@@ -62,3 +62,15 @@ const backupQuestions = [
   { text: "I believe relationships improve through honest critique", dimension: "FC", direction: "C" },
   { text: "I tend to see the best in my partner even during conflict", dimension: "FC", direction: "F" },
 ];
+
+// Additional removed questions from revision on 2025-11-15
+const removedQuestions = [
+  // Removed to make room for new user-suggested questions while keeping 50 total
+  { text: "I'm more excited by what a relationship could become than what it currently is", dimension: "IR", direction: "I" },
+  { text: "I like when my relationship is visible and acknowledged by our social circles", dimension: "SV", direction: "S" },
+  { text: "An ideal evening involves going out together rather than staying in", dimension: "SV", direction: "S" },
+  { text: "After an argument, I'm ready to move forward before fully processing what happened", dimension: "FC", direction: "F" },
+  { text: "I prioritize keeping the peace over pointing out every issue that bothers me", dimension: "FC", direction: "F" },
+  // Removed as duplicate (keeping the "wonder why they weren't more careful" version)
+  { text: "When my significant other drops a sandwich, I feel bad for them", dimension: "FC", direction: "F" },
+];

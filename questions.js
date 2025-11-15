@@ -6,7 +6,7 @@ const questions = [
   { text: "When starting a relationship, I focus more on future possibilities than current compatibility", dimension: "IR", direction: "I" },
   { text: "I prefer spontaneous romantic gestures over carefully planned ones", dimension: "IR", direction: "I" },
   { text: "When considering a relationship, I prioritize how well we align on practical matters", dimension: "IR", direction: "R" },
-  { text: "I'm more excited by what a relationship could become than what it currently is", dimension: "IR", direction: "I" },
+  { text: "I often develop crushes or feel drawn to multiple people rather than focusing on one", dimension: "IR", direction: "I" },
   { text: "I need clear communication about relationship expectations from the start", dimension: "IR", direction: "R" },
   { text: "When dating someone, I'm drawn to their potential more than their current situation", dimension: "IR", direction: "I" },
   { text: "I appreciate when a partner follows through on commitments more than grand romantic gestures", dimension: "IR", direction: "R" },
@@ -37,9 +37,9 @@ const questions = [
   { text: "I prefer celebrating relationship milestones just the two of us rather than with others", dimension: "SV", direction: "V" },
   { text: "When we have good news, I want to share it socially rather than keep it between us", dimension: "SV", direction: "S" },
   { text: "I feel most romantic during private, intimate moments away from others", dimension: "SV", direction: "V" },
-  { text: "I like when my relationship is visible and acknowledged by our social circles", dimension: "SV", direction: "S" },
+  { text: "I would feel hurt if my partner doesn't post about me on their social media", dimension: "SV", direction: "S" },
   { text: "I rarely discuss relationship details with friends and family", dimension: "SV", direction: "V" },
-  { text: "An ideal evening involves going out together rather than staying in", dimension: "SV", direction: "S" },
+  { text: "When I have a problem with my partner, I talk to friends or family for advice", dimension: "SV", direction: "S" },
   { text: "I express affection more freely when we're alone than when others are around", dimension: "SV", direction: "V" },
   { text: "I want my partner integrated into my friend groups and social activities", dimension: "SV", direction: "S" },
   { text: "The most meaningful moments happen in private, away from social settings", dimension: "SV", direction: "V" },
@@ -49,82 +49,98 @@ const questions = [
   // F/C Dimension (Forgiving vs Critical) - 12 questions
   { text: "When my partner is late to meet me, I assume something came up rather than feeling disrespected", dimension: "FC", direction: "F" },
   { text: "When my partner is late to meet me, I expect an explanation and apology", dimension: "FC", direction: "C" },
-  { text: "After an argument, I'm ready to move forward before fully processing what happened", dimension: "FC", direction: "F" },
+  { text: "When there's conflict, I try to put myself in my partner's shoes", dimension: "FC", direction: "F" },
   { text: "After an argument, I need to discuss what went wrong and how to prevent it", dimension: "FC", direction: "C" },
-  { text: "When my partner forgets something important to me, I focus on their intent over the impact", dimension: "FC", direction: "F" },
-  { text: "When my partner forgets something important to me, I expect them to understand why it matters", dimension: "FC", direction: "C" },
-  { text: "If my partner snaps at me when stressed, I let it go without addressing it", dimension: "FC", direction: "F" },
-  { text: "If my partner snaps at me when stressed, I expect them to acknowledge it later", dimension: "FC", direction: "C" },
-  { text: "When my significant other drops a sandwich, I feel bad for them", dimension: "FC", direction: "F" },
-  { text: "When my significant other drops a sandwich, I wonder why they weren't more careful", dimension: "FC", direction: "C" },
-  { text: "I prioritize keeping the peace over pointing out every issue that bothers me", dimension: "FC", direction: "F" },
+  { text: "When my partner forgets something minor, I would be visibly disappointed", dimension: "FC", direction: "C" },
+  { text: "If my partner snaps at me when stressed, I sometimes let it go without addressing it", dimension: "FC", direction: "F" },
+  { text: "If I'm proven right in a disagreement with my partner, it's fair to say 'I told you so'", dimension: "FC", direction: "C" },
+  { text: "I rarely hold grudges in relationships", dimension: "FC", direction: "F" },
+  { text: "If my significant other drops their food, I wonder why they weren't more careful", dimension: "FC", direction: "C" },
   { text: "I believe addressing problems directly, even if uncomfortable, strengthens relationships", dimension: "FC", direction: "C" },
+  { text: "If my partner snaps at me when stressed, I expect them to acknowledge it later", dimension: "FC", direction: "C" },
+  { text: "I believe the same mistake should never happen twice", dimension: "FC", direction: "C" },
 ];
 
 // Personality type descriptions
 const typeDescriptions = {
   IPSF: {
-    name: "The Tender Romantic",
-    description: "You're warm, affectionate, expressive, and forgiving. You approach love with optimism and physical warmth, openly sharing your feelings while maintaining a gentle, understanding approach to conflict."
+    name: "The Glow",
+    archetype: "Warm, hopeful, affectionate, openly loving",
+    description: "You radiate optimism and physical warmth, creating a feel-good romantic energy that draws people in. Your affectionate nature and forgiving heart make you easy to love, though you may sometimes overlook red flags or avoid difficult conversations in favor of keeping the peace. You believe in the best of people and express love freely through touch and public affection."
   },
   IPSC: {
-    name: "The Charismatic Idealist",
-    description: "You're dreamy yet hands-on, social and principled. You combine romantic idealism with physical expression and clear standards, making you both engaging and grounded."
+    name: "The Spark",
+    archetype: "Charming, seductive, idealistic with standards",
+    description: "You light up the room with magnetic charm and physical confidence, blending romantic idealism with clear expectations. Your social presence and high standards make you captivating but can sometimes come across as demanding. You're drawn to grand gestures and passionate connection, though you may struggle when reality doesn't match the vision."
   },
   IPVF: {
-    name: "The Gentle Dreamer",
-    description: "You express love through quiet intimacy and physical warmth. You're romantic and idealistic while preferring private, tender moments with your partner."
+    name: "The Ember",
+    archetype: "Quiet warmth, steady affection, gentle optimism",
+    description: "You burn softly but deeply, offering steady physical affection in private, intimate settings. Your gentle optimism and forgiving nature create a safe haven for your partner, though you may avoid conflict or struggle to express needs directly. You show love through small, tender gestures that may go unnoticed by those seeking more overt displays."
   },
   IPVC: {
-    name: "The Steady Visionary",
-    description: "You're calm, idealistic, and structured. You combine romantic hope with practical physical connection and maintain clear standards in private, meaningful ways."
+    name: "The Forge",
+    archetype: "Idealistic but disciplined, grounded, purposeful",
+    description: "You build relationships with intention and effort, combining romantic vision with practical action and clear standards. Your disciplined approach to love means you work hard to create the relationship you imagine, though your high expectations can sometimes feel rigid or uncompromising. You value consistency and may struggle with spontaneity or emotional unpredictability."
   },
   IESF: {
-    name: "The Empathic Storyteller",
-    description: "You lead with emotional depth, openness, and tenderness. You connect through vulnerability and meaningful conversation, sharing your inner world with warmth and forgiveness."
+    name: "The Muse",
+    archetype: "Emotionally inspiring, expressive, empathetic",
+    description: "You pull others into a shared romantic story through emotional depth and expressive vulnerability. Your empathetic nature and ability to articulate feelings inspire deep connection, though you may lose yourself in the narrative or forgive too easily. You thrive on emotional resonance but can be disappointed when others don't match your intensity."
   },
   IESC: {
-    name: "The Passionate Visionary",
-    description: "You're intense, emotional, social, and principled. You seek deep connections while maintaining high standards and expressing yourself openly to the world."
+    name: "The Flame",
+    archetype: "Intense, passionate, idealistic with drive",
+    description: "You burn brightly with conviction, seeking profound emotional connection while holding firm standards. Your intensity and passion create electric relationships, but your high expectations and tendency to seek perfection can overwhelm partners. You're unafraid to express what you want, though you may struggle when love feels ordinary or mundane."
   },
   IEVF: {
-    name: "The Deep Romantic",
-    description: "You're introspective, connection-seeking, and soft-hearted. You prioritize emotional intimacy in private, gentle settings where vulnerability can flourish."
+    name: "The Poet",
+    archetype: "Reflective, deeply romantic, attuned to symbolism",
+    description: "You live in emotional layers, finding meaning in subtle gestures and unspoken connection. Your introspective nature and romantic idealism create profound intimacy, though you may dwell in your inner world at the expense of practical matters. You're drawn to what could be rather than what is, sometimes creating distance through overthinking."
   },
   IEVC: {
-    name: "The Intuitive Critic",
-    description: "You're insightful, idealistic, private, and principled. You seek profound emotional understanding while maintaining clear boundaries and high standards."
+    name: "The Oracle",
+    archetype: "Insightful, intuitive, quiet but perceptive",
+    description: "You read between the lines effortlessly, understanding emotional undercurrents others miss. Your perceptive nature and clear standards make you an insightful partner, though your tendency to see patterns can lead to overanalysis or premature judgments. You value emotional authenticity but may struggle to accept imperfection in yourself or others."
   },
   RPSF: {
-    name: "The Solid Supporter",
-    description: "You're grounded, affectionate, expressive, and gentle. You show love through consistent physical presence and open warmth, while maintaining a forgiving nature."
+    name: "The Anchor",
+    archetype: "Stable, dependable, warm, socially present",
+    description: "You keep relationships grounded through consistent physical presence and steady warmth. Your reliability and social ease make you a comforting partner, though your focus on stability may resist necessary change or growth. You show love through actions and presence, but may struggle to navigate deep emotional complexity or abstract feelings."
   },
   RPSC: {
-    name: "The Realistic Commander",
-    description: "You have a strong presence that's practical, social, and structured. You lead with clarity and physical confidence while holding yourself and others to high standards."
+    name: "The Commander",
+    archetype: "Direct, practical, social, strong-willed",
+    description: "You lead relationships with clarity, structure, and physical confidence. Your decisive nature and high standards create security but can feel controlling or inflexible. You value honesty and directness, though your bluntness may sometimes hurt feelings. You thrive on clear expectations but may struggle with emotional ambiguity or vulnerability."
   },
   RPVF: {
-    name: "The Stoic Nurturer",
-    description: "You're stable, physical, private, and forgiving. You show love through quiet, consistent actions and offer steadfast support without judgment."
+    name: "The Shelter",
+    archetype: "Private, solid, nurturing, quietly reassuring",
+    description: "You create safety and comfort through quiet, consistent actions and physical presence. Your steadfast support and forgiving nature provide a refuge, though your private approach may be misread as emotional distance. You prefer showing love through deeds rather than words, which can leave partners craving more verbal affirmation or emotional expression."
   },
   RPVC: {
-    name: "The Stable Architect",
-    description: "You're realistic, physical, private, and principled. You build relationships deliberately with clear expectations and practical demonstrations of commitment."
+    name: "The Architect",
+    archetype: "Disciplined, realistic, structured, self-reliant",
+    description: "You build love thoughtfully and with precision, establishing clear expectations and boundaries. Your methodical approach creates stability, though your focus on structure may feel rigid or unemotional. You value independence and practical demonstrations of commitment, but may struggle with spontaneity or partners who need more emotional processing."
   },
   RESF: {
-    name: "The Open Heart Realist",
-    description: "You're emotionally present, expressive, and patient. You combine emotional intelligence with realistic expectations and social warmth."
+    name: "The Compass",
+    archetype: "Emotionally steady, expressive, gentle",
+    description: "You guide with clarity and warmth, balancing emotional intelligence with realistic expectations. Your patient, expressive nature makes you easy to communicate with, though your tendency toward harmony may avoid necessary confrontation. You're socially warm and emotionally available, but may struggle to set firm boundaries when needed."
   },
   RESC: {
-    name: "The Analytical Partner",
-    description: "You bring emotional intelligence, clarity, and social energy together. You understand feelings deeply while maintaining accountability and engaging openly with the world."
+    name: "The Analyst",
+    archetype: "Insightful, communicative, structured, social",
+    description: "You see patterns in relationships and name them clearly, combining emotional understanding with practical improvement. Your analytical nature and social communication skills drive growth, though your focus on what's wrong can feel critical or overwhelming. You excel at problem-solving but may struggle to simply be present without fixing."
   },
   REVF: {
-    name: "The Quiet Protector",
-    description: "You offer deep loyalty, private affection, and forgiveness. You're emotionally attuned and realistic, providing steady support in intimate settings."
+    name: "The Guardian",
+    archetype: "Private, emotionally loyal, empathetic yet steady",
+    description: "You offer protective devotion through emotional attunement and realistic care. Your quiet loyalty and empathetic understanding create deep trust, though your reserved nature may require partners to draw you out. You're steady and forgiving in private, but may avoid social vulnerability or struggle to express needs directly."
   },
   REVC: {
-    name: "The Insightful Strategist",
-    description: "You're realistic, perceptive, private, and principled. You navigate relationships with emotional wisdom and clear standards, preferring depth over display."
+    name: "The Strategist",
+    archetype: "Insightful, grounded, private, decisive",
+    description: "You understand people deeply and act with intentional precision, preferring depth over display. Your emotional wisdom and clear standards create purposeful relationships, though your analytical approach can feel calculating or distant. You value private connection and realistic expectations, but may struggle with partners who need more spontaneity or public affection."
   }
 };

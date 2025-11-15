@@ -53,60 +53,79 @@ if (!results) {
 }
 
 function displayResults(results) {
-  const { type, scores } = results;
+  const { type, scores, rawScores } = results;
 
   // Display main type
   document.getElementById('typeBadge').textContent = type;
   const typeData = typeDescriptions[type];
   document.getElementById('typeName').textContent = typeData.name;
+  document.getElementById('typeArchetype').textContent = typeData.archetype;
   document.getElementById('typeDescription').textContent = typeData.description;
 
-  // Display dimension cards
+  // Calculate percentages for each dimension
+  // Count max possible points per dimension (13 questions * 2 points = 26 for IR/PE, 12 * 2 = 24 for SV/FC)
+  const maxScores = {
+    IR: 13 * 2,  // 26
+    PE: 13 * 2,  // 26
+    SV: 12 * 2,  // 24
+    FC: 12 * 2   // 24
+  };
+
   const letters = type.split('');
+
+  // Calculate percentages (0-100 scale for each side)
+  const percentages = {
+    I: Math.round(((rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
+    R: Math.round(((-rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
+    P: Math.round(((rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
+    E: Math.round(((-rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
+    S: Math.round(((rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
+    V: Math.round(((-rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
+    F: Math.round(((rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100),
+    C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
+  };
+
+  // Display dimension breakdown with percentage bars
   const dimensions = [
-    { letter: letters[0], title: 'Hope', options: 'I/R' },
-    { letter: letters[1], title: 'Connection', options: 'P/E' },
-    { letter: letters[2], title: 'Expression', options: 'S/V' },
-    { letter: letters[3], title: 'Conflict', options: 'F/C' }
+    { pair: 'IR', first: 'I', second: 'R', title: 'Hope Dimension', firstLabel: 'Idealist', secondLabel: 'Realist' },
+    { pair: 'PE', first: 'P', second: 'E', title: 'Connection Dimension', firstLabel: 'Physical', secondLabel: 'Emotional' },
+    { pair: 'SV', first: 'S', second: 'V', title: 'Expression Dimension', firstLabel: 'Social', secondLabel: 'Private' },
+    { pair: 'FC', first: 'F', second: 'C', title: 'Resolution Dimension', firstLabel: 'Forgiving', secondLabel: 'Critical' }
   ];
 
+  const breakdownContainer = document.getElementById('dimensionsBreakdown');
+  breakdownContainer.innerHTML = '';
+
   dimensions.forEach((dim, index) => {
-    const card = document.getElementById(`dim${index + 1}`);
-    card.innerHTML = `
-      <div class="dimension-title">${dim.title}</div>
-      <div class="dimension-value">${dim.letter}</div>
-      <div class="dimension-label">${dimensionInfo[dim.letter].name}</div>
+    const firstPercent = percentages[dim.first];
+    const secondPercent = percentages[dim.second];
+    const userLetter = letters[index];
+
+    const dimElement = document.createElement('div');
+    dimElement.className = 'dimension-breakdown';
+    dimElement.innerHTML = `
+      <h4>${dim.title}</h4>
+      <div class="percentage-bar-container">
+        <div class="percentage-side">
+          <span class="percentage-label ${userLetter === dim.first ? 'active' : ''}">${dim.firstLabel}</span>
+          <span class="percentage-value ${userLetter === dim.first ? 'active' : ''}">${firstPercent}%</span>
+        </div>
+        <div class="percentage-bars">
+          <div class="bar-track">
+            <div class="bar-fill left ${userLetter === dim.first ? 'active' : ''}" style="width: ${firstPercent}%"></div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill right ${userLetter === dim.second ? 'active' : ''}" style="width: ${secondPercent}%"></div>
+          </div>
+        </div>
+        <div class="percentage-side">
+          <span class="percentage-label ${userLetter === dim.second ? 'active' : ''}">${dim.secondLabel}</span>
+          <span class="percentage-value ${userLetter === dim.second ? 'active' : ''}">${secondPercent}%</span>
+        </div>
+      </div>
     `;
+    breakdownContainer.appendChild(dimElement);
   });
-
-  // Display detailed dimension information
-  document.getElementById('hopeDimension').innerHTML = `
-    <div class="detail-content">
-      <strong>${dimensionInfo[letters[0]].name}</strong> — ${dimensionInfo[letters[0]].subtitle}<br>
-      ${dimensionInfo[letters[0]].description}
-    </div>
-  `;
-
-  document.getElementById('connectionDimension').innerHTML = `
-    <div class="detail-content">
-      <strong>${dimensionInfo[letters[1]].name}</strong> — ${dimensionInfo[letters[1]].subtitle}<br>
-      ${dimensionInfo[letters[1]].description}
-    </div>
-  `;
-
-  document.getElementById('expressionDimension').innerHTML = `
-    <div class="detail-content">
-      <strong>${dimensionInfo[letters[2]].name}</strong> — ${dimensionInfo[letters[2]].subtitle}<br>
-      ${dimensionInfo[letters[2]].description}
-    </div>
-  `;
-
-  document.getElementById('conflictDimension').innerHTML = `
-    <div class="detail-content">
-      <strong>${dimensionInfo[letters[3]].name}</strong> — ${dimensionInfo[letters[3]].subtitle}<br>
-      ${dimensionInfo[letters[3]].description}
-    </div>
-  `;
 }
 
 function shareResults() {
