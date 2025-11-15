@@ -101,9 +101,9 @@ function displayResults(results) {
     const secondPercent = percentages[dim.second];
     const userLetter = letters[index];
 
-    // Determine which side is higher
-    const higherSide = firstPercent >= secondPercent ? dim.first : dim.second;
-    const higherPercent = Math.max(firstPercent, secondPercent);
+    // Determine fill direction and width
+    const fillFromLeft = firstPercent >= secondPercent;
+    const barWidth = fillFromLeft ? firstPercent : secondPercent;
 
     const dimElement = document.createElement('div');
     dimElement.className = 'dimension-breakdown';
@@ -116,7 +116,7 @@ function displayResults(results) {
         </div>
         <div class="percentage-bar-single">
           <div class="bar-track-single">
-            <div class="bar-fill-single ${higherSide === dim.first ? 'left' : 'right'}" style="width: ${higherPercent}%"></div>
+            <div class="bar-fill-single ${fillFromLeft ? 'fill-left' : 'fill-right'}" style="width: ${barWidth}%"></div>
           </div>
         </div>
         <div class="percentage-side">
