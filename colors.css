@@ -1,0 +1,69 @@
+/*
+ * HCER Quiz Color Palette
+ * Centralized color definitions using CSS custom properties
+ *
+ * Palette: 97b3ae d2e0d3 f0ddd6 f2c3b9 d6cbbf f0eeea
+ */
+
+:root {
+  /* Primary Brand Colors */
+  --color-sage: #97b3ae;           /* Main brand color - sage green */
+  --color-mint: #d2e0d3;           /* Light mint green */
+  --color-pale-pink: #f0ddd6;      /* Pale pink */
+  --color-coral: #f2c3b9;          /* Soft coral/peach */
+  --color-tan: #d6cbbf;            /* Warm tan/beige */
+  --color-cream: #f0eeea;          /* Off-white cream */
+
+  /* Background Colors */
+  --bg-gradient-start: var(--color-mint);
+  --bg-gradient-end: var(--color-sage);
+  --bg-white: #ffffff;
+  --bg-container: var(--bg-white);
+
+  /* Text Colors */
+  --text-primary: #2a2a2a;         /* Main text - darker for readability */
+  --text-secondary: #444444;       /* Secondary text */
+  --text-muted: #666666;           /* Muted text */
+  --text-light: white;
+
+  /* Accent & Interactive */
+  --accent-primary: var(--color-sage);
+  --accent-secondary: var(--color-tan);
+  --accent-hover: var(--color-pale-pink);
+  --accent-coral: var(--color-coral);
+
+  /* Component-Specific Colors */
+  --intro-bg-start: var(--color-pale-pink);
+  --intro-bg-end: var(--color-cream);
+  --intro-border: var(--color-sage);
+
+  --question-bg-start: var(--color-cream);
+  --question-bg-end: var(--color-mint);
+
+  --button-border: var(--color-tan);
+  --button-selected-start: var(--color-sage);
+  --button-selected-end: var(--color-tan);
+
+  --progress-start: var(--color-sage);
+  --progress-end: var(--color-tan);
+
+  --result-card-start: var(--color-sage);
+  --result-card-end: var(--color-tan);
+
+  --dimension-bg-start: var(--color-cream);
+  --dimension-bg-end: var(--color-mint);
+
+  --bar-fill-start: var(--color-sage);
+  --bar-fill-end: var(--color-tan);
+  --bar-track: #e8e8e8;
+
+  /* Borders & Dividers */
+  --border-light: #e0e0e0;
+  --border-medium: var(--color-tan);
+  --border-accent: var(--color-sage);
+
+  /* Shadows */
+  --shadow-main: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-button: 0 10px 25px rgba(151, 179, 174, 0.4);
+}

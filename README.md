@@ -66,17 +66,27 @@ Then visit `http://localhost:8000`
 
 ## Customization
 
+### Changing Colors
+All colors are centralized in `colors.css` using CSS custom properties. Edit the hex values there to update the entire site's color scheme.
+
 ### Adding/Modifying Questions
 Edit `questions.js` to add or modify questions. Each question requires:
 - `text`: The question statement
 - `dimension`: One of "IR", "PE", "SV", "FC"
 - `direction`: Which trait agreement indicates (e.g., "I", "R", "P", "E", etc.)
 
-### Changing Colors/Styling
-Edit `styles.css`. The main gradient is defined in the `body` selector and can be customized throughout the file.
-
 ### Modifying Type Descriptions
 Update the `typeDescriptions` object in `questions.js` to change how each personality type is described.
+
+## Saving Form Submissions
+
+Since this is a static GitHub Pages site, you'll need a third-party service to save quiz results. See **[FORM_SUBMISSIONS.md](FORM_SUBMISSIONS.md)** for detailed guides on:
+
+- Google Sheets (Recommended - Free & Unlimited)
+- EmailJS (Email notifications)
+- Formspree (Simplest setup)
+- Download as JSON (No service needed)
+- Airtable (Best for analytics)
 
 ## License
 

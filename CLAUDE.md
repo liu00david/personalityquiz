@@ -38,26 +38,32 @@ Then visit `http://localhost:8000`
    - Shows 4-letter type, archetype name, and detailed breakdowns
    - Share functionality for social media
 
-3. **questions.js** - Question bank and data
+3. **colors.css** - Centralized color definitions
+   - CSS custom properties for all colors used throughout the site
+   - Edit hex values here to update entire color scheme
+   - Current palette: #97b3ae, #d2e0d3, #f0ddd6, #f2c3b9, #d6cbbf, #f0eeea
+
+4. **questions.js** - Question bank and data
    - Array of 50 questions distributed across 4 dimensions (13, 13, 12, 12)
    - Each question has: `text`, `dimension` (IR/PE/SV/FC), `direction` (which trait)
    - Questions are scenario-based and balanced to avoid right/wrong framing
    - `typeDescriptions` object with all 16 personality types
    - Backup of original questions saved in `questions-backup.js`
 
-4. **quiz.js** - Quiz logic and scoring
+5. **quiz.js** - Quiz logic and scoring
    - Renders questions dynamically
    - Tracks answers in local state
    - Scoring algorithm: Likert scale (-2 to +2) summed per dimension
    - Positive score = first letter, negative = second letter (e.g., IR: positive→I, negative→R)
 
-5. **results.js** - Results page logic
+6. **results.js** - Results page logic
    - Retrieves results from sessionStorage
-   - Displays personality type and dimension breakdowns
+   - Displays personality type and dimension breakdowns with percentage bars
    - Implements share/copy functionality
 
-6. **styles.css** - All styling
-   - Modern gradient-based design (purple gradient: #667eea to #764ba2)
+7. **styles.css** - All styling
+   - Uses CSS custom properties from colors.css
+   - Pastel color scheme with sage green and warm tones
    - Fully responsive with mobile breakpoints
    - Custom radio button styling for Likert scale
 
@@ -103,6 +109,12 @@ Dimensions:
 
 ## Common Tasks
 
+### Changing Colors
+1. Edit `colors.css` - all colors are defined as CSS custom properties here
+2. Update hex values in the `:root` selector
+3. Changes automatically apply to entire site
+4. No need to search/replace throughout `styles.css`
+
 ### Adding New Questions
 1. Edit `questions.js`
 2. Add question object to `questions` array with text, dimension, and direction
@@ -110,13 +122,8 @@ Dimensions:
 
 ### Modifying Personality Descriptions
 1. Edit `typeDescriptions` object in `questions.js`
-2. Each type needs `name` and `description` properties
+2. Each type needs `name`, `archetype`, and `description` properties
 3. Also update `dimensionInfo` in `results.js` for dimension-specific descriptions
-
-### Changing Visual Theme
-1. Edit gradient colors in `styles.css`
-2. Main gradient in `body` selector
-3. Component gradients throughout (search for #667eea and #764ba2)
 
 ### Testing Scoring Algorithm
 1. Fill out quiz with known answers
@@ -124,7 +131,15 @@ Dimensions:
 3. Verify sessionStorage contains correct scores
 4. Check results page displays expected personality type
 
+### Implementing Form Submissions
+1. See `FORM_SUBMISSIONS.md` for detailed implementation guides
+2. Recommended: Google Sheets via Apps Script (free, unlimited)
+3. Alternatives: EmailJS, Formspree, JSON download, Airtable
+4. All options work with static GitHub Pages hosting
+
 ## Important Files Referenced
 
 - `PERSONALITY.md` - Complete framework documentation with all 16 types
 - `README.md` - User-facing documentation and setup instructions
+- `FORM_SUBMISSIONS.md` - Guide for saving quiz results
+- `colors.css` - Centralized color palette definitions

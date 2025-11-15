@@ -6,19 +6,19 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, #d2e0d3 0%, #97b3ae 100%);
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   min-height: 100vh;
   padding: 20px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  background: white;
+  background: var(--bg-container);
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-main);
 }
 
 header {
@@ -28,15 +28,13 @@ header {
 
 h1 {
   font-size: 2.5em;
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent-primary);
   margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .subtitle {
-  color: #555;
+  color: var(--text-secondary);
   font-size: 1.1em;
   margin-bottom: 25px;
 }
@@ -45,13 +43,13 @@ h1 {
   max-width: 700px;
   margin: 0 auto 30px;
   padding: 20px;
-  background: linear-gradient(135deg, #f0ddd6 0%, #f0eeea 100%);
+  background: linear-gradient(135deg, var(--intro-bg-start) 0%, var(--intro-bg-end) 100%);
   border-radius: 12px;
-  border-left: 4px solid #97b3ae;
+  border-left: 4px solid var(--intro-border);
 }
 
 .intro p {
-  color: #444;
+  color: var(--text-primary);
   font-size: 1.05em;
   line-height: 1.7;
   text-align: left;
@@ -68,7 +66,7 @@ h1 {
 
 .dimensions-intro h3 {
   font-size: 1.3em;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 15px;
   text-align: center;
 }
@@ -80,9 +78,9 @@ h1 {
 
 .dimensions-intro li {
   padding: 10px 0;
-  color: #555;
+  color: var(--text-secondary);
   font-size: 1em;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .dimensions-intro li:last-child {
@@ -90,7 +88,7 @@ h1 {
 }
 
 .dimensions-intro strong {
-  color: #97b3ae;
+  color: var(--accent-primary);
   font-weight: 600;
 }
 
@@ -101,7 +99,7 @@ h1 {
 
 .progress-bar {
   height: 8px;
-  background: linear-gradient(90deg, #97b3ae 0%, #d6cbbf 100%);
+  background: linear-gradient(90deg, var(--progress-start) 0%, var(--progress-end) 100%);
   border-radius: 10px;
   width: 0%;
   transition: width 0.3s ease;
@@ -110,13 +108,13 @@ h1 {
 .progress-text {
   text-align: center;
   margin-top: 10px;
-  color: #555;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 /* Question Cards */
 .question-item {
-  background: linear-gradient(135deg, #f0eeea 0%, #d2e0d3 100%);
+  background: linear-gradient(135deg, var(--question-bg-start) 0%, var(--question-bg-end) 100%);
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 20px;
@@ -125,20 +123,20 @@ h1 {
 
 .question-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-hover);
 }
 
 .question-text {
   font-size: 1.1em;
   margin-bottom: 15px;
-  color: #333;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .question-number {
   display: inline-block;
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  color: var(--text-light);
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.9em;
@@ -170,30 +168,31 @@ h1 {
   min-height: 48px;
   text-align: center;
   padding: 8px 6px;
-  background: white;
-  border: 2px solid #d6cbbf;
+  background: var(--bg-white);
+  border: 2px solid var(--button-border);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 0.85em;
   font-weight: 500;
   line-height: 1.2;
+  color: var(--text-primary);
 }
 
 .likert-option input[type="radio"]:checked + label {
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
-  color: white;
-  border-color: #97b3ae;
+  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  color: var(--text-light);
+  border-color: var(--accent-primary);
   transform: scale(1.05);
 }
 
 .likert-option label:hover {
-  border-color: #97b3ae;
-  background: #f0ddd6;
+  border-color: var(--accent-primary);
+  background: var(--accent-hover);
 }
 
 .likert-option input[type="radio"]:checked + label:hover {
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
+  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
 }
 
 /* Submit Button */
@@ -203,8 +202,8 @@ h1 {
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  color: var(--text-light);
   border: none;
   padding: 15px 50px;
   font-size: 1.2em;
@@ -216,7 +215,7 @@ h1 {
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(151, 179, 174, 0.4);
+  box-shadow: var(--shadow-button);
 }
 
 .submit-btn:active {
@@ -236,9 +235,9 @@ h1 {
 .result-card {
   text-align: center;
   padding: 40px;
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
+  background: linear-gradient(135deg, var(--result-card-start) 0%, var(--result-card-end) 100%);
   border-radius: 20px;
-  color: white;
+  color: var(--text-light);
   margin-bottom: 40px;
 }
 
@@ -258,13 +257,13 @@ h1 {
   font-size: 1.1em;
   font-style: italic;
   margin-bottom: 20px;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .type-description {
   font-size: 1.1em;
   line-height: 1.7;
-  opacity: 0.95;
+  opacity: 0.98;
   text-align: left;
   max-width: 700px;
   margin: 0 auto;
@@ -278,12 +277,12 @@ h1 {
 .breakdown-section h3 {
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.8em;
 }
 
 .dimension-breakdown {
-  background: linear-gradient(135deg, #f0eeea 0%, #d2e0d3 100%);
+  background: linear-gradient(135deg, var(--dimension-bg-start) 0%, var(--dimension-bg-end) 100%);
   padding: 25px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -291,9 +290,10 @@ h1 {
 
 .dimension-breakdown h4 {
   font-size: 1.2em;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 20px;
   text-align: center;
+  font-weight: 600;
 }
 
 .percentage-bar-container {
@@ -312,13 +312,13 @@ h1 {
 
 .percentage-label {
   font-size: 0.95em;
-  color: #666;
-  font-weight: 500;
+  color: var(--text-secondary);
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .percentage-label.active {
-  color: #97b3ae;
+  color: var(--accent-primary);
   font-weight: 700;
   font-size: 1.05em;
 }
@@ -326,17 +326,14 @@ h1 {
 .percentage-value {
   font-size: 1.3em;
   font-weight: 600;
-  color: #888;
+  color: var(--text-muted);
   transition: all 0.3s ease;
 }
 
 .percentage-value.active {
   font-size: 1.5em;
   font-weight: 800;
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent-primary);
 }
 
 .percentage-bar-single {
@@ -345,7 +342,7 @@ h1 {
 
 .bar-track-single {
   height: 24px;
-  background: #e8e8e8;
+  background: var(--bar-track);
   border-radius: 12px;
   overflow: hidden;
   position: relative;
@@ -355,7 +352,7 @@ h1 {
   height: 100%;
   transition: width 0.8s ease;
   border-radius: 12px;
-  background: linear-gradient(90deg, #97b3ae 0%, #d6cbbf 100%);
+  background: linear-gradient(90deg, var(--bar-fill-start) 0%, var(--bar-fill-end) 100%);
 }
 
 .bar-fill-single.fill-left {
@@ -385,24 +382,24 @@ h1 {
 }
 
 .retake-btn {
-  background: white;
-  color: #97b3ae;
-  border: 2px solid #97b3ae;
+  background: var(--bg-white);
+  color: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
 }
 
 .retake-btn:hover {
-  background: #97b3ae;
-  color: white;
+  background: var(--accent-primary);
+  color: var(--text-light);
 }
 
 .share-btn {
-  background: linear-gradient(135deg, #97b3ae 0%, #d6cbbf 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  color: var(--text-light);
 }
 
 .share-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(151, 179, 174, 0.4);
+  box-shadow: var(--shadow-button);
 }
 
 /* Responsive Design */
