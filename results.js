@@ -101,6 +101,10 @@ function displayResults(results) {
     const secondPercent = percentages[dim.second];
     const userLetter = letters[index];
 
+    // Determine which side is higher
+    const higherSide = firstPercent >= secondPercent ? dim.first : dim.second;
+    const higherPercent = Math.max(firstPercent, secondPercent);
+
     const dimElement = document.createElement('div');
     dimElement.className = 'dimension-breakdown';
     dimElement.innerHTML = `
@@ -110,12 +114,9 @@ function displayResults(results) {
           <span class="percentage-label ${userLetter === dim.first ? 'active' : ''}">${dim.firstLabel}</span>
           <span class="percentage-value ${userLetter === dim.first ? 'active' : ''}">${firstPercent}%</span>
         </div>
-        <div class="percentage-bars">
-          <div class="bar-track">
-            <div class="bar-fill left ${userLetter === dim.first ? 'active' : ''}" style="width: ${firstPercent}%"></div>
-          </div>
-          <div class="bar-track">
-            <div class="bar-fill right ${userLetter === dim.second ? 'active' : ''}" style="width: ${secondPercent}%"></div>
+        <div class="percentage-bar-single">
+          <div class="bar-track-single">
+            <div class="bar-fill-single ${higherSide === dim.first ? 'left' : 'right'}" style="width: ${higherPercent}%"></div>
           </div>
         </div>
         <div class="percentage-side">
@@ -131,11 +132,11 @@ function displayResults(results) {
 function shareResults() {
   const type = results.type;
   const typeData = typeDescriptions[type];
-  const shareText = `I just discovered my IRSP type: ${type} - ${typeData.name}! Find your romantic personality type.`;
+  const shareText = `I just discovered my HCER type: ${type} - ${typeData.name}! Find your romantic personality type.`;
 
   if (navigator.share) {
     navigator.share({
-      title: 'My IRSP Personality Type',
+      title: 'My HCER Personality Type',
       text: shareText,
       url: window.location.origin
     }).catch(() => {

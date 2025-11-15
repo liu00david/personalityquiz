@@ -1,6 +1,6 @@
-# IRSP Relationship Typology Quiz
+# HCER Relationship Typology Quiz
 
-A modern, interactive personality quiz that helps users discover their 4-letter romantic personality type based on the IRSP framework (Idealist/Realist, Physical/Emotional, Social/Private, Forgiving/Critical).
+A modern, interactive personality quiz that helps users discover their 4-letter romantic personality type based on the HCER framework (Hope, Connection, Expression, Resolution).
 
 ## Live Demo
 
@@ -16,16 +16,16 @@ Visit the quiz at: [Your GitHub Pages URL will be here]
 - Mobile-responsive design
 - Share functionality for results
 
-## The IRSP Framework
+## The HCER Framework
 
 The quiz measures four key dimensions of romantic behavior:
 
-1. **I/R - Hope Dimension**: Idealist vs Realist
-2. **P/E - Connection Dimension**: Physical vs Emotional
-3. **S/V - Expression Dimension**: Social vs Private
-4. **F/C - Conflict Dimension**: Forgiving vs Critical
+1. **H - Hope Dimension**: Idealist vs Realist
+2. **C - Connection Dimension**: Physical vs Emotional
+3. **E - Expression Dimension**: Social vs Private
+4. **R - Resolution Dimension**: Forgiving vs Critical
 
-Results in one of 16 personality types (e.g., IPSF - The Tender Romantic).
+Results in one of 16 personality types (e.g., IPSF - The Glow, REVC - The Strategist).
 
 ## GitHub Pages Setup
 

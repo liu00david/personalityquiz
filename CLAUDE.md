@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static personality quiz website for the IRSP (Idealist/Realist, Physical/Emotional, Social/Private, Forgiving/Critical) relationship typology framework. The quiz uses vanilla HTML/CSS/JavaScript with no build process and is designed for deployment on GitHub Pages.
+This is a static personality quiz website for the HCER (Hope, Connection, Expression, Resolution) relationship typology framework. The quiz uses vanilla HTML/CSS/JavaScript with no build process and is designed for deployment on GitHub Pages.
 
 ## Development Commands
 
@@ -91,7 +91,7 @@ Dimensions:
 - **IR**: Idealist (I) vs Realist (R) - Hope dimension
 - **PE**: Physical (P) vs Emotional (E) - Connection dimension
 - **SV**: Social (S) vs Private (V) - Expression dimension
-- **FC**: Forgiving (F) vs Critical (C) - Conflict dimension
+- **FC**: Forgiving (F) vs Critical (C) - Resolution dimension
 
 ## Key Design Decisions
 

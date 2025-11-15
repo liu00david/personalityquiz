@@ -6,7 +6,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c3dcd8 100%);
   min-height: 100vh;
   padding: 20px;
   color: #333;
@@ -28,7 +28,7 @@ header {
 
 h1 {
   font-size: 2.5em;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -45,9 +45,9 @@ h1 {
   max-width: 700px;
   margin: 0 auto 30px;
   padding: 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf4 100%);
+  background: linear-gradient(135deg, #efd1d4 0%, #d8d9da 100%);
   border-radius: 12px;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #93b0ac;
 }
 
 .intro p {
@@ -90,7 +90,7 @@ h1 {
 }
 
 .dimensions-intro strong {
-  color: #667eea;
+  color: #93b0ac;
   font-weight: 600;
 }
 
@@ -101,7 +101,7 @@ h1 {
 
 .progress-bar {
   height: 8px;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #93b0ac 0%, #c5bd96 100%);
   border-radius: 10px;
   width: 0%;
   transition: width 0.3s ease;
@@ -116,7 +116,7 @@ h1 {
 
 /* Question Cards */
 .question-item {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #d8d9da 0%, #c3dcd8 100%);
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 20px;
@@ -137,7 +137,7 @@ h1 {
 
 .question-number {
   display: inline-block;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
   color: white;
   padding: 5px 12px;
   border-radius: 20px;
@@ -164,32 +164,36 @@ h1 {
 }
 
 .likert-option label {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
   text-align: center;
-  padding: 12px 8px;
+  padding: 8px 6px;
   background: white;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #d8d9da;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 0.9em;
+  font-size: 0.85em;
   font-weight: 500;
+  line-height: 1.2;
 }
 
 .likert-option input[type="radio"]:checked + label {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
   color: white;
-  border-color: #667eea;
+  border-color: #93b0ac;
   transform: scale(1.05);
 }
 
 .likert-option label:hover {
-  border-color: #667eea;
-  background: #f0f4ff;
+  border-color: #93b0ac;
+  background: #efd1d4;
 }
 
 .likert-option input[type="radio"]:checked + label:hover {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
 }
 
 /* Submit Button */
@@ -199,7 +203,7 @@ h1 {
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
   color: white;
   border: none;
   padding: 15px 50px;
@@ -212,7 +216,7 @@ h1 {
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 25px rgba(147, 176, 172, 0.4);
 }
 
 .submit-btn:active {
@@ -232,7 +236,7 @@ h1 {
 .result-card {
   text-align: center;
   padding: 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
   border-radius: 20px;
   color: white;
   margin-bottom: 40px;
@@ -279,7 +283,7 @@ h1 {
 }
 
 .dimension-breakdown {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #d8d9da 0%, #c3dcd8 100%);
   padding: 25px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -314,7 +318,7 @@ h1 {
 }
 
 .percentage-label.active {
-  color: #667eea;
+  color: #93b0ac;
   font-weight: 700;
   font-size: 1.05em;
 }
@@ -329,48 +333,37 @@ h1 {
 .percentage-value.active {
   font-size: 1.5em;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.percentage-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.percentage-bar-single {
+  flex: 1;
 }
 
-.bar-track {
-  height: 20px;
-  background: #e0e0e0;
-  border-radius: 10px;
+.bar-track-single {
+  height: 24px;
+  background: #e8e8e8;
+  border-radius: 12px;
   overflow: hidden;
   position: relative;
 }
 
-.bar-fill {
+.bar-fill-single {
   height: 100%;
   transition: width 0.8s ease;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #93b0ac 0%, #c5bd96 100%);
 }
 
-.bar-fill.left {
-  background: linear-gradient(90deg, #e0e0e0 0%, #aaa 100%);
+.bar-fill-single.left {
   float: right;
 }
 
-.bar-fill.left.active {
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-}
-
-.bar-fill.right {
-  background: linear-gradient(90deg, #aaa 0%, #e0e0e0 100%);
+.bar-fill-single.right {
   float: left;
-}
-
-.bar-fill.right.active {
-  background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
 }
 
 /* Action Buttons */
@@ -393,23 +386,23 @@ h1 {
 
 .retake-btn {
   background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
+  color: #93b0ac;
+  border: 2px solid #93b0ac;
 }
 
 .retake-btn:hover {
-  background: #667eea;
+  background: #93b0ac;
   color: white;
 }
 
 .share-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #93b0ac 0%, #c5bd96 100%);
   color: white;
 }
 
 .share-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 25px rgba(147, 176, 172, 0.4);
 }
 
 /* Responsive Design */
@@ -445,8 +438,9 @@ h1 {
     width: 100%;
   }
 
-  .percentage-bars {
+  .percentage-bar-single {
     order: 3;
+    width: 100%;
   }
 }
 
@@ -457,6 +451,26 @@ h1 {
 
   .subtitle {
     font-size: 1em;
+  }
+
+  .intro {
+    padding: 15px;
+  }
+
+  .intro p {
+    font-size: 1em;
+  }
+
+  .dimensions-intro {
+    padding: 20px;
+  }
+
+  .dimensions-intro h3 {
+    font-size: 1.1em;
+  }
+
+  .dimensions-intro li {
+    font-size: 0.95em;
   }
 
   .type-badge {
