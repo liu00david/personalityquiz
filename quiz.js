@@ -126,13 +126,20 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
   // Store results in sessionStorage
   sessionStorage.setItem('quizResults', JSON.stringify(result));
 
+  // Send to Google Sheets
   fetch('https://script.google.com/macros/s/AKfycbxba14m8jihcfD2E08HpTerf7akF4ILORyHa8cRJEYL9vDvNCu8rfYzCbq1D0qGOXnphg/exec', {
     method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(result)
+  }).catch(err => {
+    console.log('Sheet submission error (this is normal with no-cors):', err);
+  }).finally(() => {
+    // Navigate to results page after attempt
+    window.location.href = 'results.html';
   });
-
-  // Navigate to results page
-  window.location.href = 'results.html';
 });
 
 // Initialize quiz

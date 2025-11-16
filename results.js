@@ -63,12 +63,12 @@ function displayResults(results) {
   document.getElementById('typeDescription').textContent = typeData.description;
 
   // Calculate percentages for each dimension
-  // Count max possible points per dimension (13 questions * 2 points = 26 for IR/PE, 12 * 2 = 24 for SV/FC)
+  // Count max possible points per dimension (10 questions * 2 points = 20 for all)
   const maxScores = {
-    IR: 13 * 2,  // 26
-    PE: 13 * 2,  // 26
-    SV: 12 * 2,  // 24
-    FC: 12 * 2   // 24
+    IR: 10 * 2,  // 20
+    PE: 10 * 2,  // 20
+    SV: 10 * 2,  // 20
+    FC: 10 * 2   // 20
   };
 
   const letters = type.split('');
