@@ -126,6 +126,11 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
   // Store results in sessionStorage
   sessionStorage.setItem('quizResults', JSON.stringify(result));
 
+  fetch('https://script.google.com/macros/s/AKfycbxba14m8jihcfD2E08HpTerf7akF4ILORyHa8cRJEYL9vDvNCu8rfYzCbq1D0qGOXnphg/exec', {
+    method: 'POST',
+    body: JSON.stringify(result)
+  });
+
   // Navigate to results page
   window.location.href = 'results.html';
 });
