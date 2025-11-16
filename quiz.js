@@ -1,11 +1,11 @@
 // Quiz functionality and scoring algorithm
 
 const likertOptions = [
-  { value: -2, label: "Strongly Disagree" },
+  { value: -2, label: "Strong Disagree" },
   { value: -1, label: "Disagree" },
   { value: 0, label: "Neutral" },
   { value: 1, label: "Agree" },
-  { value: 2, label: "Strongly Agree" }
+  { value: 2, label: "Strong Agree" }
 ];
 
 // Track answers
@@ -15,7 +15,6 @@ let answeredCount = 0;
 // Render all questions
 function renderQuestions() {
   const container = document.getElementById('questionsContainer');
-  document.getElementById('totalQuestions').textContent = questions.length;
 
   questions.forEach((question, index) => {
     const questionDiv = document.createElement('div');
@@ -69,7 +68,7 @@ function renderQuestions() {
 function updateProgress() {
   const percentage = (answeredCount / questions.length) * 100;
   document.getElementById('progressBar').style.width = percentage + '%';
-  document.getElementById('currentQuestion').textContent = answeredCount;
+  document.getElementById('progressPercentage').textContent = Math.round(percentage) + '%';
 }
 
 // Calculate personality type
@@ -97,12 +96,12 @@ function calculatePersonality() {
     }
   });
 
-  // Determine personality type based on scores
+  // Determine personality type based on scores (>= 0 leans left on ties)
   const type =
-    (scores.IR > 0 ? 'I' : 'R') +
-    (scores.PE > 0 ? 'P' : 'E') +
-    (scores.SV > 0 ? 'S' : 'V') +
-    (scores.FC > 0 ? 'F' : 'C');
+    (scores.IR >= 0 ? 'I' : 'R') +
+    (scores.PE >= 0 ? 'P' : 'E') +
+    (scores.SV >= 0 ? 'S' : 'V') +
+    (scores.FC >= 0 ? 'F' : 'C');
 
   return {
     type,
@@ -133,3 +132,29 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
 
 // Initialize quiz
 renderQuestions();
+
+// Autofill function for testing
+function autofillQuiz() {
+  questions.forEach((question, index) => {
+    // Randomly select a value from -2 to 2
+    const randomValue = Math.floor(Math.random() * 5) - 2; // -2, -1, 0, 1, 2
+
+    // Find and check the corresponding radio button
+    const radioBtn = document.getElementById(`q${index}_${randomValue}`);
+    if (radioBtn) {
+      radioBtn.checked = true;
+
+      // Update answers object
+      if (!answers[index]) {
+        answeredCount++;
+      }
+      answers[index] = {
+        value: randomValue,
+        dimension: question.dimension,
+        direction: question.direction
+      };
+    }
+  });
+
+  updateProgress();
+}

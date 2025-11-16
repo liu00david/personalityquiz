@@ -23,12 +23,12 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 }
 
 h1 {
   font-size: 2.5em;
-  color: var(--accent-primary);
+  color: #2a2a2a;
   margin-bottom: 10px;
   font-weight: 700;
 }
@@ -43,7 +43,7 @@ h1 {
   max-width: 700px;
   margin: 0 auto 30px;
   padding: 20px;
-  background: linear-gradient(135deg, var(--intro-bg-start) 0%, var(--intro-bg-end) 100%);
+  background: var(--intro-bg-start);
   border-radius: 12px;
   border-left: 4px solid var(--intro-border);
 }
@@ -58,16 +58,16 @@ h1 {
 .dimensions-intro {
   max-width: 650px;
   margin: 0 auto;
-  padding: 25px;
+  padding: 20px;
   background: white;
   border: 2px solid #e0e0e0;
   border-radius: 12px;
 }
 
 .dimensions-intro h3 {
-  font-size: 1.3em;
+  font-size: 1.2em;
   color: var(--text-primary);
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   text-align: center;
 }
 
@@ -77,9 +77,9 @@ h1 {
 }
 
 .dimensions-intro li {
-  padding: 10px 0;
+  padding: 6px 0;
   color: var(--text-secondary);
-  font-size: 1em;
+  font-size: 0.95em;
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -94,12 +94,17 @@ h1 {
 
 /* Progress Bar */
 .progress-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-container);
+  padding: 10px 0;
   margin-bottom: 30px;
 }
 
 .progress-bar {
   height: 8px;
-  background: linear-gradient(90deg, var(--progress-start) 0%, var(--progress-end) 100%);
+  background: var(--color-sage);
   border-radius: 10px;
   width: 0%;
   transition: width 0.3s ease;
@@ -180,7 +185,7 @@ h1 {
 }
 
 .likert-option input[type="radio"]:checked + label {
-  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  background: var(--color-sage);
   color: var(--text-light);
   border-color: var(--accent-primary);
   transform: scale(1.05);
@@ -192,7 +197,7 @@ h1 {
 }
 
 .likert-option input[type="radio"]:checked + label:hover {
-  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  background: var(--color-sage);
 }
 
 /* Submit Button */
@@ -202,7 +207,7 @@ h1 {
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  background: var(--color-sage);
   color: var(--text-light);
   border: none;
   padding: 15px 50px;
@@ -235,7 +240,7 @@ h1 {
 .result-card {
   text-align: center;
   padding: 40px;
-  background: linear-gradient(135deg, var(--result-card-start) 0%, var(--result-card-end) 100%);
+  background: var(--color-sage);
   border-radius: 20px;
   color: var(--text-light);
   margin-bottom: 40px;
@@ -282,7 +287,7 @@ h1 {
 }
 
 .dimension-breakdown {
-  background: linear-gradient(135deg, var(--dimension-bg-start) 0%, var(--dimension-bg-end) 100%);
+  background: var(--dimension-bg-start);
   padding: 25px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -312,13 +317,13 @@ h1 {
 
 .percentage-label {
   font-size: 0.95em;
-  color: var(--text-secondary);
+  color: #999999;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .percentage-label.active {
-  color: var(--accent-primary);
+  color: var(--text-primary);
   font-weight: 700;
   font-size: 1.05em;
 }
@@ -326,14 +331,14 @@ h1 {
 .percentage-value {
   font-size: 1.3em;
   font-weight: 600;
-  color: var(--text-muted);
+  color: #999999;
   transition: all 0.3s ease;
 }
 
 .percentage-value.active {
   font-size: 1.5em;
   font-weight: 800;
-  color: var(--accent-primary);
+  color: var(--text-primary);
 }
 
 .percentage-bar-single {
@@ -352,7 +357,7 @@ h1 {
   height: 100%;
   transition: width 0.8s ease;
   border-radius: 12px;
-  background: linear-gradient(90deg, var(--bar-fill-start) 0%, var(--bar-fill-end) 100%);
+  background: var(--color-sage);
 }
 
 .bar-fill-single.fill-left {
@@ -393,13 +398,34 @@ h1 {
 }
 
 .share-btn {
-  background: linear-gradient(135deg, var(--button-selected-start) 0%, var(--button-selected-end) 100%);
+  background: var(--color-sage);
   color: var(--text-light);
 }
 
 .share-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-button);
+}
+
+/* Secret Autofill Button */
+.autofill-secret {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-tan);
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.autofill-secret:hover {
+  opacity: 0.8;
 }
 
 /* Responsive Design */

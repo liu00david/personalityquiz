@@ -85,12 +85,18 @@ function displayResults(results) {
     C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
   };
 
+  // Adjust 50-50 ties to 51-49 (lean left)
+  if (percentages.I === 50) { percentages.I = 51; percentages.R = 49; }
+  if (percentages.P === 50) { percentages.P = 51; percentages.E = 49; }
+  if (percentages.S === 50) { percentages.S = 51; percentages.V = 49; }
+  if (percentages.F === 50) { percentages.F = 51; percentages.C = 49; }
+
   // Display dimension breakdown with percentage bars
   const dimensions = [
-    { pair: 'IR', first: 'I', second: 'R', title: 'Hope Dimension', firstLabel: 'Idealist', secondLabel: 'Realist' },
-    { pair: 'PE', first: 'P', second: 'E', title: 'Connection Dimension', firstLabel: 'Physical', secondLabel: 'Emotional' },
-    { pair: 'SV', first: 'S', second: 'V', title: 'Expression Dimension', firstLabel: 'Social', secondLabel: 'Private' },
-    { pair: 'FC', first: 'F', second: 'C', title: 'Resolution Dimension', firstLabel: 'Forgiving', secondLabel: 'Critical' }
+    { pair: 'IR', first: 'I', second: 'R', title: 'Hope', firstLabel: 'Idealist', secondLabel: 'Realist' },
+    { pair: 'PE', first: 'P', second: 'E', title: 'Connection', firstLabel: 'Physical', secondLabel: 'Emotional' },
+    { pair: 'SV', first: 'S', second: 'V', title: 'Expression', firstLabel: 'Social', secondLabel: 'Private' },
+    { pair: 'FC', first: 'F', second: 'C', title: 'Resolution', firstLabel: 'Forgiving', secondLabel: 'Critical' }
   ];
 
   const breakdownContainer = document.getElementById('dimensionsBreakdown');

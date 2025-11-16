@@ -20,17 +20,17 @@
       <div class="dimensions-intro">
         <h3>The Four Dimensions</h3>
         <ul>
-          <li><strong>H - Hope Dimension:</strong> Idealist vs Realist</li>
-          <li><strong>C - Connection Dimension:</strong> Physical vs Emotional</li>
-          <li><strong>E - Expression Dimension:</strong> Social vs Private</li>
-          <li><strong>R - Resolution Dimension:</strong> Forgiving vs Critical</li>
+          <li><strong>[H]</strong> Hope - Idealist vs Realist</li>
+          <li><strong>[C]</strong> Connection - Physical vs Emotional</li>
+          <li><strong>[E]</strong> Expression - Social vs Private</li>
+          <li><strong>[R]</strong> Resolution - Forgiving vs Critical</li>
         </ul>
       </div>
     </header>
 
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
-      <p class="progress-text"><span id="currentQuestion">0</span> / <span id="totalQuestions">50</span></p>
+      <p class="progress-text"><span id="progressPercentage">0%</span></p>
     </div>
 
     <form id="quizForm">
@@ -41,6 +41,8 @@
       </div>
     </form>
   </div>
+
+  <button id="autofillBtn" class="autofill-secret" onclick="autofillQuiz()">🎲</button>
 
   <script src="questions.js"></script>
   <script src="quiz.js"></script>
