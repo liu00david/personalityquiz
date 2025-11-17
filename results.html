@@ -38,9 +38,26 @@
     </div>
   </div>
 
-  <!-- Hidden canvas for generating share image -->
-  <canvas id="shareCanvas" style="display: none;"></canvas>
+  <!-- Hidden share card -->
+  <div id="shareCard" style="display: none; width: 800px; background: linear-gradient(135deg, #d2e0d3 0%, #97b3ae 100%); padding: 40px; font-family: -apple-system, sans-serif;">
+    <h2 style="text-align: center; color: #2a2a2a; font-size: 32px; font-weight: bold; margin-bottom: 30px;">HCER Relationship Typology</h2>
 
+    <div style="text-align: center; margin-bottom: 30px;">
+      <img id="shareAvatar" style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    </div>
+
+    <div style="background: #305669; border-radius: 20px; padding: 40px; margin-bottom: 20px; text-align: center;">
+      <div id="shareTypeBadge" style="color: white; font-size: 96px; font-weight: bold; letter-spacing: 8px;"></div>
+    </div>
+
+    <h3 id="shareTypeName" style="text-align: center; color: #2a2a2a; font-size: 32px; font-weight: bold; margin-bottom: 40px;"></h3>
+
+    <div id="shareDimensions"></div>
+
+    <p style="text-align: center; color: #2a2a2a; font-size: 16px; margin-top: 30px;">Discover your type at https://liu00david.github.io/personalityquiz</p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="questions.js"></script>
   <script src="results.js"></script>
 </body>

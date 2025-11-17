@@ -46,9 +46,6 @@ const dimensionInfo = {
 // Get results from sessionStorage
 const results = JSON.parse(sessionStorage.getItem('quizResults'));
 
-// Store pre-generated share image
-let preGeneratedShareBlob = null;
-
 if (!results) {
   window.location.href = 'index.html';
 } else {
@@ -196,20 +193,101 @@ function displayResults(results) {
     breakdownContainer.appendChild(dimElement);
   });
 
-  // Pre-generate share image for faster sharing
-  generateShareImage().then(blob => {
-    preGeneratedShareBlob = blob;
-  }).catch(err => {
-    console.error('Pre-generation failed:', err);
+  // Populate share card (don't pre-generate, just prepare the content)
+  populateShareCard();
+}
+
+async function populateShareCard() {
+  // Set avatar - fetch and convert to data URL to avoid CORS issues
+  const traitColors = {
+    I: 'ffc6ff', R: 'caffbf', P: 'ffadad', E: 'bdb2ff',
+    S: 'ffd6a5', V: '9bf6ff', F: 'a0c4ff', C: 'fdffb6'
+  };
+  const colors = results.type.split('').map(letter => traitColors[letter]).join(',');
+  const avatarUrl = `https://hostedboringavatars.vercel.app/api/pixel?name=${results.type}&size=120&colors=${colors}`;
+
+  try {
+    const response = await fetch(avatarUrl);
+    const svgText = await response.text();
+    const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+    const reader = new FileReader();
+    reader.onload = function() {
+      document.getElementById('shareAvatar').src = reader.result;
+    };
+    reader.readAsDataURL(svgBlob);
+  } catch (err) {
+    console.warn('Failed to load avatar for share card:', err);
+  }
+
+  // Set type badge and name
+  document.getElementById('shareTypeBadge').textContent = results.type;
+  const typeData = typeDescriptions[results.type];
+  document.getElementById('shareTypeName').textContent = `"${typeData.name}"`;
+
+  // Calculate percentages
+  const maxScores = { IR: 0, PE: 0, SV: 0, FC: 0 };
+  questions.forEach(q => {
+    maxScores.IR += Math.abs(q.weights[0]) * 2;
+    maxScores.PE += Math.abs(q.weights[1]) * 2;
+    maxScores.SV += Math.abs(q.weights[2]) * 2;
+    maxScores.FC += Math.abs(q.weights[3]) * 2;
+  });
+
+  const percentages = {
+    I: Math.round(((results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
+    R: Math.round(((-results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
+    P: Math.round(((results.rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
+    E: Math.round(((-results.rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
+    S: Math.round(((results.rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
+    V: Math.round(((-results.rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
+    F: Math.round(((results.rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100),
+    C: Math.round(((-results.rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
+  };
+
+  // Build dimensions
+  const dimensions = [
+    { first: 'I', second: 'R', firstLabel: 'Idealist', secondLabel: 'Realist', title: 'Hope' },
+    { first: 'P', second: 'E', firstLabel: 'Physical', secondLabel: 'Emotional', title: 'Connection' },
+    { first: 'S', second: 'V', firstLabel: 'Social', secondLabel: 'Private', title: 'Expression' },
+    { first: 'F', second: 'C', firstLabel: 'Forgiving', secondLabel: 'Critical', title: 'Resolution' }
+  ];
+
+  const shareDimensionsContainer = document.getElementById('shareDimensions');
+  shareDimensionsContainer.innerHTML = '';
+
+  dimensions.forEach((dim, index) => {
+    const firstPercent = percentages[dim.first];
+    const secondPercent = percentages[dim.second];
+    const userLetter = results.type[index];
+    const fillFromLeft = firstPercent >= secondPercent;
+    const barWidth = fillFromLeft ? firstPercent : secondPercent;
+
+    const dimHTML = `
+      <div style="margin-bottom: 30px;">
+        <h4 style="text-align: center; color: #2a2a2a; font-size: 22px; font-weight: bold; margin-bottom: 10px;">${dim.title}</h4>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span style="font-size: 16px; font-weight: ${userLetter === dim.first ? 'bold' : '600'}; color: ${userLetter === dim.first ? '#2a2a2a' : '#999999'};">${dim.firstLabel} ${firstPercent}%</span>
+          <span style="font-size: 16px; font-weight: ${userLetter === dim.second ? 'bold' : '600'}; color: ${userLetter === dim.second ? '#2a2a2a' : '#999999'};">${secondPercent}% ${dim.secondLabel}</span>
+        </div>
+        <div style="background: #f5f3ec; height: 20px; border-radius: 10px; position: relative; overflow: hidden;">
+          <div style="background: #305669; height: 100%; width: ${barWidth}%; border-radius: 10px; ${fillFromLeft ? 'float: left;' : 'float: right;'}"></div>
+        </div>
+      </div>
+    `;
+    shareDimensionsContainer.innerHTML += dimHTML;
   });
 }
 
 function shareResults() {
   const shareBtn = document.getElementById('shareBtn');
+  shareBtn.disabled = true;
+  shareBtn.textContent = 'Generating Image...';
 
-  // Use pre-generated blob if available
-  if (preGeneratedShareBlob) {
-    const file = new File([preGeneratedShareBlob], 'hcer-results.png', { type: 'image/png' });
+  generateShareImage().then(blob => {
+    shareBtn.textContent = 'Share Results';
+    shareBtn.disabled = false;
+
+    const file = new File([blob], 'hcer-results.png', { type: 'image/png' });
 
     // Try to use native share with image
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -219,182 +297,48 @@ function shareResults() {
         files: [file]
       }).catch(err => {
         console.log('Share failed:', err);
-        downloadImage(preGeneratedShareBlob);
+        downloadImage(blob);
       });
     } else {
       // Fallback: download the image
-      downloadImage(preGeneratedShareBlob);
+      downloadImage(blob);
     }
-  } else {
-    // Fallback: generate on demand if pre-generation failed
-    shareBtn.disabled = true;
-    shareBtn.textContent = 'Generating Image...';
-
-    generateShareImage().then(blob => {
-      shareBtn.textContent = 'Share Results';
-      shareBtn.disabled = false;
-
-      const file = new File([blob], 'hcer-results.png', { type: 'image/png' });
-
-      // Try to use native share with image
-      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-          title: 'My HCER Personality Type',
-          text: `I just discovered my HCER type: ${results.type} - ${typeDescriptions[results.type].name}!`,
-          files: [file]
-        }).catch(err => {
-          console.log('Share failed:', err);
-          downloadImage(blob);
-        });
-      } else {
-        // Fallback: download the image
-        downloadImage(blob);
-      }
-    }).catch(err => {
-      console.error('Image generation failed:', err);
-      shareBtn.textContent = 'Share Results';
-      shareBtn.disabled = false;
-      alert('Unable to generate share image. Please try again.');
-    });
-  }
+  }).catch(err => {
+    console.error('Image generation failed:', err);
+    shareBtn.textContent = 'Share Results';
+    shareBtn.disabled = false;
+    alert('Unable to generate share image. Please try again.');
+  });
 }
 
 function generateShareImage() {
-  return new Promise((resolve) => {
-    const canvas = document.getElementById('shareCanvas');
-    const ctx = canvas.getContext('2d');
+  return new Promise(async (resolve, reject) => {
+    const shareCard = document.getElementById('shareCard');
 
-    // Set canvas size
-    canvas.width = 800;
-    canvas.height = 900;
+    // Temporarily show the card for capturing
+    shareCard.style.display = 'block';
 
-    // Background gradient
-    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, '#d2e0d3');
-    gradient.addColorStop(1, '#97b3ae');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Wait for avatar to load (longer timeout since it's fetching and converting)
+    await new Promise(r => setTimeout(r, 1500));
 
-    // Title
-    ctx.fillStyle = '#2a2a2a';
-    ctx.font = 'bold 32px -apple-system, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('HCER Relationship Typology', canvas.width / 2, 60);
+    try {
+      // Use html2canvas to capture the div
+      const canvas = await html2canvas(shareCard, {
+        backgroundColor: null,
+        scale: 2, // Higher quality
+        useCORS: true, // Allow cross-origin images
+        allowTaint: true
+      });
 
-    // Personality Type Badge - Rounded Box
-    const boxX = 200;
-    const boxY = 100;
-    const boxWidth = 400;
-    const boxHeight = 160;
-    const borderRadius = 20;
+      // Hide the card again
+      shareCard.style.display = 'none';
 
-    ctx.fillStyle = '#305669';
-    ctx.beginPath();
-    ctx.roundRect(boxX, boxY, boxWidth, boxHeight, borderRadius);
-    ctx.fill();
-
-    // Center text in box
-    ctx.fillStyle = 'white';
-    ctx.font = 'bold 96px -apple-system, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(results.type, canvas.width / 2, boxY + boxHeight / 2);
-
-    // Type Name
-    const typeData = typeDescriptions[results.type];
-    ctx.fillStyle = '#2a2a2a';
-    ctx.font = 'bold 36px -apple-system, sans-serif';
-    ctx.textBaseline = 'alphabetic';
-    ctx.fillText(`"${typeData.name}"`, canvas.width / 2, 300);
-
-    // Calculate max scores dynamically
-    const maxScores = {
-      IR: 0,
-      PE: 0,
-      SV: 0,
-      FC: 0
-    };
-
-    questions.forEach(q => {
-      maxScores.IR += Math.abs(q.weights[0]) * 2;
-      maxScores.PE += Math.abs(q.weights[1]) * 2;
-      maxScores.SV += Math.abs(q.weights[2]) * 2;
-      maxScores.FC += Math.abs(q.weights[3]) * 2;
-    });
-    const percentages = {
-      I: Math.round(((results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
-      R: Math.round(((-results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
-      P: Math.round(((results.rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
-      E: Math.round(((-results.rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
-      S: Math.round(((results.rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
-      V: Math.round(((-results.rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
-      F: Math.round(((results.rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100),
-      C: Math.round(((-results.rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
-    };
-
-    // Dimension breakdowns
-    const dimensions = [
-      { first: 'I', second: 'R', firstLabel: 'Idealist', secondLabel: 'Realist', title: 'Hope' },
-      { first: 'P', second: 'E', firstLabel: 'Physical', secondLabel: 'Emotional', title: 'Connection' },
-      { first: 'S', second: 'V', firstLabel: 'Social', secondLabel: 'Private', title: 'Expression' },
-      { first: 'F', second: 'C', firstLabel: 'Forgiving', secondLabel: 'Critical', title: 'Resolution' }
-    ];
-
-    let yPos = 340;
-    dimensions.forEach((dim, index) => {
-      const firstPercent = percentages[dim.first];
-      const secondPercent = percentages[dim.second];
-      const userLetter = results.type[index];
-
-      // Dimension title
-      ctx.fillStyle = '#2a2a2a';
-      ctx.font = 'bold 22px -apple-system, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'alphabetic';
-      ctx.fillText(dim.title, canvas.width / 2, yPos);
-
-      // Left label and percentage
-      ctx.font = userLetter === dim.first ? 'bold 18px -apple-system, sans-serif' : '600 16px -apple-system, sans-serif';
-      ctx.fillStyle = userLetter === dim.first ? '#2a2a2a' : '#999999';
-      ctx.textAlign = 'left';
-      ctx.fillText(`${dim.firstLabel} ${firstPercent}%`, 100, yPos + 25);
-
-      // Right label and percentage
-      ctx.font = userLetter === dim.second ? 'bold 18px -apple-system, sans-serif' : '600 16px -apple-system, sans-serif';
-      ctx.fillStyle = userLetter === dim.second ? '#2a2a2a' : '#999999';
-      ctx.textAlign = 'right';
-      ctx.fillText(`${secondPercent}% ${dim.secondLabel}`, 700, yPos + 25);
-
-      // Progress bar background with rounded corners
-      const barRadius = 10;
-      ctx.fillStyle = '#f5f3ec';
-      ctx.beginPath();
-      ctx.roundRect(100, yPos + 35, 600, 20, barRadius);
-      ctx.fill();
-
-      // Progress bar fill with rounded corners
-      const fillFromLeft = firstPercent >= secondPercent;
-      const barWidth = (fillFromLeft ? firstPercent : secondPercent) / 100 * 600;
-      ctx.fillStyle = '#305669';
-      ctx.beginPath();
-      if (fillFromLeft) {
-        ctx.roundRect(100, yPos + 35, barWidth, 20, barRadius);
-      } else {
-        ctx.roundRect(700 - barWidth, yPos + 35, barWidth, 20, barRadius);
-      }
-      ctx.fill();
-
-      yPos += 100;
-    });
-
-    // Footer
-    ctx.fillStyle = '#2a2a2a';
-    ctx.font = '16px -apple-system, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Discover your type at https://liu00david.github.io/personalityquiz', canvas.width / 2, canvas.height - 30);
-
-    // Convert to blob
-    canvas.toBlob(blob => resolve(blob), 'image/png');
+      // Convert canvas to blob
+      canvas.toBlob(blob => resolve(blob), 'image/png');
+    } catch (err) {
+      shareCard.style.display = 'none';
+      reject(err);
+    }
   });
 }
 
