@@ -1,57 +1,54 @@
-// HCER Personality Quiz Question Bank
-// Each question uses a weights matrix: [IR, PE, SV, FC]
-// Positive = left trait: [I]dealist, [P]hysical, [S]ocial, [F]orgiving
-// Negative = right trait: [R]ealist, [E]motional, Pri[v]ate, [C]ritical
-// Values typically range from -2 to 2, with 0 meaning no effect on that dimension
+// IRSP Personality Quiz Question Bank
+// Each question maps to one of 4 dimensions with a direction
 
 const questions = [
-  // I/R Dimension focused questions
-  { text: "Dating history matters when considering a relationship.", weights: [1, 0, 0, 0] },
-  { text: "I enjoy spontaneous, grand romantic gestures.", weights: [1, 1, 0, 0] },
-  { text: "I get easily disappointed when things don't go as I hoped.", weights: [1, 0, 0, 0] },
-  { text: "I want clear expectations early in a relationship.", weights: [-1, -0.5, 0, 0] },
-  { text: "I prefer gifts that are practical.", weights: [-1, 1, 0, 0] },
-  { text: "When in the talking phase, it's important to keep my options open.", weights: [1, 0, 0, 0] },
-  { text: "If my friends or family disapprove of my partner, I would reconsider the relationship.", weights: [-1, 0, 1, 0] },
-  { text: "I worry about what happens after the honeymoon phase.", weights: [1, 0, 0, 0] },
-  { text: "I believe soulmates exist.", weights: [1, -0.5, 0, 0] },
-  { text: "You can meet the right person at the wrong time.", weights: [1, -0.5, 0, 0] },
+  // I/R Dimension (Idealist vs Realist) - 10 questions
+  { text: "My partner's dating history matters to me.", dimension: "IR", direction: "I" },
+  { text: "I enjoy spontaneous, grand romantic gestures.", dimension: "IR", direction: "I" },
+  { text: "I get disappointed easily when things don’t go as I hoped.", dimension: "IR", direction: "I" },
+  { text: "I set clear long-term expectations early in a relationship.", dimension: "IR", direction: "R" },
+  { text: "I usually prefer gifts that are practical.", dimension: "IR", direction: "R" },
+  { text: "When looking to date, I feel it’s important to keep my options open.", dimension: "IR", direction: "I" },
+  { text: "If my friends or family disapprove of my partner, I would reconsider the relationship.", dimension: "IR", direction: "R" },
+  { text: "I worry about what happens after the honeymoon phase.", dimension: "IR", direction: "I" },
+  { text: "I believe soulmates exist.", dimension: "IR", direction: "I" },
+  { text: "I believe you can meet the right person at the wrong time.", dimension: "IR", direction: "I" },
 
-  // P/E Dimension focused questions
-  { text: "I don't need a defined relationship to be intimate with someone.", weights: [0.5, 1, 0, 0] },
-  { text: "Sometimes I overlook flaws if I find someone very attractive.", weights: [0, 1, 0, -0.5] },
-  { text: "I have a very consistent physical type.", weights: [0, 1, 0, 0] },
-  { text: "Where and when my first kiss happens matters a lot.", weights: [0.5, -1, 0, 0] },
-  { text: "I often reflect on my beliefs and values.", weights: [0, -1, -0.5, 0] },
-  { text: "A first date should feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
-  { text: "I care a lot about how I look to others.", weights: [0, 0.5, 1, 0] },
-  { text: "I enjoy deep or niche conversations with my partner.", weights: [0, -1, 0, 0] },
-  { text: "I go out of my way to help people, even when inconvenient.", weights: [0, -1, 0, 1] },
-  { text: "I only develop feelings when I'm confident our personalities are compatible.", weights: [-1, -1, 0, 0] },
+  // P/E Dimension (Physical vs Emotional) - 10 questions
+  { text: "I don’t need a defined relationship to be intimate with someone.", dimension: "PE", direction: "P" },
+  { text: "I sometimes overlook flaws if I find someone very attractive.", dimension: "PE", direction: "P" },
+  { text: "I tend to have a consistent physical type.", dimension: "PE", direction: "P" },
+  { text: "I like to romanticize my first kiss with someone.", dimension: "PE", direction: "E" },
+  { text: "I often reflect on my beliefs and values.", dimension: "PE", direction: "E" },
+  { text: "A first date needs to feel upscale, not casual.", dimension: "PE", direction: "P" },
+  { text: "I care a lot about how I look to others.", dimension: "PE", direction: "P" },
+  { text: "I enjoy deep or niche conversations with my partner.", dimension: "PE", direction: "E" },
+  { text: "I often go out of my way to help people.", dimension: "PE", direction: "E" },
+  { text: "I only develop feelings when I’m confident our personalities are compatible.", dimension: "PE", direction: "E" },
 
-  // S/V Dimension focused questions
-  { text: "I want all my friends to meet my partner.", weights: [0, 0, 1, 0] },
-  { text: "I am comfortable with PDA.", weights: [0, 0.5, 1, 0] },
-  { text: "How my partner presents themselves in public matters to me.", weights: [0, 0, 1, 0] },
-  { text: "I act very differently when my partner and I are alone.", weights: [0, 0, -1, 0] },
-  { text: "I like talking about my relationship details with friends.", weights: [0, 0, 1, 0] },
-  { text: "If my partner and I disagree, I want my friends' input.", weights: [0, 0, 1, -0.5] },
-  { text: "I sometimes feel envious of other relationships.", weights: [0.5, 0, 0.5, 0] },
-  { text: "I bring up my partner often in conversations.", weights: [0, 0, 1, 0] },
-  { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -1, 0] },
-  { text: "I like posting my partner on social media.", weights: [0, 0, 1.5, 0] },
+  // S/V Dimension (Social vs Private) - 10 questions
+  { text: "My friends often see me be affectionate with my partner.", dimension: "SV", direction: "S" },
+  { text: "I am comfortable with PDA.", dimension: "SV", direction: "S" },
+  { text: "How my partner presents themselves in public matters to me.", dimension: "SV", direction: "S" },
+  { text: "I act very differently when my partner and I are alone.", dimension: "SV", direction: "V" },
+  { text: "I like talking about my relationship with friends.", dimension: "SV", direction: "S" },
+  { text: "If my partner and I disagree, I want my friends’ input.", dimension: "SV", direction: "S" },
+  { text: "I need time with my friends, away from my partner.", dimension: "SV", direction: "S" },
+  { text: "I bring up my partner often in conversations.", dimension: "SV", direction: "S" },
+  { text: "My lifestyle changes depending on whether I’m single or dating.", dimension: "SV", direction: "V" },
+  { text: "I like posting my partner on social media.", dimension: "SV", direction: "S" },
 
-  // F/C Dimension focused questions
-  { text: "If my date is late to dinner, I need to ask why.", weights: [0, 0, 0, -1] },
-  { text: "In arguments, I feel there's usually a clear right and wrong.", weights: [-0.5, 0, 0, -1] },
-  { text: "When someone apologizes, I sometimes question if they mean it.", weights: [0, 0, 0, -1] },
-  { text: "If my partner gets my food order wrong, I would feel disappointed.", weights: [0, 0, 0, -1] },
-  { text: "Sometimes I raise my voice when frustrated.", weights: [0, 0, 0.5, -1] },
-  { text: "I rarely hold grudges.", weights: [0, 0, 0, 1] },
-  { text: "If my partner drops something, my first thought is why they weren't more careful.", weights: [0, 0, 0, -1] },
-  { text: "I find it easy to understand people's motivations.", weights: [0, -0.5, 0, 1] },
-  { text: "If I'm proven right, saying 'I told you so' feels fair.", weights: [0, 0, 0, -1.5] },
-  { text: "The same mistake shouldn't happen twice.", weights: [-0.5, 0, 0, -1] },
+  // F/C Dimension (Forgiving vs Critical) - 10 questions
+  { text: "If my someone is late to dinner, I need to know why.", dimension: "FC", direction: "C" },
+  { text: "In arguments, I feel there’s usually a clear right and wrong.", dimension: "FC", direction: "C" },
+  { text: "When someone apologizes, I sometimes question if they mean it.", dimension: "FC", direction: "C" },
+  { text: "If my partner forgets my food order, I would feel disappointed.", dimension: "FC", direction: "C" },
+  { text: "Sometimes I raise my voice when frustrated.", dimension: "FC", direction: "C" },
+  { text: "I rarely hold grudges.", dimension: "FC", direction: "F" },
+  { text: "If my partner drops something, my first thought is why they weren’t more careful.", dimension: "FC", direction: "C" },
+  { text: "I find it easy to understand people’s motivations.", dimension: "FC", direction: "F" },
+  { text: "If I’m proven right during a disagreement, saying 'I told you so' feels fair.", dimension: "FC", direction: "C" },
+  { text: "I believe the same mistake shouldn't happen twice.", dimension: "FC", direction: "C" },
 ];
 
 // Personality type descriptions

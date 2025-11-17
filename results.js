@@ -62,14 +62,21 @@ function displayResults(results) {
   document.getElementById('typeArchetype').textContent = typeData.archetype;
   document.getElementById('typeDescription').textContent = typeData.description;
 
-  // Calculate percentages for each dimension
-  // Count max possible points per dimension (10 questions * 2 points = 20 for all)
+  // Calculate max possible scores for each dimension based on question weights
+  // Max score = sum of absolute values of all weights * 2 (for "Strong Agree")
   const maxScores = {
-    IR: 10 * 2,  // 20
-    PE: 10 * 2,  // 20
-    SV: 10 * 2,  // 20
-    FC: 10 * 2   // 20
+    IR: 0,
+    PE: 0,
+    SV: 0,
+    FC: 0
   };
+
+  questions.forEach(q => {
+    maxScores.IR += Math.abs(q.weights[0]) * 2;
+    maxScores.PE += Math.abs(q.weights[1]) * 2;
+    maxScores.SV += Math.abs(q.weights[2]) * 2;
+    maxScores.FC += Math.abs(q.weights[3]) * 2;
+  });
 
   const letters = type.split('');
 
@@ -84,12 +91,6 @@ function displayResults(results) {
     F: Math.round(((rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100),
     C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
   };
-
-  // Adjust 50-50 ties to 51-49 (lean left)
-  if (percentages.I === 50) { percentages.I = 51; percentages.R = 49; }
-  if (percentages.P === 50) { percentages.P = 51; percentages.E = 49; }
-  if (percentages.S === 50) { percentages.S = 51; percentages.V = 49; }
-  if (percentages.F === 50) { percentages.F = 51; percentages.C = 49; }
 
   // Display dimension breakdown with percentage bars
   const dimensions = [
@@ -191,21 +192,46 @@ function generateShareImage() {
     ctx.textAlign = 'center';
     ctx.fillText('HCER Relationship Typology', canvas.width / 2, 60);
 
-    // Personality Type Badge
-    ctx.fillStyle = '#97b3ae';
-    ctx.fillRect(150, 100, 500, 180);
+    // Personality Type Badge - Rounded Box
+    const boxX = 225;
+    const boxY = 110;
+    const boxWidth = 350;
+    const boxHeight = 140;
+    const borderRadius = 20;
+
+    ctx.fillStyle = '#305669';
+    ctx.beginPath();
+    ctx.roundRect(boxX, boxY, boxWidth, boxHeight, borderRadius);
+    ctx.fill();
+
+    // Center text in box with 10px top margin
     ctx.fillStyle = 'white';
     ctx.font = 'bold 96px -apple-system, sans-serif';
-    ctx.fillText(results.type, canvas.width / 2, 215);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(results.type, boxX + boxWidth / 2, boxY + boxHeight / 2 + 6);
 
     // Type Name
     const typeData = typeDescriptions[results.type];
     ctx.fillStyle = '#2a2a2a';
     ctx.font = 'bold 36px -apple-system, sans-serif';
-    ctx.fillText(typeData.name, canvas.width / 2, 330);
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(`"${typeData.name}"`, canvas.width / 2, 330);
 
-    // Get percentages
-    const maxScores = { IR: 20, PE: 20, SV: 20, FC: 20 };
+    // Calculate max scores dynamically
+    const maxScores = {
+      IR: 0,
+      PE: 0,
+      SV: 0,
+      FC: 0
+    };
+
+    questions.forEach(q => {
+      maxScores.IR += Math.abs(q.weights[0]) * 2;
+      maxScores.PE += Math.abs(q.weights[1]) * 2;
+      maxScores.SV += Math.abs(q.weights[2]) * 2;
+      maxScores.FC += Math.abs(q.weights[3]) * 2;
+    });
     const percentages = {
       I: Math.round(((results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
       R: Math.round(((-results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
@@ -217,11 +243,6 @@ function generateShareImage() {
       C: Math.round(((-results.rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
     };
 
-    // Apply 51-49 fix
-    if (percentages.I === 50) { percentages.I = 51; percentages.R = 49; }
-    if (percentages.P === 50) { percentages.P = 51; percentages.E = 49; }
-    if (percentages.S === 50) { percentages.S = 51; percentages.V = 49; }
-    if (percentages.F === 50) { percentages.F = 51; percentages.C = 49; }
 
     // Dimension breakdowns
     const dimensions = [
@@ -241,35 +262,36 @@ function generateShareImage() {
       ctx.fillStyle = '#2a2a2a';
       ctx.font = 'bold 24px -apple-system, sans-serif';
       ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
       ctx.fillText(dim.title, canvas.width / 2, yPos);
 
       // Left label and percentage
       ctx.font = userLetter === dim.first ? 'bold 20px -apple-system, sans-serif' : '600 18px -apple-system, sans-serif';
       ctx.fillStyle = userLetter === dim.first ? '#2a2a2a' : '#999999';
       ctx.textAlign = 'left';
-      ctx.fillText(`${dim.firstLabel} ${firstPercent}%`, 100, yPos + 35);
+      ctx.fillText(`${dim.firstLabel} ${firstPercent}%`, 100, yPos + 25);
 
       // Right label and percentage
       ctx.font = userLetter === dim.second ? 'bold 20px -apple-system, sans-serif' : '600 18px -apple-system, sans-serif';
       ctx.fillStyle = userLetter === dim.second ? '#2a2a2a' : '#999999';
       ctx.textAlign = 'right';
-      ctx.fillText(`${secondPercent}% ${dim.secondLabel}`, 700, yPos + 35);
+      ctx.fillText(`${secondPercent}% ${dim.secondLabel}`, 700, yPos + 25);
 
       // Progress bar background
       ctx.fillStyle = '#f5f3ec';
-      ctx.fillRect(100, yPos + 45, 600, 20);
+      ctx.fillRect(100, yPos + 35, 600, 20);
 
       // Progress bar fill
       const fillFromLeft = firstPercent >= secondPercent;
       const barWidth = (fillFromLeft ? firstPercent : secondPercent) / 100 * 600;
-      ctx.fillStyle = '#f0ddd6';
+      ctx.fillStyle = '#305669';
       if (fillFromLeft) {
-        ctx.fillRect(100, yPos + 45, barWidth, 20);
+        ctx.fillRect(100, yPos + 35, barWidth, 20);
       } else {
-        ctx.fillRect(700 - barWidth, yPos + 45, barWidth, 20);
+        ctx.fillRect(700 - barWidth, yPos + 35, barWidth, 20);
       }
 
-      yPos += 95;
+      yPos += 110;
     });
 
     // Footer

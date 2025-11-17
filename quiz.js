@@ -3,7 +3,6 @@
 const likertOptions = [
   { value: -2, label: "Strong Disagree" },
   { value: -1, label: "Disagree" },
-  { value: 0, label: "Neutral" },
   { value: 1, label: "Agree" },
   { value: 2, label: "Strong Agree" }
 ];
@@ -44,8 +43,7 @@ function renderQuestions() {
         }
         answers[index] = {
           value: parseInt(option.value),
-          dimension: question.dimension,
-          direction: question.direction
+          weights: question.weights
         };
         updateProgress();
       });
@@ -80,20 +78,16 @@ function calculatePersonality() {
     FC: 0   // Forgiving (positive) vs Critical (negative)
   };
 
-  // Sum up scores for each dimension
+  // Sum up scores using matrix weights
+  // weights format: [IR, PE, SV, FC]
+  // Positive = left trait (I, P, S, F), Negative = right trait (R, E, V, C)
   Object.values(answers).forEach(answer => {
-    const { value, dimension, direction } = answer;
+    const { value, weights } = answer;
 
-    // Determine if we should add or subtract based on direction
-    if (dimension === 'IR') {
-      scores.IR += direction === 'I' ? value : -value;
-    } else if (dimension === 'PE') {
-      scores.PE += direction === 'P' ? value : -value;
-    } else if (dimension === 'SV') {
-      scores.SV += direction === 'S' ? value : -value;
-    } else if (dimension === 'FC') {
-      scores.FC += direction === 'F' ? value : -value;
-    }
+    scores.IR += value * weights[0];
+    scores.PE += value * weights[1];
+    scores.SV += value * weights[2];
+    scores.FC += value * weights[3];
   });
 
   // Determine personality type based on scores (>= 0 leans left on ties)
@@ -157,8 +151,9 @@ renderQuestions();
 // Autofill function for testing
 function autofillQuiz() {
   questions.forEach((question, index) => {
-    // Randomly select a value from -2 to 2
-    const randomValue = Math.floor(Math.random() * 5) - 2; // -2, -1, 0, 1, 2
+    // Randomly select a value from the available options (no neutral)
+    const options = [-2, -1, 1, 2];
+    const randomValue = options[Math.floor(Math.random() * options.length)];
 
     // Find and check the corresponding radio button
     const radioBtn = document.getElementById(`q${index}_${randomValue}`);
@@ -171,8 +166,7 @@ function autofillQuiz() {
       }
       answers[index] = {
         value: randomValue,
-        dimension: question.dimension,
-        direction: question.direction
+        weights: question.weights
       };
     }
   });
