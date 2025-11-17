@@ -136,37 +136,160 @@ function displayResults(results) {
 }
 
 function shareResults() {
-  const type = results.type;
-  const typeData = typeDescriptions[type];
-  const shareText = `I just discovered my HCER type: ${type} - ${typeData.name}! Find your romantic personality type.`;
+  const shareBtn = document.getElementById('shareBtn');
+  shareBtn.disabled = true;
+  shareBtn.textContent = 'Generating Image...';
 
-  if (navigator.share) {
-    navigator.share({
-      title: 'My HCER Personality Type',
-      text: shareText,
-      url: window.location.origin
-    }).catch(() => {
-      // Fallback to clipboard
-      copyToClipboard(shareText);
-    });
-  } else {
-    copyToClipboard(shareText + ' ' + window.location.origin);
-  }
+  // Generate the share image
+  generateShareImage().then(blob => {
+    shareBtn.textContent = 'Share Results';
+    shareBtn.disabled = false;
+
+    const file = new File([blob], 'hcer-results.png', { type: 'image/png' });
+
+    // Try to use native share with image
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({
+        title: 'My HCER Personality Type',
+        text: `I just discovered my HCER type: ${results.type} - ${typeDescriptions[results.type].name}!`,
+        files: [file]
+      }).catch(err => {
+        console.log('Share failed:', err);
+        downloadImage(blob);
+      });
+    } else {
+      // Fallback: download the image
+      downloadImage(blob);
+    }
+  }).catch(err => {
+    console.error('Image generation failed:', err);
+    shareBtn.textContent = 'Share Results';
+    shareBtn.disabled = false;
+    alert('Unable to generate share image. Please try again.');
+  });
 }
 
-function copyToClipboard(text) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('Results copied to clipboard!');
+function generateShareImage() {
+  return new Promise((resolve) => {
+    const canvas = document.getElementById('shareCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size
+    canvas.width = 800;
+    canvas.height = 900;
+
+    // Background gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, '#d2e0d3');
+    gradient.addColorStop(1, '#97b3ae');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Title
+    ctx.fillStyle = '#2a2a2a';
+    ctx.font = 'bold 32px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('HCER Relationship Typology', canvas.width / 2, 60);
+
+    // Personality Type Badge
+    ctx.fillStyle = '#97b3ae';
+    ctx.fillRect(150, 100, 500, 180);
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 96px -apple-system, sans-serif';
+    ctx.fillText(results.type, canvas.width / 2, 215);
+
+    // Type Name
+    const typeData = typeDescriptions[results.type];
+    ctx.fillStyle = '#2a2a2a';
+    ctx.font = 'bold 36px -apple-system, sans-serif';
+    ctx.fillText(typeData.name, canvas.width / 2, 330);
+
+    // Get percentages
+    const maxScores = { IR: 20, PE: 20, SV: 20, FC: 20 };
+    const percentages = {
+      I: Math.round(((results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
+      R: Math.round(((-results.rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
+      P: Math.round(((results.rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
+      E: Math.round(((-results.rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
+      S: Math.round(((results.rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
+      V: Math.round(((-results.rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
+      F: Math.round(((results.rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100),
+      C: Math.round(((-results.rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
+    };
+
+    // Apply 51-49 fix
+    if (percentages.I === 50) { percentages.I = 51; percentages.R = 49; }
+    if (percentages.P === 50) { percentages.P = 51; percentages.E = 49; }
+    if (percentages.S === 50) { percentages.S = 51; percentages.V = 49; }
+    if (percentages.F === 50) { percentages.F = 51; percentages.C = 49; }
+
+    // Dimension breakdowns
+    const dimensions = [
+      { first: 'I', second: 'R', firstLabel: 'Idealist', secondLabel: 'Realist', title: 'Hope' },
+      { first: 'P', second: 'E', firstLabel: 'Physical', secondLabel: 'Emotional', title: 'Connection' },
+      { first: 'S', second: 'V', firstLabel: 'Social', secondLabel: 'Private', title: 'Expression' },
+      { first: 'F', second: 'C', firstLabel: 'Forgiving', secondLabel: 'Critical', title: 'Resolution' }
+    ];
+
+    let yPos = 400;
+    dimensions.forEach((dim, index) => {
+      const firstPercent = percentages[dim.first];
+      const secondPercent = percentages[dim.second];
+      const userLetter = results.type[index];
+
+      // Dimension title
+      ctx.fillStyle = '#2a2a2a';
+      ctx.font = 'bold 24px -apple-system, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(dim.title, canvas.width / 2, yPos);
+
+      // Left label and percentage
+      ctx.font = userLetter === dim.first ? 'bold 20px -apple-system, sans-serif' : '600 18px -apple-system, sans-serif';
+      ctx.fillStyle = userLetter === dim.first ? '#2a2a2a' : '#999999';
+      ctx.textAlign = 'left';
+      ctx.fillText(`${dim.firstLabel} ${firstPercent}%`, 100, yPos + 50);
+
+      // Right label and percentage
+      ctx.font = userLetter === dim.second ? 'bold 20px -apple-system, sans-serif' : '600 18px -apple-system, sans-serif';
+      ctx.fillStyle = userLetter === dim.second ? '#2a2a2a' : '#999999';
+      ctx.textAlign = 'right';
+      ctx.fillText(`${secondPercent}% ${dim.secondLabel}`, 700, yPos + 50);
+
+      // Progress bar background
+      ctx.fillStyle = '#f5f3ec';
+      ctx.fillRect(100, yPos + 65, 600, 20);
+
+      // Progress bar fill
+      const fillFromLeft = firstPercent >= secondPercent;
+      const barWidth = (fillFromLeft ? firstPercent : secondPercent) / 100 * 600;
+      ctx.fillStyle = '#97b3ae';
+      if (fillFromLeft) {
+        ctx.fillRect(100, yPos + 65, barWidth, 20);
+      } else {
+        ctx.fillRect(700 - barWidth, yPos + 65, barWidth, 20);
+      }
+
+      yPos += 110;
     });
-  } else {
-    // Fallback for older browsers
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    alert('Results copied to clipboard!');
-  }
+
+    // Footer
+    ctx.fillStyle = '#2a2a2a';
+    ctx.font = '18px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Discover your type at ' + window.location.origin, canvas.width / 2, canvas.height - 30);
+
+    // Convert to blob
+    canvas.toBlob(blob => resolve(blob), 'image/png');
+  });
 }
+
+function downloadImage(blob) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `hcer-${results.type}-results.png`;
+  link.click();
+  URL.revokeObjectURL(url);
+  alert('Results image downloaded! Share it on social media.');
+}
+

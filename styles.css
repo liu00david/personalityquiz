@@ -230,6 +230,7 @@ h1 {
 .submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* Results Page */
@@ -405,6 +406,13 @@ h1 {
 .share-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-button);
+}
+
+.share-btn:disabled,
+.retake-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Secret Autofill Button */

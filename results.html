@@ -27,9 +27,12 @@
 
     <div class="actions">
       <button onclick="window.location.href='index.html'" class="retake-btn">Retake Quiz</button>
-      <button onclick="shareResults()" class="share-btn">Share Results</button>
+      <button onclick="shareResults()" class="share-btn" id="shareBtn">Share Results</button>
     </div>
   </div>
+
+  <!-- Hidden canvas for generating share image -->
+  <canvas id="shareCanvas" style="display: none;"></canvas>
 
   <script src="questions.js"></script>
   <script src="results.js"></script>

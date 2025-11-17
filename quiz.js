@@ -120,6 +120,13 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
     return;
   }
 
+  // Disable submit button to prevent spam
+  const submitBtn = document.querySelector('.submit-btn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Calculating Results...';
+  submitBtn.style.opacity = '0.6';
+  submitBtn.style.cursor = 'not-allowed';
+
   // Calculate results
   const result = calculatePersonality();
 
@@ -138,7 +145,9 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
     console.log('Sheet submission error (this is normal with no-cors):', err);
   }).finally(() => {
     // Navigate to results page after attempt
-    window.location.href = 'results.html';
+    setTimeout(() => {
+      window.location.href = 'results.html';
+    }, 500); // Small delay to show loading state
   });
 });
 
