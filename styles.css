@@ -383,7 +383,7 @@ h1 {
 
 .bar-track-single {
   height: 24px;
-  background: var(--bar-track);
+  background: #dcdcdc;
   border-radius: 12px;
   overflow: hidden;
   position: relative;

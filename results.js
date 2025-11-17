@@ -198,28 +198,22 @@ function displayResults(results) {
 }
 
 async function populateShareCard() {
-  // Set avatar - fetch and convert to data URL to avoid CORS issues
+  // Create a simple gradient circle with personality type colors
   const traitColors = {
     I: 'ffc6ff', R: 'caffbf', P: 'ffadad', E: 'bdb2ff',
     S: 'ffd6a5', V: '9bf6ff', F: 'a0c4ff', C: 'fdffb6'
   };
-  const colors = results.type.split('').map(letter => traitColors[letter]).join(',');
-  const avatarUrl = `https://hostedboringavatars.vercel.app/api/pixel?name=${results.type}&size=120&colors=${colors}`;
 
-  try {
-    const response = await fetch(avatarUrl);
-    const svgText = await response.text();
-    const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
-    const reader = new FileReader();
-    reader.onload = function() {
-      document.getElementById('shareAvatar').src = reader.result;
-    };
-    reader.readAsDataURL(svgBlob);
-  } catch (err) {
-    console.warn('Failed to load avatar for share card:', err);
-  }
+  const typeLetters = results.type.split('');
+  const color1 = '#' + traitColors[typeLetters[0]];
+  const color2 = '#' + traitColors[typeLetters[1]];
+  const color3 = '#' + traitColors[typeLetters[2]];
+  const color4 = '#' + traitColors[typeLetters[3]];
 
-  // Set type badge and name
+  const avatarDiv = document.getElementById('shareAvatar');
+  avatarDiv.style.background = `linear-gradient(135deg, ${color1} 0%, ${color2} 33%, ${color3} 66%, ${color4} 100%)`;
+
+  // Put full type inside the circle
   document.getElementById('shareTypeBadge').textContent = results.type;
   const typeData = typeDescriptions[results.type];
   document.getElementById('shareTypeName').textContent = `"${typeData.name}"`;
@@ -263,13 +257,13 @@ async function populateShareCard() {
     const barWidth = fillFromLeft ? firstPercent : secondPercent;
 
     const dimHTML = `
-      <div style="margin-bottom: 30px;">
-        <h4 style="text-align: center; color: #2a2a2a; font-size: 22px; font-weight: bold; margin-bottom: 10px;">${dim.title}</h4>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <div style="margin-bottom: 40px;">
+        <h4 style="text-align: center; color: #2a2a2a; font-size: 22px; font-weight: bold; margin-bottom: 5px;">${dim.title}</h4>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; padding: 0 100px;">
           <span style="font-size: 16px; font-weight: ${userLetter === dim.first ? 'bold' : '600'}; color: ${userLetter === dim.first ? '#2a2a2a' : '#999999'};">${dim.firstLabel} ${firstPercent}%</span>
           <span style="font-size: 16px; font-weight: ${userLetter === dim.second ? 'bold' : '600'}; color: ${userLetter === dim.second ? '#2a2a2a' : '#999999'};">${secondPercent}% ${dim.secondLabel}</span>
         </div>
-        <div style="background: #f5f3ec; height: 20px; border-radius: 10px; position: relative; overflow: hidden;">
+        <div style="background: #f5f3ec; height: 20px; border-radius: 10px; position: relative; overflow: hidden; margin: 0 100px;">
           <div style="background: #305669; height: 100%; width: ${barWidth}%; border-radius: 10px; ${fillFromLeft ? 'float: left;' : 'float: right;'}"></div>
         </div>
       </div>
@@ -305,7 +299,7 @@ function shareResults() {
     }
   }).catch(err => {
     console.error('Image generation failed:', err);
-    shareBtn.textContent = 'Share Results';
+    shareBtn.textContent = 'Share Results!';
     shareBtn.disabled = false;
     alert('Unable to generate share image. Please try again.');
   });
@@ -318,8 +312,8 @@ function generateShareImage() {
     // Temporarily show the card for capturing
     shareCard.style.display = 'block';
 
-    // Wait for avatar to load (longer timeout since it's fetching and converting)
-    await new Promise(r => setTimeout(r, 1500));
+    // Short wait for rendering
+    await new Promise(r => setTimeout(r, 100));
 
     try {
       // Use html2canvas to capture the div

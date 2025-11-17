@@ -6,15 +6,15 @@
 
 const questions = [
   // I/R Dimension focused questions
-  { text: "Dating history matters when considering a relationship.", weights: [1, 0, 0, 0] },
+  { text: "A person’s past matters to me when thinking about a relationship.", weights: [0.75, 0, 0, 0] },
   { text: "I enjoy spontaneous, grand romantic gestures.", weights: [1, 1, 0, 0] },
-  { text: "I get easily disappointed when things don't go as I hoped.", weights: [1, 0, 0, 0] },
+  { text: "I get easily disappointed when things don't go as I hoped.", weights: [0.75, 0, 0, 0] },
   { text: "I want clear expectations early in a relationship.", weights: [-1, -0.5, 0, 0] },
-  { text: "I prefer gifts that are practical.", weights: [-1, 1, 0, 0] },
+  { text: "I prefer gifts that are practical.", weights: [-1.25, 1, 0, 0] },
   { text: "When in the talking phase, it's important to keep my options open.", weights: [1, 0, 0, 0] },
-  { text: "If my friends or family disapprove of my partner, I would reconsider the relationship.", weights: [-1, 0, 1, 0] },
-  { text: "My big worry is what happens after the honeymoon phase.", weights: [1, 0, 0, 0] },
-  { text: "I believe soulmates exist.", weights: [0.5, -0.5, 0, 0] },
+  { text: "If my friends or family disapprove, I would reconsider the relationship.", weights: [-1.25, 0, 1, 0] },
+  { text: "My big worry is what happens after the honeymoon phase.", weights: [0.75, 0, 0, 0] },
+  { text: "I believe soulmates exist.", weights: [1, -0.5, 0, 0] },
   { text: "It's possible to meet the right person at the wrong time.", weights: [1, -0.5, 0, 0] },
 
   // P/E Dimension focused questions
@@ -30,28 +30,28 @@ const questions = [
   { text: "I only develop feelings when I'm confident our personalities are compatible.", weights: [-1, -1, 0, 0] },
 
   // S/V Dimension focused questions
-  { text: "I care a lot about my friends meeting my partner.", weights: [0, 0, 1, 0] },
-  { text: "I enjoy giving or receiving public displays of affection.", weights: [0, 1, 1, 0] },
-  { text: "How my partner presents themselves in public matters to me.", weights: [0, 0, 1, 0] },
-  { text: "I act very differently when my partner and I are alone.", weights: [0, 0, -1, 0] },
-  { text: "I like talking about my relationship details with friends.", weights: [0, 0, 1, 0] },
-  { text: "If my partner and I disagree, I go to my friends for advice.", weights: [0, 0, 1, -0.5] },
+  { text: "I care a lot about my friends meeting my partner.", weights: [0, 0, 0.75, 0] },
+  { text: "I enjoy giving or receiving public displays of affection.", weights: [0, 1, 0.75, 0] },
+  { text: "How my partner presents themselves in public matters to me.", weights: [0, 0, 0.75, 0] },
+  { text: "I act very differently when my partner and I are alone.", weights: [0, 0, -1.25, 0] },
+  { text: "I like talking about my relationship details with friends.", weights: [0, 0, 0.75, 0] },
+  { text: "If my partner and I disagree, I go to my friends for advice.", weights: [0, 0, 0.75, -0.5] },
   { text: "I sometimes feel envious of other relationships.", weights: [0.5, 0, 0.5, 0] },
-  { text: "I bring up my partner often in conversations.", weights: [0, 0, 1, 0] },
-  { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -1, 0] },
-  { text: "I would always want to post my partner on social media.", weights: [0, 0, 1.5, 0] },
+  { text: "I bring up my partner often in conversations.", weights: [0, 0, 0.75, 0] },
+  { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -1.25, 0] },
+  { text: "I would post my partner on social media often.", weights: [0, 0, 1, 0] },
 
   // F/C Dimension focused questions
-  { text: "If my date is late to dinner, I must know why.", weights: [0, 0, 0, -1] },
-  { text: "In arguments, I feel there's usually a clear right and wrong.", weights: [-0.5, 0, 0, -1] },
-  { text: "When someone apologizes, I sometimes question if they mean it.", weights: [0, 0, 0, -1] },
-  { text: "It's better when my partner says sorry first.", weights: [0, 0, 0, -1] },
-  { text: "Sometimes I raise my voice when frustrated.", weights: [0, 0, 0.5, -1] },
-  { text: "I rarely hold grudges.", weights: [0, 0, 0, 1] },
-  { text: "If my partner drops something, I ask why they weren't more careful.", weights: [0, 0.5, 0, -1] },
-  { text: "I find it easy to understand where others are coming from, even when I disagree.", weights: [0, -0,5, 0, 1] },
-  { text: "If I'm proven right, an 'I told you so' feels fair.", weights: [0, 0, 0, -1.5] },
-  { text: "The same mistake should never happen twice.", weights: [-0.5, 0, 0, -1] },
+  { text: "If my date is late to dinner, I must know why.", weights: [0, 0, 0, -0.75] },
+  { text: "In arguments, I feel there's usually a clear right and wrong.", weights: [-0.5, 0, 0, -0.75] },
+  { text: "When someone apologizes, I sometimes question if they mean it.", weights: [0, 0, 0, -0.75] },
+  { text: "It's better when my partner says sorry first.", weights: [0, 0, 0, -0.75] },
+  { text: "Sometimes I raise my voice when frustrated.", weights: [0, 0, 0.5, -0.75] },
+  { text: "I rarely hold grudges.", weights: [0, 0, 0, 1.25] },
+  { text: "If my partner drops something, I ask why they weren't more careful.", weights: [0, 0.5, 0, -0.75] },
+  { text: "I easily understand where others are coming from, even when I disagree.", weights: [0, -0.5, 0, 1.25] },
+  { text: "If I'm proven right, an 'I told you so' feels fair.", weights: [0, 0, 0, -1] },
+  { text: "The same mistake should never happen twice.", weights: [-0.5, 0, 0, -0.75] },
 ];
 
 // Personality type descriptions
