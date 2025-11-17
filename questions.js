@@ -52,85 +52,86 @@ const questions = [
 ];
 
 // Personality type descriptions
+// Personality type descriptions
 const typeDescriptions = {
   IPSF: {
     name: "The Glow",
     archetype: "Warm, hopeful, affectionate, openly loving",
-    description: "You radiate optimism and physical warmth, creating a feel-good romantic energy that draws people in. Your affectionate nature and forgiving heart make you easy to love, though you may sometimes overlook red flags or avoid difficult conversations in favor of keeping the peace. You believe in the best of people and express love freely through touch and public affection."
+    description: "You radiate optimism and physical warmth, naturally drawing people in with your affectionate presence. You express love openly through touch and shared moments, making partners feel valued. Your forgiving and easy-going nature creates harmony, but you may overlook incompatibilities or avoid difficult conversations, sometimes prioritizing emotional comfort over clarity."
   },
   IPSC: {
     name: "The Spark",
     archetype: "Charming, seductive, idealistic with standards",
-    description: "You light up the room with magnetic charm and physical confidence, blending romantic idealism with clear expectations. Your social presence and high standards make you captivating but can sometimes come across as demanding. You're drawn to grand gestures and passionate connection, though you may struggle when reality doesn't match the vision."
+    description: "You bring energy, charm, and a magnetic presence to your relationships, blending physical attraction with high standards. You thrive on passion and grand gestures, making connections exciting and memorable. At times, your intensity and expectations may feel demanding or overwhelming to partners, especially when reality doesn’t meet your ideal vision."
   },
   IPVF: {
     name: "The Ember",
     archetype: "Quiet warmth, steady affection, gentle optimism",
-    description: "You burn softly but deeply, offering steady physical affection in private, intimate settings. Your gentle optimism and forgiving nature create a safe haven for your partner, though you may avoid conflict or struggle to express needs directly. You show love through small, tender gestures that may go unnoticed by those seeking more overt displays."
+    description: "You offer consistent, understated affection and create a safe, private space for intimacy. Your calm and forgiving demeanor makes partners feel nurtured and cared for. However, you may struggle to voice your needs or confront conflict, and your subtle expressions of love can be overlooked by those who prefer more outward displays."
   },
   IPVC: {
     name: "The Forge",
     archetype: "Idealistic but disciplined, grounded, purposeful",
-    description: "You build relationships with intention and effort, combining romantic vision with practical action and clear standards. Your disciplined approach to love means you work hard to create the relationship you imagine, though your high expectations can sometimes feel rigid or uncompromising. You value consistency and may struggle with spontaneity or emotional unpredictability."
+    description: "You approach relationships with intention and effort, combining a hopeful outlook with practical planning. You value reliability and structure, often building strong foundations. While this creates stability, your high standards and focus on structure may feel rigid, and spontaneity or emotional unpredictability may be challenging for you to navigate."
   },
   IESF: {
     name: "The Muse",
     archetype: "Emotionally inspiring, expressive, empathetic",
-    description: "You pull others into a shared romantic story through emotional depth and expressive vulnerability. Your empathetic nature and ability to articulate feelings inspire deep connection, though you may lose yourself in the narrative or forgive too easily. You thrive on emotional resonance but can be disappointed when others don't match your intensity."
+    description: "You excel at creating deep emotional resonance, drawing partners into meaningful connection through shared vulnerability. Your empathy and expressive nature inspire trust and closeness. At times, your desire for emotional intensity can lead to disappointment, and you may overextend in forgiveness or lose yourself in others’ experiences."
   },
   IESC: {
     name: "The Flame",
     archetype: "Intense, passionate, idealistic with drive",
-    description: "You burn brightly with conviction, seeking profound emotional connection while holding firm standards. Your intensity and passion create electric relationships, but your high expectations and tendency to seek perfection can overwhelm partners. You're unafraid to express what you want, though you may struggle when love feels ordinary or mundane."
+    description: "You pursue emotional and physical connection with passion and conviction, creating powerful, memorable relationships. Your idealism and high standards foster deep engagement, but your intensity can overwhelm partners or make ordinary moments feel insufficient. You thrive on meaningful gestures but may struggle when reality fails to match your vision."
   },
   IEVF: {
     name: "The Poet",
     archetype: "Reflective, deeply romantic, attuned to symbolism",
-    description: "You live in emotional layers, finding meaning in subtle gestures and unspoken connection. Your introspective nature and romantic idealism create profound intimacy, though you may dwell in your inner world at the expense of practical matters. You're drawn to what could be rather than what is, sometimes creating distance through overthinking."
+    description: "You notice subtle gestures and cherish emotional nuance, creating intimacy through thoughtfulness and reflection. Your introspective nature brings depth to relationships, though you may overthink or dwell in your inner world, sometimes losing sight of practical realities. You are drawn to what could be, which can create distance if partners are more grounded."
   },
   IEVC: {
     name: "The Oracle",
     archetype: "Insightful, intuitive, quiet but perceptive",
-    description: "You read between the lines effortlessly, understanding emotional undercurrents others miss. Your perceptive nature and clear standards make you an insightful partner, though your tendency to see patterns can lead to overanalysis or premature judgments. You value emotional authenticity but may struggle to accept imperfection in yourself or others."
+    description: "You read emotional undercurrents with ease and provide a thoughtful, perceptive presence in relationships. You value authenticity and understanding, creating clarity and insight for your partner. However, your tendency to analyze or judge patterns can come across as critical or distant, and you may struggle to accept imperfection or ambiguity."
   },
   RPSF: {
     name: "The Anchor",
     archetype: "Stable, dependable, warm, socially present",
-    description: "You keep relationships grounded through consistent physical presence and steady warmth. Your reliability and social ease make you a comforting partner, though your focus on stability may resist necessary change or growth. You show love through actions and presence, but may struggle to navigate deep emotional complexity or abstract feelings."
+    description: "You bring stability and comfort through consistent presence and supportive actions. Your reliability and social ease make you a reassuring partner. At times, your focus on steadiness may limit flexibility, and navigating complex emotional situations may feel challenging, though your commitment and practical care provide a strong foundation."
   },
   RPSC: {
     name: "The Commander",
     archetype: "Direct, practical, social, strong-willed",
-    description: "You lead relationships with clarity, structure, and physical confidence. Your decisive nature and high standards create security but can feel controlling or inflexible. You value honesty and directness, though your bluntness may sometimes hurt feelings. You thrive on clear expectations but may struggle with emotional ambiguity or vulnerability."
+    description: "You provide structure, clarity, and confidence in relationships, leading with decisiveness and clear standards. Your forthright nature fosters accountability and security. However, your bluntness can feel harsh, and a focus on control or practical outcomes may make emotional ambiguity or vulnerability harder for you to navigate."
   },
   RPVF: {
     name: "The Shelter",
     archetype: "Private, solid, nurturing, quietly reassuring",
-    description: "You create safety and comfort through quiet, consistent actions and physical presence. Your steadfast support and forgiving nature provide a refuge, though your private approach may be misread as emotional distance. You prefer showing love through deeds rather than words, which can leave partners craving more verbal affirmation or emotional expression."
+    description: "You offer a safe, steady space for partners, showing love through quiet actions and consistent support. Your private, nurturing approach builds trust and loyalty. You may be perceived as distant by those seeking more verbal or public affection, and expressing needs directly can sometimes be a challenge, despite your deeply caring nature."
   },
   RPVC: {
     name: "The Architect",
     archetype: "Disciplined, realistic, structured, self-reliant",
-    description: "You build love thoughtfully and with precision, establishing clear expectations and boundaries. Your methodical approach creates stability, though your focus on structure may feel rigid or unemotional. You value independence and practical demonstrations of commitment, but may struggle with spontaneity or partners who need more emotional processing."
+    description: "You approach love methodically, creating stable, thoughtfully constructed relationships. Your independence and clear expectations foster trust and reliability. At times, your focus on structure may feel rigid or unemotional, and spontaneous emotional expression may not come naturally, though your partners can count on consistency and clarity."
   },
   RESF: {
     name: "The Compass",
     archetype: "Emotionally steady, expressive, gentle",
-    description: "You guide with clarity and warmth, balancing emotional intelligence with realistic expectations. Your patient, expressive nature makes you easy to communicate with, though your tendency toward harmony may avoid necessary confrontation. You're socially warm and emotionally available, but may struggle to set firm boundaries when needed."
+    description: "You balance emotional intelligence with realistic expectations, guiding relationships with warmth and clarity. Your gentle, expressive nature makes communication smooth and reassuring. You may avoid confrontation or suppress boundaries to maintain harmony, yet your patient approach helps partners feel supported and understood."
   },
   RESC: {
     name: "The Analyst",
     archetype: "Insightful, communicative, structured, social",
-    description: "You see patterns in relationships and name them clearly, combining emotional understanding with practical improvement. Your analytical nature and social communication skills drive growth, though your focus on what's wrong can feel critical or overwhelming. You excel at problem-solving but may struggle to simply be present without fixing."
+    description: "You excel at noticing patterns, communicating insights, and fostering growth in relationships. Your analytical approach helps solve challenges and clarify expectations. However, an emphasis on identifying issues can feel critical or overbearing, and being present without analyzing may sometimes be difficult."
   },
   REVF: {
     name: "The Guardian",
     archetype: "Private, emotionally loyal, empathetic yet steady",
-    description: "You offer protective devotion through emotional attunement and realistic care. Your quiet loyalty and empathetic understanding create deep trust, though your reserved nature may require partners to draw you out. You're steady and forgiving in private, but may avoid social vulnerability or struggle to express needs directly."
+    description: "You offer deep emotional loyalty and protective care, creating a stable, trustworthy partnership. Your empathy and steadiness build security for your partner. At times, your reserved nature may require partners to initiate connection or emotional expression, and social vulnerability may not come easily."
   },
   REVC: {
     name: "The Strategist",
     archetype: "Insightful, grounded, private, decisive",
-    description: "You understand people deeply and act with intentional precision, preferring depth over display. Your emotional wisdom and clear standards create purposeful relationships, though your analytical approach can feel calculating or distant. You value private connection and realistic expectations, but may struggle with partners who need more spontaneity or public affection."
+    description: "You combine emotional insight with careful planning, building relationships with purpose and depth. Your clarity and decisiveness foster meaningful connections. However, your analytical approach can feel calculated or distant, and you may struggle with partners seeking spontaneity or outward displays of affection."
   }
 };
