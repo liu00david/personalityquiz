@@ -19,7 +19,7 @@ const questions = [
 
   // P/E Dimension focused questions
   { text: "I need a defined relationship in order to be intimate with someone.", weights: [-0.5, -1.5, 0, 0] },
-  { text: "Sometimes I overlook red flags in people.", weights: [0, 1, 0, -0.5] },
+  { text: "Occasionally, I overlook red flags in people.", weights: [0, 1, 0, -0.5] },
   { text: "I’m attracted to a very particular physical look.", weights: [0, 1, 0, 0] },
   { text: "I care about the moment and place of a first kiss.", weights: [0, -1.5, 0, 0] },
   { text: "I often reflect on my beliefs and values.", weights: [0, -1, -0.5, 0] },
@@ -47,7 +47,7 @@ const questions = [
   { text: "When someone apologizes, I sometimes question if they mean it.", weights: [0, 0, 0, -0.75] },
   { text: "I usually am the one to say sorry first.", weights: [0, 0, 0, 0.75] },
   { text: "I might raise my voice when frustrated.", weights: [0, 0, 0.5, -0.75] },
-  { text: "I rarely hold grudges.", weights: [0, 0, 0, 1.25] },
+  { text: "I don't hold grudges.", weights: [0, 0, 0, 1.25] },
   { text: "If my partner drops something, I point out that they should be more careful.", weights: [0, 0.5, 0, -0.75] },
   { text: "I easily understand where others are coming from, even when I disagree.", weights: [0, -0.5, 0, 1.25] },
   { text: "If I'm proven right, an 'I told you so' feels fair.", weights: [0, 0, 0, -1] },
