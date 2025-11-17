@@ -247,36 +247,36 @@ function generateShareImage() {
       ctx.font = userLetter === dim.first ? 'bold 20px -apple-system, sans-serif' : '600 18px -apple-system, sans-serif';
       ctx.fillStyle = userLetter === dim.first ? '#2a2a2a' : '#999999';
       ctx.textAlign = 'left';
-      ctx.fillText(`${dim.firstLabel} ${firstPercent}%`, 100, yPos + 50);
+      ctx.fillText(`${dim.firstLabel} ${firstPercent}%`, 100, yPos + 35);
 
       // Right label and percentage
       ctx.font = userLetter === dim.second ? 'bold 20px -apple-system, sans-serif' : '600 18px -apple-system, sans-serif';
       ctx.fillStyle = userLetter === dim.second ? '#2a2a2a' : '#999999';
       ctx.textAlign = 'right';
-      ctx.fillText(`${secondPercent}% ${dim.secondLabel}`, 700, yPos + 50);
+      ctx.fillText(`${secondPercent}% ${dim.secondLabel}`, 700, yPos + 35);
 
       // Progress bar background
       ctx.fillStyle = '#f5f3ec';
-      ctx.fillRect(100, yPos + 65, 600, 20);
+      ctx.fillRect(100, yPos + 45, 600, 20);
 
       // Progress bar fill
       const fillFromLeft = firstPercent >= secondPercent;
       const barWidth = (fillFromLeft ? firstPercent : secondPercent) / 100 * 600;
-      ctx.fillStyle = '#97b3ae';
+      ctx.fillStyle = '#f0ddd6';
       if (fillFromLeft) {
-        ctx.fillRect(100, yPos + 65, barWidth, 20);
+        ctx.fillRect(100, yPos + 45, barWidth, 20);
       } else {
-        ctx.fillRect(700 - barWidth, yPos + 65, barWidth, 20);
+        ctx.fillRect(700 - barWidth, yPos + 45, barWidth, 20);
       }
 
-      yPos += 110;
+      yPos += 95;
     });
 
     // Footer
     ctx.fillStyle = '#2a2a2a';
     ctx.font = '18px -apple-system, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Discover your type at ' + window.location.origin, canvas.width / 2, canvas.height - 30);
+    ctx.fillText('Discover your type at https://liu00david.github.io/personalityquiz', canvas.width / 2, canvas.height - 30);
 
     // Convert to blob
     canvas.toBlob(blob => resolve(blob), 'image/png');
