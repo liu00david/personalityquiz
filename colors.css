@@ -9,10 +9,12 @@
   /* Primary Brand Colors */
   --color-sage: #97b3ae;           /* Main brand color - sage green */
   --color-mint: #d2e0d3;           /* Light mint green */
-  --color-pale-pink: #f0ddd6;      /* Pale pink */
-  --color-coral: #f2c3b9;          /* Soft coral/peach */
+  --color-pale-pink: #f9e7e0;      /* Pale pink */
+  --color-coral: #edd7c2;          /* Soft coral/peach */
   --color-tan: #d6cbbf;            /* Warm tan/beige */
   --color-cream: #f0eeea;          /* Off-white cream */
+  --color-dark-sage: #87a9ab;
+  --color-sage-blue: #3a6275;
 
   /* Background Colors */
   --bg-gradient-start: var(--color-mint);
@@ -42,7 +44,7 @@
 
   --button-border: var(--color-tan);
   --button-selected-start: var(--color-sage);
-  --button-selected-end: var(--color-tan);
+  --button-selected-end: var(--color-dark-sage);
 
   --progress-start: var(--color-sage);
   --progress-end: var(--color-tan);

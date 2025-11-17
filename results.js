@@ -62,6 +62,10 @@ function displayResults(results) {
   document.getElementById('typeArchetype').textContent = typeData.archetype;
   document.getElementById('typeDescription').textContent = typeData.description;
 
+  // Set avatar using Boring Avatars
+  const avatarUrl = `https://hostedboringavatars.vercel.app/api/pixel?name=${type}&size=150&colors=97b3ae,f0ddd6,d6cbbf,f2c3b9,d2e0d3`;
+  document.getElementById('typeAvatar').src = avatarUrl;
+
   // Calculate max possible scores for each dimension based on question weights
   // Max score = sum of absolute values of all weights * 2 (for "Strong Agree")
   const maxScores = {
@@ -92,13 +96,55 @@ function displayResults(results) {
     C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
   };
 
-  // Display dimension breakdown with percentage bars
+  // Analyze strength of each dimension
   const dimensions = [
     { pair: 'IR', first: 'I', second: 'R', title: 'Hope', firstLabel: 'Idealist', secondLabel: 'Realist' },
     { pair: 'PE', first: 'P', second: 'E', title: 'Connection', firstLabel: 'Physical', secondLabel: 'Emotional' },
     { pair: 'SV', first: 'S', second: 'V', title: 'Expression', firstLabel: 'Social', secondLabel: 'Private' },
     { pair: 'FC', first: 'F', second: 'C', title: 'Resolution', firstLabel: 'Forgiving', secondLabel: 'Critical' }
   ];
+
+  const strongTraits = [];
+  const balancedTraits = [];
+
+  dimensions.forEach((dim, index) => {
+    const firstPercent = percentages[dim.first];
+    const secondPercent = percentages[dim.second];
+    const userLetter = letters[index];
+    const dominantPercent = Math.max(firstPercent, secondPercent);
+    const dominantLabel = firstPercent > secondPercent ? dim.firstLabel : dim.secondLabel;
+
+    if (dominantPercent >= 60) {
+      strongTraits.push({ label: dominantLabel, percent: dominantPercent, title: dim.title });
+    } else if (dominantPercent <= 55) {
+      balancedTraits.push({
+        first: dim.firstLabel,
+        second: dim.secondLabel,
+        firstPercent,
+        secondPercent,
+        title: dim.title
+      });
+    }
+  });
+
+  // Generate personalized insights
+  let insightsText = '';
+
+  if (strongTraits.length > 0) {
+    const traitList = strongTraits.map(t => `${t.label} (${t.percent}%)`).join(', ');
+    insightsText += `Your strongest ${strongTraits.length === 1 ? 'trait is' : 'traits are'} ${traitList}. ${strongTraits.length === 1 ? 'This dimension' : 'These dimensions'} strongly define what you find attractive, and matters most in a relationship. `;
+  }
+
+  if (balancedTraits.length > 0) {
+    const balancedList = balancedTraits.map(t => `${t.title} (${t.firstPercent}% ${t.first}, ${t.secondPercent}% ${t.second})`).join(', ');
+    insightsText += `You show balance in: ${balancedList}. This means you can adapt between both styles depending on the situation and partner.`;
+  }
+
+  if (insightsText === '') {
+    insightsText = 'Your personality shows moderate tendencies across all dimensions, giving you flexibility in how you express yourself in relationships.';
+  }
+
+  document.getElementById('insightsText').textContent = insightsText;
 
   const breakdownContainer = document.getElementById('dimensionsBreakdown');
   breakdownContainer.innerHTML = '';
@@ -192,9 +238,37 @@ function generateShareImage() {
     ctx.textAlign = 'center';
     ctx.fillText('HCER Relationship Typology', canvas.width / 2, 60);
 
-    // Personality Type Badge - Rounded Box
+    // Avatar circle
+    const avatarSize = 120;
+    const avatarX = canvas.width / 2 - avatarSize / 2;
+    const avatarY = 90;
+
+    // Load and draw avatar
+    const avatarImg = new Image();
+    avatarImg.crossOrigin = 'anonymous';
+    avatarImg.src = `https://hostedboringavatars.vercel.app/api/pixel?name=${results.type}&size=${avatarSize}&colors=97b3ae,f0ddd6,d6cbbf,f2c3b9,d2e0d3`;
+
+    avatarImg.onload = function() {
+      // Draw circular clip
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(canvas.width / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(avatarImg, avatarX, avatarY, avatarSize, avatarSize);
+      ctx.restore();
+
+      // White border around avatar
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(canvas.width / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+      ctx.stroke();
+    };
+
+    // Personality Type Badge - Rounded Box (moved down)
     const boxX = 225;
-    const boxY = 110;
+    const boxY = 230;
     const boxWidth = 350;
     const boxHeight = 140;
     const borderRadius = 20;
@@ -211,12 +285,12 @@ function generateShareImage() {
     ctx.textBaseline = 'middle';
     ctx.fillText(results.type, boxX + boxWidth / 2, boxY + boxHeight / 2 + 6);
 
-    // Type Name
+    // Type Name (moved down to make room for avatar)
     const typeData = typeDescriptions[results.type];
     ctx.fillStyle = '#2a2a2a';
     ctx.font = 'bold 36px -apple-system, sans-serif';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(`"${typeData.name}"`, canvas.width / 2, 330);
+    ctx.fillText(`"${typeData.name}"`, canvas.width / 2, 420);
 
     // Calculate max scores dynamically
     const maxScores = {
@@ -252,7 +326,7 @@ function generateShareImage() {
       { first: 'F', second: 'C', firstLabel: 'Forgiving', secondLabel: 'Critical', title: 'Resolution' }
     ];
 
-    let yPos = 400;
+    let yPos = 480;
     dimensions.forEach((dim, index) => {
       const firstPercent = percentages[dim.first];
       const secondPercent = percentages[dim.second];
