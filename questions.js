@@ -6,15 +6,15 @@
 
 const questions = [
   // I/R Dimension focused questions
-  { text: "A person’s past matters to me when thinking about a relationship.", weights: [0.75, 0, 0, 0] },
-  { text: "I enjoy spontaneous, grand romantic gestures.", weights: [1, 1, 0, 0] },
-  { text: "I get easily disappointed when things don't go as I hoped.", weights: [0.75, 0, 0, 0] },
-  { text: "I want clear expectations early in a relationship.", weights: [-1, -0.5, 0, 0] },
-  { text: "I prefer gifts that are practical.", weights: [-1.25, 1, 0, 0] },
-  { text: "When in the talking phase, it's important to keep my options open.", weights: [1, 0, 0, 0] },
+  { text: "I won’t compromise when it comes to finding the right match.", weights: [1.25, 0, 0, 0] },
+  { text: "I enjoy spontaneous, grand romantic gestures.", weights: [0.75, 1, 0, 0] },
+  { text: "I get easily disappointed when things don't go as planned.", weights: [1, 0, 0, 0] },
+  { text: "I want to set clear expectations early in a relationship.", weights: [-1, -0.5, 0, 0] },
+  { text: "I prefer gifts that are practical.", weights: [-0.5, 1, 0, 0] },
+  { text: "When in the talking phase, it's important to keep my options open.", weights: [1.5, 0, 0, 0] },
   { text: "If my friends or family disapprove, I would reconsider the relationship.", weights: [-1.25, 0, 1, 0] },
   { text: "My big worry is what happens after the honeymoon phase.", weights: [0.75, 0, 0, 0] },
-  { text: "I believe true soulmates exist.", weights: [1, -0.5, 0, 0] },
+  { text: "I believe true soulmates exist.", weights: [0.75, -0.5, 0, 0] },
   { text: "It's possible to meet the right person at the wrong time.", weights: [1, -0.5, 0, 0] },
 
   // P/E Dimension focused questions
