@@ -23,18 +23,18 @@ const questions = [
   { text: "I’m drawn to a very particular physical look.", weights: [0, 1, 0, 0] },
   { text: "I’m particular about the moment and place of a first kiss.", weights: [0, -1.5, 0, 0] },
   { text: "I often reflect on my beliefs and values.", weights: [0, -1, -0.5, 0] },
-  { text: "A first date should feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
+  { text: "I want my first date feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
   { text: "I care a lot about how I look to others.", weights: [0, 0.5, 1, 0] },
   { text: "I enjoy deep or niche conversations with my partner.", weights: [0, -1, 0, 0] },
-  { text: "I enjoy helping people, even strangers and when inconvenient.", weights: [0, -1, 0, 1] },
-  { text: "I only develop feelings when I'm confident our personalities are compatible.", weights: [-1, -1, 0, 0] },
+  { text: "I often help people, including strangers, even when it’s not convenient.", weights: [0, -1, 0, 1] },
+  { text: "Sometimes my feelings are hard to contain or rationalize.", weights: [1, 1, 0, 0] },
 
   // S/V Dimension focused questions
-  { text: "I care a lot about my friends meeting my partner.", weights: [0, 0, 0.75, 0] },
+  { text: "Having my friends meet my partner matters a lot to me.", weights: [0, 0, 0.75, 0] },
   { text: "I enjoy giving or receiving public displays of affection.", weights: [0, 1, 0.75, 0] },
   { text: "How my partner presents themselves in public matters to me.", weights: [0, 0, 0.75, 0] },
   { text: "I act very differently when my partner and I are alone.", weights: [0, 0, -1.25, 0] },
-  { text: "I like talking about my relationship details with friends.", weights: [0, 0, 0.75, 0] },
+  { text: "I like talking about the details of my relationship with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I disagree, I go to my friends for advice.", weights: [0, 0, 0.75, -0.5] },
   { text: "I sometimes feel envious of other relationships.", weights: [0.5, 0, 0.5, 0] },
   { text: "I don't usually bring my partner up when I’m talking with others.", weights: [0, 0, -0.75, 0] },
@@ -42,7 +42,7 @@ const questions = [
   { text: "I would post my partner on social media often.", weights: [0, 0, 1, 0] },
 
   // F/C Dimension focused questions
-  { text: "If my date is late to dinner, I must know why.", weights: [0, 0, 0, -0.75] },
+  { text: "If my date is late to dinner, I must ask and know why.", weights: [0, 0, 0, -0.75] },
   { text: "In arguments, I feel there's usually a clear right and wrong.", weights: [-0.5, 0, 0, -0.75] },
   { text: "When someone apologizes, I sometimes question if they mean it.", weights: [0, 0, 0, -0.75] },
   { text: "It's better when my partner says sorry first.", weights: [0, 0, 0, -0.75] },
