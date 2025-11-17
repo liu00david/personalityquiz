@@ -14,7 +14,7 @@ const questions = [
   { text: "When in the talking phase, it's important to keep my options open.", weights: [1, 0, 0, 0] },
   { text: "If my friends or family disapprove, I would reconsider the relationship.", weights: [-1.25, 0, 1, 0] },
   { text: "My big worry is what happens after the honeymoon phase.", weights: [0.75, 0, 0, 0] },
-  { text: "I believe soulmates exist.", weights: [1, -0.5, 0, 0] },
+  { text: "I believe true soulmates exist.", weights: [1, -0.5, 0, 0] },
   { text: "It's possible to meet the right person at the wrong time.", weights: [1, -0.5, 0, 0] },
 
   // P/E Dimension focused questions
@@ -37,7 +37,7 @@ const questions = [
   { text: "I like talking about my relationship details with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I disagree, I go to my friends for advice.", weights: [0, 0, 0.75, -0.5] },
   { text: "I sometimes feel envious of other relationships.", weights: [0.5, 0, 0.5, 0] },
-  { text: "I bring up my partner often in conversations.", weights: [0, 0, 0.75, 0] },
+  { text: "I don't usually bring my partner up when I’m talking with others.", weights: [0, 0, -0.75, 0] },
   { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -1.25, 0] },
   { text: "I would post my partner on social media often.", weights: [0, 0, 1, 0] },
 

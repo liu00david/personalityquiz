@@ -172,3 +172,12 @@ Example item:
 
 The quiz typically uses **40–60 questions** for balance and accuracy.
 
+# Personality color alignment
+- I (Idealist): Pink (#ffc6ff)
+- R (Realist): Green (#caffbf)
+- P (Physical): Coral (#ffadad)
+- E (Emotional): Purple (#bdb2ff)
+- S (Social): Orange (#ffd6a5)
+- V (Private): Cyan (#9bf6ff)
+- F (Forgiving): Blue (#a0c4ff)
+- C (Critical): Yellow (#fdffb6)

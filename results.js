@@ -128,7 +128,7 @@ function displayResults(results) {
 
     if (dominantPercent >= 60) {
       strongTraits.push({ label: dominantLabel, percent: dominantPercent, title: dim.title });
-    } else if (dominantPercent <= 54) {
+    } else if (dominantPercent <= 55) {
       balancedTraits.push({
         first: dim.firstLabel,
         second: dim.secondLabel,
@@ -144,16 +144,16 @@ function displayResults(results) {
 
   if (strongTraits.length > 0) {
     const traitList = strongTraits.map(t => `${t.label} (${t.percent}%)`).join(', ');
-    insightsText += `Your strongest ${strongTraits.length === 1 ? 'trait is' : 'traits are'} ${traitList}. ${strongTraits.length === 1 ? 'This dimension' : 'These dimensions'} strongly define what you find attractive, and matters most in a relationship. `;
+    insightsText += `Your strongest ${strongTraits.length === 1 ? 'trait is' : 'traits are'} ${traitList}. ${strongTraits.length === 1 ? 'This dimension shapes' : 'These dimensions shape'} your relationship style, and you may find the most compatibility with someone who shares them. `;
   }
 
   if (balancedTraits.length > 0) {
     const balancedList = balancedTraits.map(t => `${t.title} (${t.firstPercent}% ${t.first}, ${t.secondPercent}% ${t.second})`).join(', ');
-    insightsText += `You show balance in: ${balancedList}. This means you can adapt between both styles depending on the situation and partner.`;
+    insightsText += `You show balance in: ${balancedList}. This indicates you can shift between both tendencies, responding to what the situation or relationship needs. `;
   }
 
-  if (insightsText === '') {
-    insightsText = 'Your personality shows moderate tendencies across all dimensions, giving you flexibility in how you express yourself in relationships.';
+  if (insightsText === '' || balancedTraits.length == 4) {
+    insightsText = 'Your results are balanced across all dimensions, giving you a flexible relationship style. For a clearer type, try retaking the quiz with more decisive answers. ';
   }
 
   document.getElementById('insightsText').textContent = insightsText;
