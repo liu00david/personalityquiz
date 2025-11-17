@@ -6,14 +6,14 @@
 
 const questions = [
   // I/R Dimension focused questions
-  { text: "I'm very picky when it comes to finding the right match.", weights: [1.25, 0, 0, 0] },
+  { text: "People often say I’m picky.", weights: [1.25, 0, 0, 0] },
   { text: "I enjoy spontaneous, grand romantic gestures.", weights: [0.75, 1, 0, 0] },
   { text: "I get easily disappointed when things don't go as planned.", weights: [1, 0, 0, 0] },
   { text: "I want to set clear expectations early in a relationship.", weights: [-1, -0.5, 0, 0] },
   { text: "I prefer gifts that are practical.", weights: [-0.5, 1, 0, 0] },
   { text: "When in the talking phase, it's important to keep my options open.", weights: [1.5, 0, 0, 0] },
   { text: "If my friends or family disapprove, I would rethink the relationship.", weights: [-1.25, 0, 1, 0] },
-  { text: "My big worry is what happens after the honeymoon phase.", weights: [0.75, 0, 0, 0] },
+  { text: "I worry what would happen after the honeymoon phase.", weights: [0.75, 0, 0, 0] },
   { text: "I believe true soulmates exist.", weights: [0.75, -0.5, 0, 0] },
   { text: "It's possible to meet the right person at the wrong time.", weights: [1, -0.5, 0, 0] },
 
@@ -23,7 +23,7 @@ const questions = [
   { text: "I’m attracted to a very particular physical look.", weights: [0, 1, 0, 0] },
   { text: "I care about the moment and place of a first kiss.", weights: [0, -1.5, 0, 0] },
   { text: "I often reflect on my beliefs and values.", weights: [0, -1, -0.5, 0] },
-  { text: "I want my first date feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
+  { text: "I prefer my first date to feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
   { text: "I usually dress my best, no matter the occasion.", weights: [0, 0.5, 1, 0] },
   { text: "I enjoy deep or niche conversations with my partner.", weights: [0, -1, 0, 0] },
   { text: "I often help people, including strangers, even when it’s not convenient.", weights: [0, -1, 0, 1] },
