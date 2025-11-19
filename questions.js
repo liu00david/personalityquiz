@@ -7,11 +7,11 @@
 const questions = [
   // I/R Dimension focused questions
   { text: "People often say I’m picky.", weights: [1.25, 0, 0, 0] },
-  { text: "I enjoy spontaneous, grand romantic gestures.", weights: [0.75, 1, 0, 0] },
+  { text: "I enjoy spontaneous, grand romantic gestures.", weights: [1.25, 1, 0, 0] },
   { text: "I get easily disappointed when things don't go as planned.", weights: [1, 0, 0, 0] },
-  { text: "I want to set clear expectations early in a relationship.", weights: [-1, -0.5, 0, 0] },
-  { text: "I prefer gifts that are practical.", weights: [-0.5, 1, 0, 0] },
-  { text: "I keep my options open until a relationship becomes exclusive.", weights: [1.5, 0, 0, 0] },
+  { text: "I want to set clear expectations early in a relationship.", weights: [-1.25, -0.5, 0, 0] },
+  { text: "I prefer gifts that are practical.", weights: [-0.75, 0, 0, 0] },
+  { text: "I keep my options open until a relationship becomes exclusive.", weights: [1.25, 0, 0, 0] },
   { text: "If my friends or family disapprove, I would reconsider the relationship.", weights: [-1.25, 0, 1, 0] },
   { text: "I worry about what happens after the honeymoon phase.", weights: [0.75, 0, 0, 0] },
   { text: "I believe that true soulmates exist.", weights: [0.75, -0.5, 0, 0] },
@@ -26,20 +26,20 @@ const questions = [
   { text: "I prefer my first date to feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
   { text: "I usually dress my best, no matter the occasion.", weights: [0, 0.5, 1, 0] },
   { text: "I enjoy deep or niche conversations with my partner.", weights: [0, -1, 0, 0] },
-  { text: "I often help people, including strangers, even when it’s inconvenient.", weights: [0, -1, 0, 1] },
-  { text: "Sometimes my feelings are hard to contain or rationalize.", weights: [1, 1, 0, 0] },
+  { text: "I often help people, including strangers, even when it’s inconvenient.", weights: [0.5, -0.75, 0, 1] },
+  { text: "Sometimes my feelings are hard to contain or rationalize.", weights: [0.75, 1, 0, 0] },
 
   // S/V Dimension focused questions
   { text: "Having my friends meet my partner matters a lot to me.", weights: [0, 0, 0.75, 0] },
-  { text: "I don't mind public displays of affection.", weights: [0, 1, 0.75, 0] },
-  { text: "I enjoy doing simple, everyday activities with my partner more than going out.", weights: [0, 0, -1, 0] },
+  { text: "I don't mind public displays of affection.", weights: [0, 0.75, 0.75, 0] },
+  { text: "I enjoy doing simple, everyday activities with my partner more than going out.", weights: [0.5, 0, -1, 0] },
   { text: "It takes some time before I share a relationship publicly.", weights: [0, 0, -1.25, 0] },
   { text: "I like going into the details of my dating life with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I argue, I would go to my friends for advice.", weights: [0, 0, 0.75, -0.5] },
   { text: "I occasionally compare my relationship to others.", weights: [0.5, 0, 1, 0] },
   { text: "I often bring my partner up in conversations with others.", weights: [0, 0, 1, 0] },
   { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -0.5, 0] },
-  { text: "I like posting my partner on social media.", weights: [0, 0, 1.25, 0] },
+  { text: "I like posting my partner on social media.", weights: [0.5, 0, 1.25, 0] },
 
   // F/C Dimension focused questions
   { text: "If my date is late to dinner, I want them to explain why.", weights: [0, 0, 0, -0.75] },
