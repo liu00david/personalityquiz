@@ -23,7 +23,7 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .results-container header {
@@ -99,17 +99,18 @@ h1 {
 
 /* Progress Bar */
 .progress-container {
+  margin: 0 auto 20px;
   position: sticky;
   top: 0;
   z-index: 100;
   background: var(--bg-container);
-  padding: 5px 0;
-  margin-bottom: 30px;
+  padding: 10px 0;
+  border-radius: 0px 0px 20px 20px;
 }
 
 .progress-bar {
   height: 8px;
-  background: var(--color-dark-sage);
+  background: var(--color-sage-blue);
   border-radius: 10px;
   width: 0%;
   transition: width 0.3s ease;
@@ -158,7 +159,7 @@ h1 {
 .likert-scale {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -175,7 +176,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 44px;
   text-align: center;
   padding: 8px 6px;
   background: var(--bg-white);
@@ -474,6 +475,24 @@ h1 {
 
 .autofill-secret:hover {
   opacity: 0.8;
+}
+
+.autofill-secret.autofill-active {
+  opacity: 0.9;
+  background: var(--color-sage-blue);
+  box-shadow: 0 0 0 3px rgba(58, 98, 117, 0.3);
+}
+
+/* Unanswered Question Highlight */
+.question-unanswered {
+  outline: 3px solid var(--color-strong-pink);
+  outline-offset: 2px;
+  animation: pulse-outline 1s ease-in-out;
+}
+
+@keyframes pulse-outline {
+  0%, 100% { outline-color: var(--color-strong-pink); }
+  50% { outline-color: rgba(237, 180, 157, 0.5); }
 }
 
 /* Responsive Design */

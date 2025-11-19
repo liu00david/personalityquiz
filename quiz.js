@@ -10,6 +10,7 @@ const likertOptions = [
 // Track answers
 let answers = {};
 let answeredCount = 0;
+let isRandomMode = false;
 
 // Render all questions
 function renderQuestions() {
@@ -45,6 +46,10 @@ function renderQuestions() {
           value: parseInt(option.value),
           weights: question.weights
         };
+
+        // Remove highlight if question was highlighted
+        questionDiv.classList.remove('question-unanswered');
+
         updateProgress();
       });
 
@@ -110,7 +115,24 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
 
   // Check if all questions are answered
   if (answeredCount < questions.length) {
-    alert(`Please answer all questions. You have ${questions.length - answeredCount} questions remaining.`);
+    // Find first unanswered question
+    const allQuestions = document.querySelectorAll('.question-item');
+    let firstUnanswered = null;
+
+    questions.forEach((question, index) => {
+      if (!answers[index]) {
+        allQuestions[index].classList.add('question-unanswered');
+        if (!firstUnanswered) {
+          firstUnanswered = allQuestions[index];
+        }
+      }
+    });
+
+    // Scroll to first unanswered question
+    if (firstUnanswered) {
+      firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     return;
   }
 
@@ -127,49 +149,93 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
   // Store results in sessionStorage
   sessionStorage.setItem('quizResults', JSON.stringify(result));
 
-  // Send to Google Sheets
-  fetch('https://script.google.com/macros/s/AKfycbxba14m8jihcfD2E08HpTerf7akF4ILORyHa8cRJEYL9vDvNCu8rfYzCbq1D0qGOXnphg/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(result)
-  }).catch(err => {
-    console.log('Sheet submission error (this is normal with no-cors):', err);
-  }).finally(() => {
-    // Navigate to results page after attempt
+  // Send to Google Sheets only if NOT in random mode
+  if (!isRandomMode) {
+    fetch('https://script.google.com/macros/s/AKfycbxba14m8jihcfD2E08HpTerf7akF4ILORyHa8cRJEYL9vDvNCu8rfYzCbq1D0qGOXnphg/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(result)
+    }).catch(err => {
+      console.log('Sheet submission error (this is normal with no-cors):', err);
+    }).finally(() => {
+      // Navigate to results page after attempt
+      setTimeout(() => {
+        window.location.href = 'results.html';
+      }, 500); // Small delay to show loading state
+    });
+  } else {
+    // Skip Google Sheets in random mode
     setTimeout(() => {
       window.location.href = 'results.html';
-    }, 500); // Small delay to show loading state
-  });
+    }, 500);
+  }
 });
 
 // Initialize quiz
 renderQuestions();
 
-// Autofill function for testing
-function autofillQuiz() {
-  questions.forEach((question, index) => {
-    // Randomly select a value from the available options (no neutral)
-    const options = [-2, -1, 1, 2];
-    const randomValue = options[Math.floor(Math.random() * options.length)];
+// Toggle random mode
+function toggleRandomMode() {
+  const btn = document.getElementById('autofillBtn');
 
-    // Find and check the corresponding radio button
-    const radioBtn = document.getElementById(`q${index}_${randomValue}`);
-    if (radioBtn) {
-      radioBtn.checked = true;
+  if (isRandomMode) {
+    // Turn OFF: Clear all answers
+    questions.forEach((question, index) => {
+      const radioButtons = document.querySelectorAll(`input[name="q${index}"]`);
+      radioButtons.forEach(radio => {
+        radio.checked = false;
+      });
+    });
 
-      // Update answers object
-      if (!answers[index]) {
-        answeredCount++;
+    answers = {};
+    answeredCount = 0;
+    isRandomMode = false;
+    btn.classList.remove('autofill-active');
+    btn.textContent = '🎲';
+    updateProgress();
+
+    // Remove any unanswered highlights
+    const allQuestions = document.querySelectorAll('.question-item');
+    allQuestions.forEach(q => q.classList.remove('question-unanswered'));
+
+  } else {
+    // Turn ON: Fill quiz randomly
+    questions.forEach((question, index) => {
+      // Randomly select a value from the available options (no neutral)
+      const options = [-2, -1, 1, 2];
+      const randomValue = options[Math.floor(Math.random() * options.length)];
+
+      // Find and check the corresponding radio button
+      const radioBtn = document.getElementById(`q${index}_${randomValue}`);
+      if (radioBtn) {
+        radioBtn.checked = true;
+
+        // Update answers object
+        if (!answers[index]) {
+          answeredCount++;
+        }
+        answers[index] = {
+          value: randomValue,
+          weights: question.weights
+        };
       }
-      answers[index] = {
-        value: randomValue,
-        weights: question.weights
-      };
-    }
-  });
+    });
 
-  updateProgress();
+    isRandomMode = true;
+    btn.classList.add('autofill-active');
+    btn.textContent = '🎲';
+    updateProgress();
+
+    // Remove any unanswered highlights
+    const allQuestions = document.querySelectorAll('.question-item');
+    allQuestions.forEach(q => q.classList.remove('question-unanswered'));
+  }
+}
+
+// Keep old function name for compatibility
+function autofillQuiz() {
+  toggleRandomMode();
 }
