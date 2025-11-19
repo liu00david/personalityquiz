@@ -17,6 +17,22 @@
   --color-dark-sage: #87a9ab;
   --color-sage-blue: #3a6275;
 
+  /* Trait Colors for Avatar */
+  --trait-i: #ffc6ff;              /* Idealist - pink */
+  --trait-r: #caffbf;              /* Realist - green */
+  --trait-p: #ffadad;              /* Physical - coral red */
+  --trait-e: #bdb2ff;              /* Emotional - lavender */
+  --trait-s: #ffd6a5;              /* Social - peach */
+  --trait-v: #9bf6ff;              /* Private - cyan */
+  --trait-f: #a0c4ff;              /* Forgiving - sky blue */
+  --trait-c: #fdffb6;              /* Critical - yellow */
+
+  /* Dimension Colors for Bars */
+  --dimension-hope: #c4a4d4;       /* Hope (I/R) - purple */
+  --dimension-connection: #ffa8a8; /* Connection (P/E) - red */
+  --dimension-expression: #ffc988; /* Expression (S/V) - orange */
+  --dimension-resolution: #94c7f5; /* Resolution (F/C) - blue */
+
   /* Background Colors */
   --bg-gradient-start: var(--color-mint);
   --bg-gradient-end: var(--color-sage);

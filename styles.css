@@ -401,7 +401,7 @@ h1 {
   height: 100%;
   transition: width 0.8s ease;
   border-radius: 12px;
-  background: var(--color-dark-sage);
+  /* Background color set dynamically per dimension */
 }
 
 .bar-fill-single.fill-left {

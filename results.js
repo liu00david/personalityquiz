@@ -62,10 +62,17 @@ function generatePixelAvatar(type, percentages, size) {
   canvas.height = size;
   const ctx = canvas.getContext('2d');
 
-  // Get colors for all traits
+  // Get colors from CSS variables
+  const styles = getComputedStyle(document.documentElement);
   const traitColors = {
-    I: '#ffc6ff', R: '#caffbf', P: '#ffadad', E: '#bdb2ff',
-    S: '#ffd6a5', V: '#9bf6ff', F: '#a0c4ff', C: '#fdffb6'
+    I: styles.getPropertyValue('--trait-i').trim(),
+    R: styles.getPropertyValue('--trait-r').trim(),
+    P: styles.getPropertyValue('--trait-p').trim(),
+    E: styles.getPropertyValue('--trait-e').trim(),
+    S: styles.getPropertyValue('--trait-s').trim(),
+    V: styles.getPropertyValue('--trait-v').trim(),
+    F: styles.getPropertyValue('--trait-f').trim(),
+    C: styles.getPropertyValue('--trait-c').trim()
   };
 
   const gridSize = 8; // 8x8 pixel grid
@@ -245,6 +252,15 @@ function displayResults(results) {
   const breakdownContainer = document.getElementById('dimensionsBreakdown');
   breakdownContainer.innerHTML = '';
 
+  // Get dimension colors from CSS variables
+  const styles = getComputedStyle(document.documentElement);
+  const dimensionColors = {
+    'Hope': styles.getPropertyValue('--dimension-hope').trim(),
+    'Connection': styles.getPropertyValue('--dimension-connection').trim(),
+    'Expression': styles.getPropertyValue('--dimension-expression').trim(),
+    'Resolution': styles.getPropertyValue('--dimension-resolution').trim()
+  };
+
   dimensions.forEach((dim, index) => {
     const firstPercent = percentages[dim.first];
     const secondPercent = percentages[dim.second];
@@ -253,6 +269,7 @@ function displayResults(results) {
     // Determine fill direction and width
     const fillFromLeft = firstPercent >= secondPercent;
     const barWidth = fillFromLeft ? firstPercent : secondPercent;
+    const barColor = dimensionColors[dim.title];
 
     const dimElement = document.createElement('div');
     dimElement.className = 'dimension-breakdown';
@@ -265,7 +282,7 @@ function displayResults(results) {
         </div>
         <div class="percentage-bar-single">
           <div class="bar-track-single">
-            <div class="bar-fill-single ${fillFromLeft ? 'fill-left' : 'fill-right'}" style="width: ${barWidth}%"></div>
+            <div class="bar-fill-single ${fillFromLeft ? 'fill-left' : 'fill-right'}" style="width: ${barWidth}%; background: ${barColor};"></div>
           </div>
         </div>
         <div class="percentage-side">
@@ -347,11 +364,20 @@ function shareResults() {
 
   const letters = currentType.split('');
 
+  // Dimension colors for bars
+  const dimensionColorMap = {
+    'Hope': '#c4a4d4',
+    'Connection': '#ffa8a8',
+    'Expression': '#ffc988',
+    'Resolution': '#94c7f5'
+  };
+
   currentDimensions.forEach((dim, index) => {
     const y = dimensionsY + (index * spacing);
     const firstPercent = currentPercentages[dim.first];
     const secondPercent = currentPercentages[dim.second];
     const userLetter = letters[index];
+    const barColor = dimensionColorMap[dim.title];
 
     // Draw dimension title
     ctx.fillStyle = colors.textPrimary;
@@ -373,12 +399,12 @@ function shareResults() {
     ctx.fillStyle = colors.white;
     roundRect(ctx, barX, y + 5, barWidth, barHeight, 12);
 
-    // Draw percentage bar fill (with curved edges)
+    // Draw percentage bar fill (with curved edges and dimension color)
     const fillFromLeft = firstPercent >= secondPercent;
     const fillPercent = fillFromLeft ? firstPercent : secondPercent;
     const fillWidth = (barWidth * fillPercent) / 100;
 
-    ctx.fillStyle = colors.sageBlue;
+    ctx.fillStyle = barColor;
     if (fillFromLeft) {
       roundRectLeftOnly(ctx, barX, y + 5, fillWidth, barHeight, 12);
     } else {
