@@ -118,12 +118,18 @@ function generatePixelAvatar(type, percentages, size) {
     [pixelColors[i], pixelColors[j]] = [pixelColors[j], pixelColors[i]];
   }
 
-  // Fill the grid
+  // Fill the grid with faint borders between pixels
   let colorIndex = 0;
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
       ctx.fillStyle = pixelColors[colorIndex];
       ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+
+      // Add very faint border
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+
       colorIndex++;
     }
   }
@@ -325,15 +331,15 @@ function shareResults() {
   ctx.fillStyle = colors.sageBlue;
   ctx.font = 'bold 64px -apple-system, sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText(currentType, width / 2, avatarY + avatarSize + 80);
+  ctx.fillText(currentType, width / 2, avatarY + avatarSize + 90);
 
   // Draw personality name
   ctx.fillStyle = colors.textPrimary;
   ctx.font = 'bold 36px -apple-system, sans-serif';
-  ctx.fillText(currentTypeData.name, width / 2, avatarY + avatarSize + 130);
+  ctx.fillText(currentTypeData.name, width / 2, avatarY + avatarSize + 140);
 
   // Draw dimensions (moved lower, skinnier bars, shorter width)
-  const dimensionsY = avatarY + avatarSize + 200;
+  const dimensionsY = avatarY + avatarSize + 230;
   const barWidth = 500;
   const barHeight = 20;
   const barX = (width - barWidth) / 2;
@@ -351,7 +357,17 @@ function shareResults() {
     ctx.fillStyle = colors.textPrimary;
     ctx.font = 'bold 20px -apple-system, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(dim.title, width / 2, y - 10);
+    ctx.fillText(dim.title, width / 2, y - 16);
+
+    // Draw labels and percentages above the bar
+    ctx.font = 'bold 16px -apple-system, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = userLetter === dim.first ? colors.textPrimary : '#999999';
+    ctx.fillText(`${dim.firstLabel}: ${firstPercent}%`, barX, y - 5);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = userLetter === dim.second ? colors.textPrimary : '#999999';
+    ctx.fillText(`${dim.secondLabel}: ${secondPercent}%`, barX + barWidth, y - 5);
 
     // Draw percentage bar track (white)
     ctx.fillStyle = colors.white;
@@ -368,16 +384,6 @@ function shareResults() {
     } else {
       roundRectRightOnly(ctx, barX + barWidth - fillWidth, y + 5, fillWidth, barHeight, 12);
     }
-
-    // Draw labels and percentages (all bold)
-    ctx.font = 'bold 16px -apple-system, sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillStyle = userLetter === dim.first ? colors.textPrimary : '#999999';
-    ctx.fillText(`${dim.firstLabel}: ${firstPercent}%`, barX, y + 55);
-
-    ctx.textAlign = 'right';
-    ctx.fillStyle = userLetter === dim.second ? colors.textPrimary : '#999999';
-    ctx.fillText(`${dim.secondLabel}: ${secondPercent}%`, barX + barWidth, y + 55);
   });
 
   // Add footer text (two lines)
@@ -389,15 +395,39 @@ function shareResults() {
   ctx.font = '14px -apple-system, sans-serif';
   ctx.fillText('https://liu00david.github.io/personalityquiz', width / 2, height - 60);
 
-  // Download image
-  canvas.toBlob((blob) => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `HCER-${currentType}-Results.png`;
-    a.click();
-    URL.revokeObjectURL(url);
+  // Share image
+  canvas.toBlob(async (blob) => {
+    const file = new File([blob], `HCER-${currentType}-Results.png`, { type: 'image/png' });
+
+    // Try to use native share if available
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: `My personality: ${currentType}, ${currentTypeData.name}`,
+          text: `Discover your HCER Relationship Typology at https://liu00david.github.io/personalityquiz`
+        });
+      } catch (err) {
+        // User cancelled or share failed, fallback to download
+        if (err.name !== 'AbortError') {
+          downloadImage(blob);
+        }
+      }
+    } else {
+      // Fallback to download if Web Share API not supported
+      downloadImage(blob);
+    }
   });
+}
+
+// Helper function to download image
+function downloadImage(blob) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `HCER-${currentType}-Results.png`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // Helper function to draw rounded rectangles
@@ -419,8 +449,10 @@ function roundRect(ctx, x, y, width, height, radius) {
 function roundRectLeftOnly(ctx, x, y, width, height, radius) {
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
-  ctx.lineTo(x + width, y);
-  ctx.lineTo(x + width, y + height);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
   ctx.lineTo(x + radius, y + height);
   ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
   ctx.lineTo(x, y + radius);
@@ -431,13 +463,15 @@ function roundRectLeftOnly(ctx, x, y, width, height, radius) {
 
 function roundRectRightOnly(ctx, x, y, width, height, radius) {
   ctx.beginPath();
-  ctx.moveTo(x, y);
+  ctx.moveTo(x + radius, y);
   ctx.lineTo(x + width - radius, y);
   ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
   ctx.lineTo(x + width, y + height - radius);
   ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  ctx.lineTo(x, y + height);
-  ctx.lineTo(x, y);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
   ctx.fill();
 }

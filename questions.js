@@ -45,13 +45,13 @@ const questions = [
   { text: "If my date is late to dinner, I must ask and find out why.", weights: [0, 0, 0, -0.75] },
   { text: "In arguments, there's usually a clear right and wrong.", weights: [-0.5, 0, 0, -0.75] },
   { text: "When someone apologizes, I sometimes question if they mean it.", weights: [0, 0, 0, -0.75] },
-  { text: "I usually am the one to say sorry first.", weights: [0, 0, 0, 0.75] },
+  { text: "I'm usually the one to say sorry first.", weights: [0, 0, 0, 0.75] },
   { text: "I might raise my voice when frustrated.", weights: [0, 0, 0.5, -0.75] },
   { text: "I don't hold grudges.", weights: [0, 0, 0, 1.25] },
   { text: "If my partner drops something, I point out that they should be more careful.", weights: [0, 0.5, 0, -0.75] },
   { text: "I easily understand where others are coming from, even when I disagree.", weights: [0, -0.5, 0, 1.25] },
-  { text: "I like to be complimented on my work.", weights: [0, 0, 0, -1] },
-  { text: "The same mistake should never happen twice.", weights: [-0.5, 0, 0, -0.75] },
+  { text: "I want people to acknowledge when I'm correct.", weights: [0, 0, 0, -1] },
+  { text: "The same mistake should never happen twice.", weights: [0, 0, 0, -0.75] },
 ];
 
 // Personality type descriptions
