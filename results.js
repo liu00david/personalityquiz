@@ -55,16 +55,9 @@ if (!results) {
   displayResults(results);
 }
 
-// Pixel Avatar Generator
-function generatePixelAvatar(type, percentages, size) {
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-
-  // Get colors from CSS variables
+function getTraitColors() {
   const styles = getComputedStyle(document.documentElement);
-  const traitColors = {
+  return {
     I: styles.getPropertyValue('--trait-i').trim(),
     R: styles.getPropertyValue('--trait-r').trim(),
     P: styles.getPropertyValue('--trait-p').trim(),
@@ -74,6 +67,16 @@ function generatePixelAvatar(type, percentages, size) {
     F: styles.getPropertyValue('--trait-f').trim(),
     C: styles.getPropertyValue('--trait-c').trim()
   };
+}
+
+// Pixel Avatar Generator
+function generatePixelAvatar(type, percentages, size) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  const traitColors = getTraitColors();
 
   const gridSize = 8; // 8x8 pixel grid
   const pixelSize = size / gridSize;
@@ -252,7 +255,7 @@ function displayResults(results) {
   const breakdownContainer = document.getElementById('dimensionsBreakdown');
   breakdownContainer.innerHTML = '';
 
-  // Get dimension colors from CSS variables
+  // Get colors from CSS variables
   const styles = getComputedStyle(document.documentElement);
   const dimensionColors = {
     'Hope': styles.getPropertyValue('--dimension-hope').trim(),
@@ -260,6 +263,7 @@ function displayResults(results) {
     'Expression': styles.getPropertyValue('--dimension-expression').trim(),
     'Resolution': styles.getPropertyValue('--dimension-resolution').trim()
   };
+  const traitColors = getTraitColors();
 
   dimensions.forEach((dim, index) => {
     const firstPercent = percentages[dim.first];
@@ -269,7 +273,8 @@ function displayResults(results) {
     // Determine fill direction and width
     const fillFromLeft = firstPercent >= secondPercent;
     const barWidth = fillFromLeft ? firstPercent : secondPercent;
-    const barColor = dimensionColors[dim.title];
+    const dominantTrait = fillFromLeft ? dim.first : dim.second;
+    const barColor = traitColors[dominantTrait] || dimensionColors[dim.title];
 
     const dimElement = document.createElement('div');
     dimElement.className = 'dimension-breakdown';
@@ -365,19 +370,15 @@ function shareResults() {
   const letters = currentType.split('');
 
   // Dimension colors for bars
-  const dimensionColorMap = {
-    'Hope': '#c4a4d4',
-    'Connection': '#ffa8a8',
-    'Expression': '#ffc988',
-    'Resolution': '#94c7f5'
-  };
+  const traitColors = getTraitColors();
 
   currentDimensions.forEach((dim, index) => {
     const y = dimensionsY + (index * spacing);
     const firstPercent = currentPercentages[dim.first];
     const secondPercent = currentPercentages[dim.second];
     const userLetter = letters[index];
-    const barColor = dimensionColorMap[dim.title];
+    const dominantTrait = firstPercent >= secondPercent ? dim.first : dim.second;
+    const barColor = traitColors[dominantTrait];
 
     // Draw dimension title
     ctx.fillStyle = colors.textPrimary;
