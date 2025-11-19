@@ -320,7 +320,7 @@ h1 {
 
 /* Breakdown Section */
 .breakdown-section {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .breakdown-section h3 {
@@ -328,6 +328,24 @@ h1 {
   margin-bottom: 25px;
   color: var(--text-primary);
   font-size: 1.8em;
+}
+
+.dimensions-link-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dimensions-link {
+  color: var(--color-sage-blue);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.25em;
+  transition: all 0.2s ease;
+}
+
+.dimensions-link:hover {
+  color: var(--color-sage);
+  text-decoration: underline;
 }
 
 .dimension-breakdown {
@@ -613,12 +631,16 @@ h1 {
   }
 
   .breakdown-section {
-    margin-bottom: 30px;
+    margin-bottom: 26px;
   }
 
   .breakdown-section h3 {
     font-size: 1.4em;
     margin-bottom: 20px;
+  }
+
+  .dimensions-link {
+    font-size: 1.05em;
   }
 
   .dimension-breakdown {
