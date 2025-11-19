@@ -396,7 +396,7 @@ h1 {
   height: 100%;
   transition: width 0.8s ease;
   border-radius: 12px;
-  background: var(--color-sage);
+  background: var(--color-dark-sage);
 }
 
 .bar-fill-single.fill-left {
@@ -555,7 +555,7 @@ h1 {
 
   .type-badge {
     font-size: 2.2em;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     margin-bottom: 5px;
   }
 
@@ -565,7 +565,7 @@ h1 {
   }
 
   .type-archetype {
-    font-size: 0.95em;
+    font-size: 1em;
     margin-bottom: 15px;
   }
 
@@ -576,12 +576,12 @@ h1 {
 
   .type-description {
     text-align: center;
-    font-size: 0.95em;
+    font-size: 1em;
     line-height: 1.5;
   }
 
   .breakdown-section {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 
   .breakdown-section h3 {
@@ -590,7 +590,7 @@ h1 {
   }
 
   .dimension-breakdown {
-    padding: 15px;
+    padding: 10px 15px 20px 15px;
     margin-bottom: 20px;
   }
 
