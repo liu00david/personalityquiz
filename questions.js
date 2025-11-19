@@ -11,11 +11,11 @@ const questions = [
   { text: "I get easily disappointed when things don't go as planned.", weights: [1, 0, 0, 0] },
   { text: "I want to set clear expectations early in a relationship.", weights: [-1, -0.5, 0, 0] },
   { text: "I prefer gifts that are practical.", weights: [-0.5, 1, 0, 0] },
-  { text: "When in the talking phase, it's important to keep my options open.", weights: [1.5, 0, 0, 0] },
-  { text: "If my friends or family disapprove, I would rethink the relationship.", weights: [-1.25, 0, 1, 0] },
+  { text: "I keep my options open until a relationship becomes exclusive.", weights: [1.5, 0, 0, 0] },
+  { text: "If my friends or family disapprove, I would reconsider the relationship.", weights: [-1.25, 0, 1, 0] },
   { text: "I worry what would happen after the honeymoon phase.", weights: [0.75, 0, 0, 0] },
   { text: "I believe that true soulmates exist.", weights: [0.75, -0.5, 0, 0] },
-  { text: "It's possible to meet the right person at the wrong time.", weights: [1, -0.5, 0, 0] },
+  { text: "It matters to me how my partner handles their money.", weights: [-1, 0, 0, 0] },
 
   // P/E Dimension focused questions
   { text: "I need a defined relationship in order to be intimate with someone.", weights: [-0.5, -1.5, 0, 0] },
@@ -31,15 +31,15 @@ const questions = [
 
   // S/V Dimension focused questions
   { text: "Having my friends meet my partner matters a lot to me.", weights: [0, 0, 0.75, 0] },
-  { text: "I enjoy giving or receiving public displays of affection.", weights: [0, 1, 0.75, 0] },
-  { text: "I care about my partner’s public appearance and behavior.", weights: [0, 0, 0.75, 0] },
-  { text: "In private, I act very differently with someone I like.", weights: [0, 0, -1.25, 0] },
+  { text: "I don't mind public displays of affection.", weights: [0, 1, 0.75, 0] },
+  { text: "I enjoy doing simple, everyday activities with my partner more than going out.", weights: [0, 0, -1, 0] },
+  { text: "It takes some time before I share a relationship publicly.", weights: [0, 0, -1.25, 0] },
   { text: "I like going into the details of my dating life with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I argue, I would go to my friends for advice.", weights: [0, 0, 0.75, -0.5] },
-  { text: "I can feel envious of other relationships.", weights: [0.5, 0, 1, 0] },
+  { text: "I sometimes compare my relationship to others.", weights: [0.5, 0, 1, 0] },
   { text: "I always bring my partner up in conversations with others.", weights: [0, 0, 1, 0] },
-  { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -0.50, 0] },
-  { text: "I would post my partner on social media often.", weights: [0, 0, 1.5, 0] },
+  { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -0.5, 0] },
+  { text: "I like to post my partner on social media often.", weights: [0, 0, 1.25, 0] },
 
   // F/C Dimension focused questions
   { text: "If my date is late to dinner, I must ask and find out why.", weights: [0, 0, 0, -0.75] },
