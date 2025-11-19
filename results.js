@@ -303,7 +303,7 @@ function shareResults() {
   const avatarSize = 200;
   const avatarCanvas = generatePixelAvatar(currentType, currentPercentages, avatarSize);
   const avatarX = (width - avatarSize) / 2;
-  const avatarY = 80;
+  const avatarY = 100;
 
   // Draw avatar with circular mask
   ctx.save();
@@ -335,7 +335,7 @@ function shareResults() {
   // Draw dimensions (moved lower, skinnier bars, shorter width)
   const dimensionsY = avatarY + avatarSize + 200;
   const barWidth = 500;
-  const barHeight = 24;
+  const barHeight = 20;
   const barX = (width - barWidth) / 2;
   const spacing = 95;
 
@@ -382,12 +382,12 @@ function shareResults() {
 
   // Add footer text (two lines)
   ctx.fillStyle = colors.textMuted;
-  ctx.font = '18px -apple-system, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('HCER Relationship Typology', width / 2, height - 75);
-
   ctx.font = '16px -apple-system, sans-serif';
-  ctx.fillText('https://liu00david.github.io/personalityquiz', width / 2, height - 50);
+  ctx.textAlign = 'center';
+  ctx.fillText('HCER Relationship Typology', width / 2, height - 80);
+
+  ctx.font = '14px -apple-system, sans-serif';
+  ctx.fillText('https://liu00david.github.io/personalityquiz', width / 2, height - 60);
 
   // Download image
   canvas.toBlob((blob) => {
