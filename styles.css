@@ -361,7 +361,7 @@ h1 {
 }
 
 .percentage-label {
-  font-size: 1em;
+  font-size: 1.15em;
   color: #999999;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -370,7 +370,7 @@ h1 {
 .percentage-label.active {
   color: var(--text-primary);
   font-weight: 700;
-  font-size: 1.1em;
+  font-size: 1.35em;
 }
 
 .percentage-value {
@@ -521,6 +521,32 @@ h1 {
 
   .type-badge {
     font-size: 3em;
+  }
+
+  .percentage-label {
+    font-size: 1.1em;
+    color: #999999;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .percentage-label.active {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  
+  .percentage-value {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #999999;
+    transition: all 0.3s ease;
+  }
+  
+  .percentage-value.active {
+    font-size: 1.25em;
+    font-weight: 800;
+    color: var(--text-primary);
   }
 }
 
