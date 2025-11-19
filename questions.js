@@ -26,7 +26,7 @@ const questions = [
   { text: "I prefer my first date to feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
   { text: "I usually dress my best, no matter the occasion.", weights: [0, 0.5, 1, 0] },
   { text: "I enjoy deep or niche conversations with my partner.", weights: [0, -1, 0, 0] },
-  { text: "I often help people, including strangers, even when it’s not convenient.", weights: [0, -1, 0, 1] },
+  { text: "I often help people, including strangers, even when it’s inconvenient.", weights: [0, -1, 0, 1] },
   { text: "Sometimes my feelings are hard to contain or rationalize.", weights: [1, 1, 0, 0] },
 
   // S/V Dimension focused questions
