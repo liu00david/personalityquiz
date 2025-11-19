@@ -164,7 +164,7 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
       timestamp: new Date().toISOString()
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbxba14m8jihcfD2E08HpTerf7akF4ILORyHa8cRJEYL9vDvNCu8rfYzCbq1D0qGOXnphg/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbw4Zxz0Ew4tc0rrhfrbQ0qz0z8bEM_2SlEeCRUfT92Pv_PJnnUfxs8VwYXZXGSdJxfgPQ/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
