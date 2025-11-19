@@ -22,7 +22,7 @@ const questions = [
   { text: "At times, I overlook red flags in people.", weights: [0, 1, 0, -0.5] },
   { text: "I’m attracted to a variety of physical types.", weights: [0, 1, 0, 0] },
   { text: "I care about how my first kiss will go.", weights: [0, -1, 0, 0] },
-  { text: "I like to reflect on my beliefs and values.", weights: [0, -1, -0.5, 0] },
+  { text: "I spend time reflecting on my beliefs and values.", weights: [0, -1, -0.5, 0] },
   { text: "I prefer my first date to feel upscale, not casual.", weights: [0, 1, 0.5, 0] },
   { text: "I aim to dress my best no matter the occasion.", weights: [0, 0.5, 1, 0] },
   { text: "I enjoy deep, niche conversations with my partner.", weights: [0, -1, 0, 0] },
