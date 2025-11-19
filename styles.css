@@ -412,13 +412,16 @@ h1 {
   flex-wrap: wrap;
 }
 
-.retake-btn {
+.retake-btn, .share-btn {
   padding: 12px 30px;
   font-size: 1.1em;
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 600;
+}
+
+.retake-btn {
   background: var(--bg-white);
   color: var(--accent-primary);
   border: 2px solid var(--accent-primary);
@@ -427,6 +430,17 @@ h1 {
 .retake-btn:hover {
   background: var(--accent-primary);
   color: var(--text-light);
+}
+
+.share-btn {
+  background: var(--color-dark-sage);
+  color: var(--text-light);
+  border: 2px solid var(--color-dark-sage);
+}
+
+.share-btn:hover {
+  background: var(--color-sage);
+  border-color: var(--color-sage);
 }
 
 

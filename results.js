@@ -46,6 +46,9 @@ const dimensionInfo = {
 // Get results from sessionStorage
 const results = JSON.parse(sessionStorage.getItem('quizResults'));
 
+// Global variables for sharing
+let currentType, currentPercentages, currentTypeData, currentDimensions;
+
 if (!results) {
   window.location.href = 'index.html';
 } else {
@@ -53,48 +56,75 @@ if (!results) {
 }
 
 // Pixel Avatar Generator
-function generatePixelAvatar(type, size) {
+function generatePixelAvatar(type, percentages, size) {
   const canvas = document.createElement('canvas');
   canvas.width = size;
   canvas.height = size;
   const ctx = canvas.getContext('2d');
 
-  // Get colors for this type
+  // Get colors for all traits
   const traitColors = {
     I: '#ffc6ff', R: '#caffbf', P: '#ffadad', E: '#bdb2ff',
     S: '#ffd6a5', V: '#9bf6ff', F: '#a0c4ff', C: '#fdffb6'
   };
 
-  const colors = type.split('').map(letter => traitColors[letter]);
-
-  // Create deterministic pattern based on type
   const gridSize = 8; // 8x8 pixel grid
   const pixelSize = size / gridSize;
+  const totalPixels = gridSize * gridSize;
 
-  // Use type string to seed pattern
+  // Calculate number of pixels for each trait based on percentages
+  const traitPixelCounts = {};
+  let assignedPixels = 0;
+
+  // Only use the 4 dominant traits from the type
+  const dominantTraits = type.split('');
+  const traitData = dominantTraits.map(trait => ({
+    trait,
+    percentage: percentages[trait],
+    pixels: Math.floor((percentages[trait] / 100) * totalPixels)
+  })).sort((a, b) => b.percentage - a.percentage);
+
+  // Assign pixels based on percentage
+  traitData.forEach(data => {
+    traitPixelCounts[data.trait] = data.pixels;
+    assignedPixels += data.pixels;
+  });
+
+  // Distribute remaining pixels to highest percentage traits
+  let remaining = totalPixels - assignedPixels;
+  for (let i = 0; i < traitData.length && remaining > 0; i++) {
+    traitPixelCounts[traitData[i].trait]++;
+    remaining--;
+  }
+
+  // Create array of pixels with their assigned colors
+  const pixelColors = [];
+  Object.entries(traitPixelCounts).forEach(([trait, count]) => {
+    for (let i = 0; i < count; i++) {
+      pixelColors.push(traitColors[trait]);
+    }
+  });
+
+  // Shuffle pixels using seeded random for consistency
   const seed = type.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-
-  // Simple seeded random function
   let randomSeed = seed;
   const seededRandom = () => {
     randomSeed = (randomSeed * 9301 + 49297) % 233280;
     return randomSeed / 233280;
   };
 
-  // Generate symmetrical pattern (mirror horizontally)
+  for (let i = pixelColors.length - 1; i > 0; i--) {
+    const j = Math.floor(seededRandom() * (i + 1));
+    [pixelColors[i], pixelColors[j]] = [pixelColors[j], pixelColors[i]];
+  }
+
+  // Fill the grid
+  let colorIndex = 0;
   for (let y = 0; y < gridSize; y++) {
-    for (let x = 0; x < Math.ceil(gridSize / 2); x++) {
-      const shouldFill = seededRandom() > 0.5;
-
-      if (shouldFill) {
-        // Pick color based on position
-        const colorIndex = Math.floor(seededRandom() * colors.length);
-        ctx.fillStyle = colors[colorIndex];
-
-        // Fill pixel and its mirror
-        ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
-        ctx.fillRect((gridSize - 1 - x) * pixelSize, y * pixelSize, pixelSize, pixelSize);
-      }
+    for (let x = 0; x < gridSize; x++) {
+      ctx.fillStyle = pixelColors[colorIndex];
+      ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+      colorIndex++;
     }
   }
 
@@ -111,13 +141,12 @@ function displayResults(results) {
   document.getElementById('typeArchetype').textContent = typeData.archetype;
   document.getElementById('typeDescription').textContent = typeData.description;
 
-  // Generate and set pixel avatar locally
-  const avatarCanvas = generatePixelAvatar(type, 150);
-  const avatarImg = document.getElementById('typeAvatar');
-  avatarImg.src = avatarCanvas.toDataURL();
+  // Store for sharing
+  currentType = type;
+  currentTypeData = typeData;
 
+  // Calculate percentages first (needed for avatar generation)
   // Calculate max possible scores for each dimension based on question weights
-  // Max score = sum of absolute values of all weights * 2 (for "Strong Agree")
   const maxScores = {
     IR: 0,
     PE: 0,
@@ -132,8 +161,6 @@ function displayResults(results) {
     maxScores.FC += Math.abs(q.weights[3]) * 2;
   });
 
-  const letters = type.split('');
-
   // Calculate percentages (0-100 scale for each side)
   const percentages = {
     I: Math.round(((rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
@@ -146,6 +173,16 @@ function displayResults(results) {
     C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
   };
 
+  // Store for sharing
+  currentPercentages = percentages;
+
+  // Generate and set pixel avatar locally
+  const avatarCanvas = generatePixelAvatar(type, percentages, 150);
+  const avatarImg = document.getElementById('typeAvatar');
+  avatarImg.src = avatarCanvas.toDataURL();
+
+  const letters = type.split('');
+
   // Analyze strength of each dimension
   const dimensions = [
     { pair: 'IR', first: 'I', second: 'R', title: 'Hope', firstLabel: 'Idealist', secondLabel: 'Realist' },
@@ -153,6 +190,9 @@ function displayResults(results) {
     { pair: 'SV', first: 'S', second: 'V', title: 'Expression', firstLabel: 'Social', secondLabel: 'Private' },
     { pair: 'FC', first: 'F', second: 'C', title: 'Resolution', firstLabel: 'Forgiving', secondLabel: 'Critical' }
   ];
+
+  // Store for sharing
+  currentDimensions = dimensions;
 
   const strongTraits = [];
   const balancedTraits = [];
@@ -230,4 +270,174 @@ function displayResults(results) {
     `;
     breakdownContainer.appendChild(dimElement);
   });
+}
+
+// Share Results Function
+function shareResults() {
+  const canvas = document.createElement('canvas');
+  const width = 800;
+  const height = 1000;
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+
+  // Color variables
+  const colors = {
+    sage: '#97b3ae',        // Background
+    mint: '#d2e0d3',        // Card background
+    sageBlue: '#3a6275',    // Type badge and bar fill
+    white: '#ffffff',       // Bar track
+    textPrimary: '#2a2a2a', // Main text
+    textMuted: '#666666'    // Footer text
+  };
+
+  // Background - sage green
+  ctx.fillStyle = colors.sage;
+  ctx.fillRect(0, 0, width, height);
+
+  // Add rounded rectangle background for content - light mint green
+  ctx.fillStyle = colors.mint;
+  roundRect(ctx, 40, 40, width - 80, height - 80, 20);
+
+  // Draw pixel avatar
+  const avatarSize = 200;
+  const avatarCanvas = generatePixelAvatar(currentType, currentPercentages, avatarSize);
+  const avatarX = (width - avatarSize) / 2;
+  const avatarY = 80;
+
+  // Draw avatar with circular mask
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.clip();
+  ctx.drawImage(avatarCanvas, avatarX, avatarY, avatarSize, avatarSize);
+  ctx.restore();
+
+  // Draw white circle border around avatar
+  ctx.strokeStyle = colors.white;
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Draw personality type badge
+  ctx.fillStyle = colors.sageBlue;
+  ctx.font = 'bold 64px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(currentType, width / 2, avatarY + avatarSize + 80);
+
+  // Draw personality name
+  ctx.fillStyle = colors.textPrimary;
+  ctx.font = 'bold 36px -apple-system, sans-serif';
+  ctx.fillText(currentTypeData.name, width / 2, avatarY + avatarSize + 130);
+
+  // Draw dimensions (moved lower, skinnier bars, shorter width)
+  const dimensionsY = avatarY + avatarSize + 200;
+  const barWidth = 500;
+  const barHeight = 24;
+  const barX = (width - barWidth) / 2;
+  const spacing = 95;
+
+  const letters = currentType.split('');
+
+  currentDimensions.forEach((dim, index) => {
+    const y = dimensionsY + (index * spacing);
+    const firstPercent = currentPercentages[dim.first];
+    const secondPercent = currentPercentages[dim.second];
+    const userLetter = letters[index];
+
+    // Draw dimension title
+    ctx.fillStyle = colors.textPrimary;
+    ctx.font = 'bold 20px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(dim.title, width / 2, y - 10);
+
+    // Draw percentage bar track (white)
+    ctx.fillStyle = colors.white;
+    roundRect(ctx, barX, y + 5, barWidth, barHeight, 12);
+
+    // Draw percentage bar fill (with curved edges)
+    const fillFromLeft = firstPercent >= secondPercent;
+    const fillPercent = fillFromLeft ? firstPercent : secondPercent;
+    const fillWidth = (barWidth * fillPercent) / 100;
+
+    ctx.fillStyle = colors.sageBlue;
+    if (fillFromLeft) {
+      roundRectLeftOnly(ctx, barX, y + 5, fillWidth, barHeight, 12);
+    } else {
+      roundRectRightOnly(ctx, barX + barWidth - fillWidth, y + 5, fillWidth, barHeight, 12);
+    }
+
+    // Draw labels and percentages (all bold)
+    ctx.font = 'bold 16px -apple-system, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = userLetter === dim.first ? colors.textPrimary : '#999999';
+    ctx.fillText(`${dim.firstLabel}: ${firstPercent}%`, barX, y + 55);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = userLetter === dim.second ? colors.textPrimary : '#999999';
+    ctx.fillText(`${dim.secondLabel}: ${secondPercent}%`, barX + barWidth, y + 55);
+  });
+
+  // Add footer text (two lines)
+  ctx.fillStyle = colors.textMuted;
+  ctx.font = '18px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('HCER Relationship Typology', width / 2, height - 75);
+
+  ctx.font = '16px -apple-system, sans-serif';
+  ctx.fillText('https://liu00david.github.io/personalityquiz', width / 2, height - 50);
+
+  // Download image
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `HCER-${currentType}-Results.png`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+}
+
+// Helper function to draw rounded rectangles
+function roundRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function roundRectLeftOnly(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width, y);
+  ctx.lineTo(x + width, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function roundRectRightOnly(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x, y + height);
+  ctx.lineTo(x, y);
+  ctx.closePath();
+  ctx.fill();
 }

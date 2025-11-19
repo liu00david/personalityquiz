@@ -91,3 +91,9 @@ Since this is a static GitHub Pages site, you'll need a third-party service to s
 ## License
 
 MIT License - feel free to use and modify for your own projects!
+
+### Colors
+I: '#ffc6ff' Pink, R: '#caffbf' Green, 
+P: '#ffadad' Red, E: '#bdb2ff' Purple,
+S: '#ffd6a5' Orange, V: '#9bf6ff' Cyan, 
+F: '#a0c4ff' Blue, C: '#fdffb6' Yellow,
