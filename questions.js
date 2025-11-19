@@ -36,7 +36,7 @@ const questions = [
   { text: "It takes some time before I share a relationship publicly.", weights: [0, 0, -1.25, 0] },
   { text: "I like going into the details of my dating life with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I argue, I would go to my friends for advice.", weights: [0, 0, 0.75, -0.5] },
-  { text: "I occasionally compare my relationship to others.", weights: [0.5, 0, 1, 0] },
+  { text: "I occasionally compare my dating life to others.", weights: [0.5, 0, 1, 0] },
   { text: "I often bring my partner up in conversations with others.", weights: [0, 0, 1, 0] },
   { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -0.5, 0] },
   { text: "I like posting my partner on social media.", weights: [0.5, 0, 1.25, 0] },

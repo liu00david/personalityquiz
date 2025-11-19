@@ -12,6 +12,18 @@ let answers = {};
 let answeredCount = 0;
 let isRandomMode = false;
 
+// Track metrics
+const quizMetrics = {
+  startTime: Date.now(),
+  firstAnswerTime: null,
+  userAgent: navigator.userAgent,
+  screenWidth: window.screen.width,
+  screenHeight: window.screen.height,
+  referrer: document.referrer || 'direct',
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  language: navigator.language
+};
+
 // Render all questions
 function renderQuestions() {
   const container = document.getElementById('questionsContainer');
@@ -41,6 +53,10 @@ function renderQuestions() {
       input.addEventListener('change', () => {
         if (!answers[index]) {
           answeredCount++;
+          // Track first answer time
+          if (quizMetrics.firstAnswerTime === null) {
+            quizMetrics.firstAnswerTime = Date.now();
+          }
         }
         answers[index] = {
           value: parseInt(option.value),
@@ -157,14 +173,31 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
       individualAnswers.push(answers[index] ? answers[index].value : 0);
     });
 
-    // Create submission object with both results and individual answers
+    // Calculate time metrics
+    const endTime = Date.now();
+    const totalTimeSeconds = Math.round((endTime - quizMetrics.startTime) / 1000);
+    const timeToFirstAnswer = quizMetrics.firstAnswerTime
+      ? Math.round((quizMetrics.firstAnswerTime - quizMetrics.startTime) / 1000)
+      : null;
+
+    // Create submission object with results, answers, and metrics
     const submission = {
       ...result,
       answers: individualAnswers,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      metrics: {
+        totalTimeSeconds,
+        timeToFirstAnswer,
+        userAgent: quizMetrics.userAgent,
+        screenWidth: quizMetrics.screenWidth,
+        screenHeight: quizMetrics.screenHeight,
+        referrer: quizMetrics.referrer,
+        timezone: quizMetrics.timezone,
+        language: quizMetrics.language
+      }
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbw4Zxz0Ew4tc0rrhfrbQ0qz0z8bEM_2SlEeCRUfT92Pv_PJnnUfxs8VwYXZXGSdJxfgPQ/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbyyNhS2ey_FppR1n6iWX_eIeGHuzq4jLs9buCyDb6TrHoV2Jg-enaxsjULQ5HQm5WpCsw/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
