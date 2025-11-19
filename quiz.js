@@ -151,13 +151,26 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
 
   // Send to Google Sheets only if NOT in random mode
   if (!isRandomMode) {
+    // Prepare individual answers for submission
+    const individualAnswers = [];
+    questions.forEach((question, index) => {
+      individualAnswers.push(answers[index] ? answers[index].value : 0);
+    });
+
+    // Create submission object with both results and individual answers
+    const submission = {
+      ...result,
+      answers: individualAnswers,
+      timestamp: new Date().toISOString()
+    };
+
     fetch('https://script.google.com/macros/s/AKfycbxba14m8jihcfD2E08HpTerf7akF4ILORyHa8cRJEYL9vDvNCu8rfYzCbq1D0qGOXnphg/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(result)
+      body: JSON.stringify(submission)
     }).catch(err => {
       console.log('Sheet submission error (this is normal with no-cors):', err);
     }).finally(() => {

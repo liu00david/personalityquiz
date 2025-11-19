@@ -282,6 +282,11 @@ h1 {
   color: var(--text-primary);
   font-size: 1.05em;
   line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+.personalized-insights p:last-child {
+  margin-bottom: 0;
 }
 
 .type-badge {
@@ -326,7 +331,7 @@ h1 {
 
 .dimension-breakdown {
   background: var(--dimension-bg-start);
-  padding: 15px 50px 25px 50px;
+  padding: 15px 50px 30px 50px;
   border-radius: 15px;
   margin-bottom: 25px;
 }
@@ -355,7 +360,7 @@ h1 {
 }
 
 .percentage-label {
-  font-size: 0.95em;
+  font-size: 1em;
   color: #999999;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -364,18 +369,18 @@ h1 {
 .percentage-label.active {
   color: var(--text-primary);
   font-weight: 700;
-  font-size: 1.05em;
+  font-size: 1.1em;
 }
 
 .percentage-value {
-  font-size: 1.3em;
+  font-size: 1.35em;
   font-weight: 600;
   color: #999999;
   transition: all 0.3s ease;
 }
 
 .percentage-value.active {
-  font-size: 1.5em;
+  font-size: 1.55em;
   font-weight: 800;
   color: var(--text-primary);
 }
@@ -590,8 +595,8 @@ h1 {
   }
 
   .dimension-breakdown {
-    padding: 10px 15px 20px 15px;
-    margin-bottom: 20px;
+    padding: 5px 20px 20px 20px;
+    margin-bottom: 15px;
   }
 
   .dimension-breakdown h4 {
@@ -599,12 +604,29 @@ h1 {
     margin-bottom: 10px;
   }
 
+  .percentage-bar-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
   .percentage-value {
-    font-size: 1.1em;
+    font-size: 0.8em;
   }
 
   .percentage-value.active {
-    font-size: 1.3em;
+    font-size: 1em;
+  }
+
+  .percentage-label {
+    font-size: 0.7em;
+  }
+  
+  .percentage-label.active {
+    font-size: 0.7em;
   }
 
   .personalized-insights {
@@ -621,6 +643,11 @@ h1 {
     font-size: 0.95em;
     line-height: 1.6;
     text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .personalized-insights p:last-child {
+    margin-bottom: 0;
   }
 
   .actions {
@@ -630,5 +657,13 @@ h1 {
   .retake-btn, .share-btn {
     padding: 10px 25px;
     font-size: 1em;
+  }
+
+  .bar-track-single {
+    height: 16px;
+    background: #dcdcdc;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
   }
 }

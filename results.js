@@ -224,24 +224,23 @@ function displayResults(results) {
   });
 
   // Generate personalized insights
-  let insightsText = '';
+  let insightsHTML = '';
 
   if (strongTraits.length > 0) {
     const traitList = strongTraits.map(t => `${t.label} (${t.percent}%)`).join(', ');
-    insightsText += `Your strongest ${strongTraits.length === 1 ? 'trait is' : 'traits are'} ${traitList}. ${strongTraits.length === 1 ? 'This dimension shapes' : 'These dimensions shape'} your relationship style, and you may find the most compatibility with someone who shares them. `;
+    insightsHTML += `<p>Your strongest ${strongTraits.length === 1 ? 'trait is' : 'traits are'} ${traitList}. ${strongTraits.length === 1 ? 'This dimension shapes' : 'These dimensions shape'} your relationship style, and you may find the most compatibility with someone who shares them.</p>`;
   }
 
   if (balancedTraits.length > 0) {
-    const balancedList = balancedTraits.map(t => `${t.title} (${t.firstPercent}% ${t.first}, ${t.secondPercent}% ${t.second})`).join(', ')
-    insightsText += '\n';
-    insightsText += `You show balance in: ${balancedList}. This indicates you can shift between both tendencies, responding to what the situation or relationship needs. `;
+    const balancedList = balancedTraits.map(t => `${t.title} (${t.firstPercent}% ${t.first}, ${t.secondPercent}% ${t.second})`).join(', ');
+    insightsHTML += `<p>You show balance in ${balancedList}. This indicates you can shift between both tendencies, responding to what the situation or relationship needs.</p>`;
   }
 
-  if (insightsText === '' || balancedTraits.length == 4) {
-    insightsText = 'Your results are balanced across all dimensions, giving you a flexible relationship style. For a clearer type, try retaking the quiz with more decisive answers. ';
+  if (insightsHTML === '' || balancedTraits.length == 4) {
+    insightsHTML = '<p>Your results are balanced across all dimensions, giving you a flexible relationship style. For a clearer type, try retaking the quiz with more decisive answers.</p>';
   }
 
-  document.getElementById('insightsText').textContent = insightsText;
+  document.getElementById('insightsText').innerHTML = insightsHTML;
 
   const breakdownContainer = document.getElementById('dimensionsBreakdown');
   breakdownContainer.innerHTML = '';
