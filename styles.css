@@ -666,4 +666,9 @@ h1 {
     overflow: hidden;
     position: relative;
   }
+
+  /* Submit Button */
+.submit-container {
+  margin-top: 20px;
+}
 }
