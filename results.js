@@ -387,7 +387,7 @@ function shareResults() {
     ctx.fillText(dim.title, width / 2, y - 16);
 
     // Draw labels and percentages above the bar
-    ctx.font = 'bold 16px -apple-system, sans-serif';
+    ctx.font = 'bold 18px -apple-system, sans-serif';
     ctx.textAlign = 'left';
     ctx.fillStyle = userLetter === dim.first ? colors.textPrimary : '#999999';
     ctx.fillText(`${dim.firstLabel}: ${firstPercent}%`, barX, y - 5);

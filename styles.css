@@ -639,10 +639,6 @@ h1 {
     margin-bottom: 20px;
   }
 
-  .dimensions-link {
-    font-size: 1.05em;
-  }
-
   .dimension-breakdown {
     padding: 5px 20px 20px 20px;
     margin-bottom: 15px;
@@ -675,7 +671,7 @@ h1 {
   }
   
   .percentage-label.active {
-    font-size: 0.7em;
+    font-size: 0.8em;
   }
 
   .personalized-insights {
