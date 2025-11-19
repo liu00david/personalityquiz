@@ -232,7 +232,8 @@ function displayResults(results) {
   }
 
   if (balancedTraits.length > 0) {
-    const balancedList = balancedTraits.map(t => `${t.title} (${t.firstPercent}% ${t.first}, ${t.secondPercent}% ${t.second})`).join(', ');
+    const balancedList = balancedTraits.map(t => `${t.title} (${t.firstPercent}% ${t.first}, ${t.secondPercent}% ${t.second})`).join(', ')
+    insightsText += '\n';
     insightsText += `You show balance in: ${balancedList}. This indicates you can shift between both tendencies, responding to what the situation or relationship needs. `;
   }
 
