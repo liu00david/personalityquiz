@@ -1,99 +1,82 @@
 # HCER Relationship Typology Quiz
 
-A modern, interactive personality quiz that helps users discover their 4-letter romantic personality type based on the HCER framework (Hope, Connection, Expression, Resolution).
+An opinionated, single-page quiz that helps people discover their four-letter HCER relationship type (Hope, Connection, Expression, Resolution). Everything is vanilla HTML/CSS/JS and deploys cleanly to GitHub Pages.
+
+---
 
 ## Live Demo
 
-Visit the quiz at: [Your GitHub Pages URL will be here]
+https://liu00david.github.io/personalityquiz  
+(Update the URL if you fork this project.)
 
-## Features
+---
 
-- 50 carefully crafted questions across 4 relationship dimensions
-- Modern, colorful, gradient-based UI
-- 5-point Likert scale for nuanced responses
-- Instant personality type calculation
-- Detailed results page with dimension breakdowns
-- Mobile-responsive design
-- Share functionality for results
+## What’s inside
 
-## The HCER Framework
+- **50 Likert questions** that map to four weighted dimensions (Idealist/Realist, Physical/Emotional, Social/Private, Forgiving/Critical).
+- **Real-time scoring** in `quiz.js`; results persist in `sessionStorage` and flow straight into `results.html`.
+- **Pixel avatar generator** that paints an 8×8 grid with trait colors defined in `colors.css`.
+- **Dimension breakdowns** with dominant/balanced callouts plus long-form archetype copy from `questions.js`.
+- **Shareable PNG export** built on `<canvas>` so users can download or share their result.
+- **Responsive styling** handled in `styles.css` with a centralized palette in `colors.css`.
 
-The quiz measures four key dimensions of romantic behavior:
+---
 
-1. **H - Hope Dimension**: Idealist vs Realist
-2. **C - Connection Dimension**: Physical vs Emotional
-3. **E - Expression Dimension**: Social vs Private
-4. **R - Resolution Dimension**: Forgiving vs Critical
-
-Results in one of 16 personality types (e.g., IPSF - The Glow, REVC - The Strategist).
-
-## GitHub Pages Setup
-
-1. Push this repository to GitHub
-2. Go to repository Settings → Pages
-3. Under "Source", select the main branch
-4. Click Save
-5. Your site will be live at `https://[username].github.io/personality-quiz/`
-
-## Project Structure
+## Directory overview
 
 ```
 personality-quiz/
-├── index.html          # Main quiz page
-├── results.html        # Results display page
-├── styles.css          # All styling and responsive design
-├── questions.js        # Question bank and type descriptions
-├── quiz.js             # Quiz logic and scoring algorithm
-├── results.js          # Results page logic
-├── PERSONALITY.md      # Framework documentation
-└── README.md           # This file
+├── index.html          # Quiz UI + Likert flow
+├── quiz.js             # Question rendering, scoring, storage
+├── results.html        # Results layout
+├── results.js          # Avatar, breakdowns, sharing logic
+├── questions.js        # Question bank + 16 type descriptions
+├── colors.css          # Brand + trait color tokens
+├── styles.css          # Global styles and responsive rules
+├── PERSONALITY.md      # HCER framework explainer
+└── README.md           # You are here
 ```
 
-## Local Development
+No bundler or build step—open `index.html` in a browser or run a tiny static server for live reload.
 
-Simply open `index.html` in a web browser. No build process or server required!
-
-For a better development experience with live reload:
 ```bash
-# Using Python 3
 python -m http.server 8000
-
-# Using Node.js
+# or
 npx serve
 ```
 
-Then visit `http://localhost:8000`
+Then visit `http://localhost:8000`.
 
-## Customization
+---
 
-### Changing Colors
-All colors are centralized in `colors.css` using CSS custom properties. Edit the hex values there to update the entire site's color scheme.
+## Customizing the quiz
 
-### Adding/Modifying Questions
-Edit `questions.js` to add or modify questions. Each question requires:
-- `text`: The question statement
-- `dimension`: One of "IR", "PE", "SV", "FC"
-- `direction`: Which trait agreement indicates (e.g., "I", "R", "P", "E", etc.)
+| Task | Where to edit | Notes |
+|------|---------------|-------|
+| Update questions / weights | `questions.js` | Each object has `text` plus a `[IR, PE, SV, FC]` weight array. |
+| Rewrite archetypes | `typeDescriptions` in `questions.js` | Content feeds both results copy and documentation. |
+| Tweak colors | `colors.css` | Trait colors power avatars, bars, and docs—update once, use everywhere. |
+| Change layout | `styles.css` | Uses CSS variables heavily; responsive blocks at the bottom. |
+| Modify sharing output | `shareResults()` in `results.js` | Canvas dimensions, fonts, and colors are easy to adjust. |
 
-### Modifying Type Descriptions
-Update the `typeDescriptions` object in `questions.js` to change how each personality type is described.
+For deeper framework details (dimensions, color mapping, and type summaries) see `PERSONALITY.md`.
 
-## Saving Form Submissions
+---
 
-Since this is a static GitHub Pages site, you'll need a third-party service to save quiz results. See **[FORM_SUBMISSIONS.md](FORM_SUBMISSIONS.md)** for detailed guides on:
+## Deployment (GitHub Pages)
 
-- Google Sheets (Recommended - Free & Unlimited)
-- EmailJS (Email notifications)
-- Formspree (Simplest setup)
-- Download as JSON (No service needed)
-- Airtable (Best for analytics)
+1. Push the repo to GitHub.  
+2. Repo **Settings → Pages**.  
+3. Choose the `main` branch and root folder, save.  
+4. After Pages finishes building, your site is live at `https://<username>.github.io/<repo>/`.
+
+Because everything is client-side, no extra configuration is required.
+
+---
 
 ## License
 
-MIT License - feel free to use and modify for your own projects!
+MIT — remix, restyle, and extend as long as you keep the attribution.
 
-### Colors
-I: '#ffc6ff' Pink, R: '#caffbf' Green, 
-P: '#ffadad' Red, E: '#bdb2ff' Purple,
-S: '#ffd6a5' Orange, V: '#9bf6ff' Cyan, 
-F: '#a0c4ff' Blue, C: '#fdffb6' Yellow,
+Colors reference for quick copy/paste:  
+`I #ffc6ff · R #caffbf · P #ffadad · E #bdb2ff · S #ffd6a5 · V #9bf6ff · F #a0c4ff · C #fdffb6`

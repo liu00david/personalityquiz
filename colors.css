@@ -15,7 +15,7 @@
   --color-tan: #d6cbbf;            /* Warm tan/beige */
   --color-cream: #f0eeea;          /* Off-white cream */
   --color-dark-sage: #87a9ab;
-  --color-sage-blue: #3a6275;
+  --color-sage-blue: #557d90;
 
   /* Trait Colors for Avatar */
   --trait-i: #ffc6ff;              /* Idealist - pink */
@@ -61,7 +61,7 @@
 
   --button-border: var(--color-tan);
   --button-selected-start: var(--color-sage);
-  --button-selected-end: var(--color-dark-sage);
+  --button-selected-end: var(--color-sage-blue);
 
   --progress-start: var(--color-sage);
   --progress-end: var(--color-tan);

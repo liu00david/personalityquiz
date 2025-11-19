@@ -243,7 +243,7 @@ function displayResults(results) {
 
   if (balancedTraits.length > 0) {
     const balancedList = balancedTraits.map(t => `${t.title} (${t.firstPercent}% ${t.first}, ${t.secondPercent}% ${t.second})`).join(', ');
-    insightsHTML += `<p>You show balance in ${balancedList}. This indicates you can shift between both tendencies, responding to what the situation or relationship needs.</p>`;
+    insightsHTML += `<p>You show balance in ${balancedList}. This indicates you can shift between both tendencies, responding to relationship needs.</p>`;
   }
 
   if (insightsHTML === '' || balancedTraits.length == 4) {

@@ -209,7 +209,8 @@ h1 {
 /* Submit Button */
 .submit-container {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 35px;
+  margin-bottom: 20px;
 }
 
 .submit-btn {
@@ -418,7 +419,7 @@ h1 {
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 10px;
+  margin: 0px 16px 30px 16px;
 }
 
 .retake-btn, .share-btn {
@@ -668,7 +669,8 @@ h1 {
   }
 
   /* Submit Button */
-.submit-container {
-  margin-top: 20px;
-}
+  .submit-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
 }
