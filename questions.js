@@ -50,7 +50,7 @@ const questions = [
   { text: "I don't hold grudges.", weights: [0, 0, 0, 1] },
   { text: "If my partner drops something, I point out that they should be more careful.", weights: [0, 0, 0, -1] },
   { text: "I easily understand where others are coming from, even when I disagree.", weights: [0, 0, 0, 1.25] },
-  { text: "I speak before I fully think things through.", weights: [0, 0, 0, -1] },
+  { text: "I tend to speak faster than I think.", weights: [0, 0, 0, -1] },
   { text: "The same mistake should never happen twice.", weights: [0, 0, 0, -1] },
 ];
 
