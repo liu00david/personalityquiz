@@ -412,17 +412,13 @@ h1 {
   flex-wrap: wrap;
 }
 
-.retake-btn, .share-btn {
+.retake-btn {
   padding: 12px 30px;
   font-size: 1.1em;
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 600;
-  border: none;
-}
-
-.retake-btn {
   background: var(--bg-white);
   color: var(--accent-primary);
   border: 2px solid var(--accent-primary);
@@ -433,22 +429,6 @@ h1 {
   color: var(--text-light);
 }
 
-.share-btn {
-  background: var(--color-sage-blue);
-  color: var(--text-light);
-}
-
-.share-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-button);
-}
-
-.share-btn:disabled,
-.retake-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
 
 /* Secret Autofill Button */
 .autofill-secret {
