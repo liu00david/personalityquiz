@@ -317,22 +317,22 @@ h1 {
 
 .breakdown-section h3 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: var(--text-primary);
   font-size: 1.8em;
 }
 
 .dimension-breakdown {
   background: var(--dimension-bg-start);
-  padding: 25px;
+  padding: 20px;
   border-radius: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .dimension-breakdown h4 {
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: var(--text-primary);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-align: center;
   font-weight: 600;
 }
@@ -433,14 +433,22 @@ h1 {
 }
 
 .share-btn {
-  background: var(--color-dark-sage);
+  background: var(--color-sage-blue);
   color: var(--text-light);
-  border: 2px solid var(--color-dark-sage);
+  border: 2px solid var(--color-sage-blue);
+  animation: shake 8s ease-in-out infinite;
 }
 
 .share-btn:hover {
   background: var(--color-sage);
   border-color: var(--color-sage);
+  animation: none;
+}
+
+@keyframes shake {
+  0%, 12.5%, 100% { transform: translateX(0); }
+  1.25%, 3.75%, 6.25%, 8.75%, 11.25% { transform: translateX(-2px); }
+  2.5%, 5%, 7.5%, 10% { transform: translateX(2px); }
 }
 
 
@@ -546,7 +554,42 @@ h1 {
     font-size: 1em;
   }
 
+  .result-card {
+    padding: 25px;
+    margin-bottom: 30px;
+  }
+
+  .type-description {
+    font-size: 1em;
+    line-height: 1.6;
+  }
+
+  .breakdown-section h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
+
   .dimension-breakdown {
+    padding: 15px;
+    margin-bottom: 12px;
+  }
+
+  .dimension-breakdown h4 {
+    font-size: 1em;
+    margin-bottom: 12px;
+  }
+
+  .personalized-insights {
     padding: 20px;
+    margin-bottom: 25px;
+  }
+
+  .personalized-insights h3 {
+    font-size: 1.3em;
+    margin-bottom: 8px;
+  }
+
+  .personalized-insights p {
+    font-size: 1em;
   }
 }

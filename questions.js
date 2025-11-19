@@ -36,10 +36,10 @@ const questions = [
   { text: "In private, I act very differently with someone I like.", weights: [0, 0, -1.25, 0] },
   { text: "I like going into the details of my dating life with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I argue, I would go to my friends for advice.", weights: [0, 0, 0.75, -0.5] },
-  { text: "I can feel envious of other relationships.", weights: [0.5, 0, 0.5, 0] },
-  { text: "I always bring my partner up in conversations with others.", weights: [0, 0, 0.75, 0] },
-  { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -1.25, 0] },
-  { text: "I would post my partner on social media often.", weights: [0, 0, 1, 0] },
+  { text: "I can feel envious of other relationships.", weights: [0.5, 0, 1, 0] },
+  { text: "I always bring my partner up in conversations with others.", weights: [0, 0, 1, 0] },
+  { text: "My lifestyle is very different when I'm single vs dating.", weights: [0, 0.5, -0.50, 0] },
+  { text: "I would post my partner on social media often.", weights: [0, 0, 1.5, 0] },
 
   // F/C Dimension focused questions
   { text: "If my date is late to dinner, I must ask and find out why.", weights: [0, 0, 0, -0.75] },
