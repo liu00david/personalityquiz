@@ -34,7 +34,7 @@ const questions = [
   { text: "I like public displays of affection.", weights: [0, 0.75, 0.75, 0] },
   { text: "I enjoy doing simple, everyday activities with my partner more than going out.", weights: [0.5, 0, -0.75, 0] },
   { text: "It takes some time before I share a relationship publicly.", weights: [0, 0, -1.25, 0] },
-  { text: "I talk pretty openly about my relationship with friends.", weights: [0, 0, 0.75, 0] },
+  { text: "I talk openly about my relationship with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I argue, I go to others for advice.", weights: [0, 0, 0.75, -0.5] },
   { text: "I compare my dating life to other people.", weights: [0.5, 0, 1, 0] },
   { text: "I bring my partner up in conversations a lot.", weights: [0, 0, 1, 0] },
@@ -45,13 +45,13 @@ const questions = [
   { text: "If my date is late to dinner, I want them to explain why.", weights: [0, 0, 0, -1] },
   { text: "During arguments, there's usually a clear right and wrong.", weights: [0, 0, 0, -1] },
   { text: "I look for the deeper meaning behind someone's actions.", weights: [0, -0.5, 0, -0.75] },
-  { text: "I'm usually the one to apologize first.", weights: [0, 0, 0, 1] },
+  { text: "I usually am the first to apologize.", weights: [0, 0, 0, 1] },
   { text: "When I'm frustrated, my voice or tone changes easily.", weights: [0, 0, 0, -1] },
   { text: "I don't hold grudges.", weights: [0, 0, 0, 1] },
   { text: "If my partner drops something, I point out that they should be more careful.", weights: [0, 0, 0, -1] },
   { text: "I easily understand where others are coming from, even when I disagree.", weights: [0, 0, 0, 1.25] },
   { text: "I tend to speak faster than I think.", weights: [0, 0, 0, -1] },
-  { text: "The same mistake should never happen twice.", weights: [0, 0, 0, -1] },
+  { text: "The same mistake shouldn't happen twice.", weights: [0, 0, 0, -1] },
 ];
 
 // Personality type descriptions

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All 16 HCER Personalities</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="colors.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .personalities-guide {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .personality-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .personality-card {
+      background: var(--bg-white);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: var(--shadow-hover);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      border: 3px solid transparent;
+    }
+
+    .personality-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .personality-type {
+      font-size: 1.8em;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      letter-spacing: 3px;
+    }
+
+    .personality-name {
+      font-size: 1.4em;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--color-sage);
+    }
+
+    .personality-archetype {
+      font-size: 1em;
+      color: var(--text-secondary);
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    .personality-description {
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 0.95em;
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .personality-struggles {
+      background: linear-gradient(135deg, var(--color-peach-light), var(--color-peach));
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      color: var(--text-primary);
+      font-style: italic;
+    }
+
+    .struggles-label {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text-primary);
+    }
+
+    .trait-badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .trait-badge {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1em;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-link {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .back-btn {
+      padding: 12px 30px;
+      font-size: 1.1em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      background: var(--color-sage-blue);
+      color: var(--text-light);
+      border: 2px solid var(--color-sage-blue);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-btn:hover {
+      background: var(--color-sage);
+      border-color: var(--color-sage);
+    }
+
+    @media (max-width: 768px) {
+      .personality-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .personality-card {
+        padding: 20px;
+      }
+
+      .personality-type {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body style="background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%); min-height: 100vh;">
+  <div class="personalities-guide">
+    <div style="background: var(--bg-white); border-radius: 20px; padding: 20px 20px 30px 20px; margin-bottom: 30px; box-shadow: var(--shadow-hover); text-align: center;">
+      <h1 style="font-size: 1.5em; color: #2a2a2a; margin-bottom: 10px;">All 16 HCER Personalities</h1>
+      <p style="color: var(--text-secondary); font-size: 1em;">Explore the full spectrum of relationship typologies</p>
+    </div>
+
+    <div class="personality-grid" id="personalitiesContainer"></div>
+
+    <div class="back-link">
+      <a href="results.html" class="back-btn">Back to Results</a>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script>
+    // Trait color mapping
+    const traitColors = {
+      'I': 'var(--trait-i)',
+      'R': 'var(--trait-r)',
+      'P': 'var(--trait-p)',
+      'E': 'var(--trait-e)',
+      'S': 'var(--trait-s)',
+      'V': 'var(--trait-v)',
+      'F': 'var(--trait-f)',
+      'C': 'var(--trait-c)'
+    };
+
+    // Render all personality types
+    function renderPersonalities() {
+      const container = document.getElementById('personalitiesContainer');
+
+      // Sort types alphabetically
+      const sortedTypes = Object.keys(typeDescriptions).sort();
+
+      sortedTypes.forEach(type => {
+        const data = typeDescriptions[type];
+
+        const card = document.createElement('div');
+        card.className = 'personality-card';
+
+        // Create trait badges
+        const badges = document.createElement('div');
+        badges.className = 'trait-badges';
+
+        type.split('').forEach(letter => {
+          const badge = document.createElement('div');
+          badge.className = 'trait-badge';
+          badge.style.background = traitColors[letter];
+          badge.textContent = letter;
+          badges.appendChild(badge);
+        });
+
+        // Create card content
+        card.innerHTML = `
+          <div class="personality-type">${type}</div>
+          <div class="personality-name">${data.name}</div>
+          <div class="personality-archetype">${data.archetype}</div>
+          <div class="personality-description">${data.description}</div>
+          <div class="personality-struggles">
+            <span class="struggles-label">Growth edge:</span>
+            ${data.struggles}
+          </div>
+        `;
+
+        // Insert badges after type
+        const nameDiv = card.querySelector('.personality-name');
+        nameDiv.parentNode.insertBefore(badges, nameDiv);
+
+        container.appendChild(card);
+      });
+    }
+
+    renderPersonalities();
+  </script>
+</body>
+</html>
