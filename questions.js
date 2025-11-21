@@ -7,7 +7,7 @@
 const questions = [
   // I/R Dimension focused questions
   { text: "My friends think that I’m picky.", weights: [1, 0, 0, 0] },
-  { text: "I enjoy spontaneous, grand romantic gestures.", weights: [1, 0, 0, 0] },
+  { text: "I enjoy spontaneous and grand romantic gestures.", weights: [1, 0, 0, 0] },
   { text: "I get easily disappointed when things don't go as planned.", weights: [1, 0, 0, 0] },
   { text: "I want to set clear expectations early in a relationship.", weights: [-1.25, -0.5, 0, 0] },
   { text: "I prefer gifts that are practical.", weights: [-0.75, 0, 0, 0] },
