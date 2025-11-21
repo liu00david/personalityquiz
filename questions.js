@@ -31,7 +31,7 @@ const questions = [
 
   // S/V Dimension focused questions
   { text: "I include my partner in friend group hangouts.", weights: [0, 0, 1, 0] },
-  { text: "I like public displays of affection.", weights: [0, 0.75, 1, 0] },
+  { text: "I enjoy sharing public displays of affection.", weights: [0, 0.75, 1, 0] },
   { text: "I enjoy doing simple, everyday activities with my partner more than going out.", weights: [0.5, 0, -1, 0] },
   { text: "It takes some time before I share a relationship publicly.", weights: [0, 0, -1.25, 0] },
   { text: "I talk openly about my relationship with friends.", weights: [0, 0, 0.75, 0] },

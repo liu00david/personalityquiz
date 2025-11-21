@@ -179,14 +179,14 @@ function displayResults(results) {
 
   // Calculate percentages (0-100 scale for each side)
   const percentages = {
-    I: Math.round(((rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
-    R: Math.round(((-rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
-    P: Math.round(((rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
-    E: Math.round(((-rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
-    S: Math.round(((rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
-    V: Math.round(((-rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
-    F: Math.round(((rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100),
-    C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
+    I: Math.round(((rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 105),
+    R: Math.round(((-rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 105),
+    P: Math.round(((rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 105),
+    E: Math.round(((-rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 105),
+    S: Math.round(((rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 105),
+    V: Math.round(((-rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 105),
+    F: Math.round(((rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 105),
+    C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 105)
   };
 
   // Store for sharing
