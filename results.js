@@ -178,15 +178,21 @@ function displayResults(results) {
   });
 
   // Calculate percentages (0-100 scale for each side)
+  // Round one side, then calculate the other as 100 - first to ensure they sum to exactly 100
+  const I = Math.round(((rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100);
+  const P = Math.round(((rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100);
+  const S = Math.round(((rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100);
+  const F = Math.round(((rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100);
+
   const percentages = {
-    I: Math.round(((rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
-    R: Math.round(((-rawScores.IR + maxScores.IR) / (2 * maxScores.IR)) * 100),
-    P: Math.round(((rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
-    E: Math.round(((-rawScores.PE + maxScores.PE) / (2 * maxScores.PE)) * 100),
-    S: Math.round(((rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
-    V: Math.round(((-rawScores.SV + maxScores.SV) / (2 * maxScores.SV)) * 100),
-    F: Math.round(((rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100),
-    C: Math.round(((-rawScores.FC + maxScores.FC) / (2 * maxScores.FC)) * 100)
+    I: I,
+    R: 100 - I,
+    P: P,
+    E: 100 - P,
+    S: S,
+    V: 100 - S,
+    F: F,
+    C: 100 - F
   };
 
   // Store for sharing
