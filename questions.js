@@ -23,7 +23,7 @@ const questions = [
   { text: "I’m attracted to a variety of physical types.", weights: [0, 1, 0, 0] },
   { text: "I care about how my first kiss will go with someone.", weights: [0, -1, 0, 0] },
   { text: "I spend time reflecting on my beliefs and values.", weights: [0, -1, 0, 0] },
-  { text: "I prefer my first date to feel upscale, less casual.", weights: [0, 0.75, 0.75, 0] },
+  { text: "I prefer my first date to feel upscale and less casual.", weights: [0, 0.75, 0.50, 0] },
   { text: "I aim to dress my best no matter the occasion.", weights: [0, 0.5, 1, 0] },
   { text: "I enjoy having deep, niche conversations with my partner.", weights: [0, -1, 0, 0] },
   { text: "I often help people, including strangers, even when it’s inconvenient.", weights: [0.5, -0.5, 0, 0.5] },
