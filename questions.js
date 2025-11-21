@@ -6,7 +6,7 @@
 
 const questions = [
   // I/R Dimension focused questions
-  { text: "My friends think that I’m picky.", weights: [1, 0, 0, 0] },
+  { text: "My friends think that I’m picky when dating.", weights: [1, 0, 0, 0] },
   { text: "I enjoy spontaneous and grand romantic gestures.", weights: [1, 0, 0, 0] },
   { text: "I get easily disappointed when things don't go as planned.", weights: [1, 0, 0, 0] },
   { text: "I want to set clear expectations early in a relationship.", weights: [-1.25, -0.5, 0, 0] },
@@ -25,14 +25,14 @@ const questions = [
   { text: "I spend time reflecting on my beliefs and values.", weights: [0, -1, 0, 0] },
   { text: "I prefer my first date to feel upscale, less casual.", weights: [0, 0.75, 0.75, 0] },
   { text: "I aim to dress my best no matter the occasion.", weights: [0, 0.5, 1, 0] },
-  { text: "I have deep, niche conversations with my partner.", weights: [0, -1, 0, 0] },
+  { text: "I enjoy having deep, niche conversations with my partner.", weights: [0, -1, 0, 0] },
   { text: "I often help people, including strangers, even when it’s inconvenient.", weights: [0.5, -0.5, 0, 0.5] },
-  { text: "Sometimes my feelings are hard to contain or rationalize.", weights: [0.75, 1, 0, 0] },
+  { text: "Sometimes my feelings are hard to express or rationalize.", weights: [0.75, 1, 0, 0] },
 
   // S/V Dimension focused questions
-  { text: "I include my partner in friend group hangouts.", weights: [0, 0, 0.75, 0] },
-  { text: "I like public displays of affection.", weights: [0, 0.75, 0.75, 0] },
-  { text: "I enjoy doing simple, everyday activities with my partner more than going out.", weights: [0.5, 0, -0.75, 0] },
+  { text: "I include my partner in friend group hangouts.", weights: [0, 0, 1, 0] },
+  { text: "I like public displays of affection.", weights: [0, 0.75, 1, 0] },
+  { text: "I enjoy doing simple, everyday activities with my partner more than going out.", weights: [0.5, 0, -1, 0] },
   { text: "It takes some time before I share a relationship publicly.", weights: [0, 0, -1.25, 0] },
   { text: "I talk openly about my relationship with friends.", weights: [0, 0, 0.75, 0] },
   { text: "If my partner and I argue, I go to others for advice.", weights: [0, 0, 0.75, -0.5] },
@@ -45,7 +45,7 @@ const questions = [
   { text: "If my date is late to dinner, I want them to explain why.", weights: [0, 0, 0, -1] },
   { text: "During arguments, there's usually a clear right and wrong.", weights: [0, 0, 0, -1] },
   { text: "I look for the deeper meaning behind someone's actions.", weights: [0, -0.5, 0, -0.75] },
-  { text: "I usually am the first to apologize.", weights: [0, 0, 0, 1] },
+  { text: "I am usually the first one to apologize.", weights: [0, 0, 0, 1] },
   { text: "When I'm frustrated, my voice or tone changes easily.", weights: [0, 0, 0, -1] },
   { text: "I don't hold grudges.", weights: [0, 0, 0, 1] },
   { text: "If my partner drops something, I point out that they should be more careful.", weights: [0, 0, 0, -1] },
