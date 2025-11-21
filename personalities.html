@@ -14,11 +14,58 @@
       padding: 40px 20px;
     }
 
+    .category-section {
+      margin-bottom: 50px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .category-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .category-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .category-header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-title {
+      font-size: 2em;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .category-description {
+      font-size: 1.1em;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
     .personality-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 25px;
-      margin-top: 30px;
     }
 
     @media (min-width: 768px) {
@@ -55,7 +102,7 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 10px;
-      color: var(--color-sage);
+      color: var(--color-sage-blue);
     }
 
     .personality-archetype {
@@ -156,10 +203,10 @@
   <div class="personalities-guide">
     <div style="background: var(--bg-white); border-radius: 20px; padding: 20px 20px 30px 20px; margin-bottom: 30px; box-shadow: var(--shadow-hover); text-align: center;">
       <h1 style="font-size: 1.5em; color: #2a2a2a; margin-bottom: 10px;">The 16 HCER Personalities</h1>
-      <p style="color: var(--text-secondary); font-size: 1em;">Defining the typologies</p>
+      <p style="color: var(--text-secondary); font-size: 1em;">Four categories of relationship typologies</p>
     </div>
 
-    <div class="personality-grid" id="personalitiesContainer"></div>
+    <div id="personalitiesContainer"></div>
 
     <div class="back-link">
       <a href="results.html" class="back-btn">Back to Results</a>
@@ -170,58 +217,118 @@
   <script>
     // Trait color mapping
     const traitColors = {
-      'I': 'var(--trait-i)',
-      'R': 'var(--trait-r)',
-      'P': 'var(--trait-p)',
-      'E': 'var(--trait-e)',
-      'S': 'var(--trait-s)',
-      'V': 'var(--trait-v)',
-      'F': 'var(--trait-f)',
-      'C': 'var(--trait-c)'
+      'I': '--trait-i',
+      'R': '--trait-r',
+      'P': '--trait-p',
+      'E': '--trait-e',
+      'S': '--trait-s',
+      'V': '--trait-v',
+      'F': '--trait-f',
+      'C': '--trait-c'
     };
 
-    // Render all personality types
+    // Define categories based on Hope (I/R) + Resolution (F/C)
+    const categories = [
+      {
+        name: 'Believers',
+        description: 'Optimistic hearts who give endless chances',
+        types: ['IPSF', 'IPVF', 'IESF', 'IEVF'],
+        gradient: ['--trait-i', '--trait-f'],
+        direction: 90  // left to right
+      },
+      {
+        name: 'Visionaries',
+        description: 'Dreamers with discerning standards',
+        types: ['IPSC', 'IPVC', 'IESC', 'IEVC'],
+        gradient: ['--trait-i', '--trait-c'],
+        direction: 270  // right to left
+      },
+      {
+        name: 'Stabilizers',
+        description: 'Grounded souls who maintain peace',
+        types: ['RPSF', 'RPVF', 'RESF', 'REVF'],
+        gradient: ['--trait-r', '--trait-f'],
+        direction: 90  // left to right
+      },
+      {
+        name: 'Directors',
+        description: 'Practical leaders with clear expectations',
+        types: ['RPSC', 'RPVC', 'RESC', 'REVC'],
+        gradient: ['--trait-r', '--trait-c'],
+        direction: 270  // right to left
+      }
+    ];
+
+    // Get computed colors
+    function getColor(varName) {
+      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
+
+    // Render all personality types by category
     function renderPersonalities() {
       const container = document.getElementById('personalitiesContainer');
 
-      // Sort types alphabetically
-      const sortedTypes = Object.keys(typeDescriptions).sort();
+      categories.forEach(category => {
+        // Create category section
+        const section = document.createElement('div');
+        section.className = 'category-section';
+        const color1 = getColor(category.gradient[0]);
+        const color2 = getColor(category.gradient[1]);
+        section.style.background = `linear-gradient(${category.direction}deg, ${color1} 0%, ${color2} 100%)`;
 
-      sortedTypes.forEach(type => {
-        const data = typeDescriptions[type];
+        // Create category header
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.innerHTML = `
+          <h2 class="category-title">${category.name}</h2>
+          <p class="category-description">${category.description}</p>
+        `;
+        section.appendChild(header);
 
-        const card = document.createElement('div');
-        card.className = 'personality-card';
+        // Create grid for personalities
+        const grid = document.createElement('div');
+        grid.className = 'personality-grid';
 
-        // Create trait badges
-        const badges = document.createElement('div');
-        badges.className = 'trait-badges';
+        // Render each personality in this category
+        category.types.forEach(type => {
+          const data = typeDescriptions[type];
 
-        type.split('').forEach(letter => {
-          const badge = document.createElement('div');
-          badge.className = 'trait-badge';
-          badge.style.background = traitColors[letter];
-          badge.textContent = letter;
-          badges.appendChild(badge);
+          const card = document.createElement('div');
+          card.className = 'personality-card';
+
+          // Create card content first
+          card.innerHTML = `
+            <div class="personality-type">${type}</div>
+            <div class="personality-name">${data.name}</div>
+            <div class="personality-archetype">${data.archetype}</div>
+            <div class="personality-description">${data.description}</div>
+            <div class="personality-struggles">
+              <span class="struggles-label">Growth edge:</span>
+              ${data.struggles}
+            </div>
+          `;
+
+          // Create trait badges after innerHTML is set
+          const badges = document.createElement('div');
+          badges.className = 'trait-badges';
+
+          type.split('').forEach(letter => {
+            const badge = document.createElement('div');
+            badge.className = 'trait-badge';
+            badge.style.background = getColor(traitColors[letter]);
+            badge.textContent = letter;
+            badges.appendChild(badge);
+          });
+
+          // Insert badges after type, before name
+          const nameDiv = card.querySelector('.personality-name');
+          nameDiv.parentNode.insertBefore(badges, nameDiv);
+
+          grid.appendChild(card);
         });
 
-        // Create card content
-        card.innerHTML = `
-          <div class="personality-type">${type}</div>
-          <div class="personality-name">${data.name}</div>
-          <div class="personality-archetype">${data.archetype}</div>
-          <div class="personality-description">${data.description}</div>
-          <div class="personality-struggles">
-            <span class="struggles-label">Growth edge:</span>
-            ${data.struggles}
-          </div>
-        `;
-
-        // Insert badges after type
-        const nameDiv = card.querySelector('.personality-name');
-        nameDiv.parentNode.insertBefore(badges, nameDiv);
-
-        container.appendChild(card);
+        section.appendChild(grid);
+        container.appendChild(section);
       });
     }
 
