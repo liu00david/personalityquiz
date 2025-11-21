@@ -244,7 +244,7 @@ function displayResults(results) {
 
   if (strongTraits.length > 0) {
     const traitList = strongTraits.map(t => `${t.label} (${t.percent}%)`).join(', ');
-    insightsHTML += `<p>Your strongest ${strongTraits.length === 1 ? 'trait is' : 'traits are'} ${traitList}. ${strongTraits.length === 1 ? 'This dimension shapes' : 'These dimensions shape'} your relationship style, and you may find the most compatibility with someone who shares this.</p>`;
+    insightsHTML += `<p>Your strongest ${strongTraits.length === 1 ? 'trait is' : 'traits are'} ${traitList}. ${strongTraits.length === 1 ? 'This dimension shapes' : 'These dimensions shape'} your relationship style, and you may find the most compatibility with someone sharing this.</p>`;
   }
 
   if (balancedTraits.length > 0) {
