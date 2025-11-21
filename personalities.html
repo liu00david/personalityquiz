@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All 16 HCER Personalities</title>
+  <title>16 HCER Personalities</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="colors.css">
   <link rel="stylesheet" href="styles.css">
@@ -16,9 +16,15 @@
 
     .personality-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: 1fr;
       gap: 25px;
       margin-top: 30px;
+    }
+
+    @media (min-width: 768px) {
+      .personality-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .personality-card {
@@ -150,7 +156,7 @@
   <div class="personalities-guide">
     <div style="background: var(--bg-white); border-radius: 20px; padding: 20px 20px 30px 20px; margin-bottom: 30px; box-shadow: var(--shadow-hover); text-align: center;">
       <h1 style="font-size: 1.5em; color: #2a2a2a; margin-bottom: 10px;">All 16 HCER Personalities</h1>
-      <p style="color: var(--text-secondary); font-size: 1em;">Explore the full spectrum of relationship typologies</p>
+      <p style="color: var(--text-secondary); font-size: 1em;">Defining relationship typologies</p>
     </div>
 
     <div class="personality-grid" id="personalitiesContainer"></div>
