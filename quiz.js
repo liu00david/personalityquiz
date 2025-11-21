@@ -11,6 +11,7 @@ const likertOptions = [
 let answers = {};
 let answeredCount = 0;
 let isRandomMode = false;
+let identityAnswer = null;
 
 // Track metrics
 const quizMetrics = {
@@ -23,6 +24,51 @@ const quizMetrics = {
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   language: navigator.language
 };
+
+// Render identity question
+function renderIdentityQuestion() {
+  const container = document.getElementById('questionsContainer');
+
+  const questionDiv = document.createElement('div');
+  questionDiv.className = 'question-item identity-question';
+
+  const questionText = document.createElement('div');
+  questionText.className = 'question-text';
+  questionText.innerHTML = `<span class="question-number">#</span>What do you identify as?`;
+  questionDiv.appendChild(questionText);
+
+  const optionsDiv = document.createElement('div');
+  optionsDiv.className = 'identity-options';
+
+  const identityOptions = ['Man', 'Woman', 'Non-binary', 'Prefer not to say'];
+
+  identityOptions.forEach(option => {
+    const optionDiv = document.createElement('div');
+    optionDiv.className = 'identity-option';
+
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'identity';
+    input.value = option;
+    input.id = `identity_${option.replace(/\s+/g, '_')}`;
+
+    input.addEventListener('change', () => {
+      identityAnswer = option;
+      questionDiv.classList.remove('question-unanswered');
+    });
+
+    const label = document.createElement('label');
+    label.htmlFor = `identity_${option.replace(/\s+/g, '_')}`;
+    label.textContent = option;
+
+    optionDiv.appendChild(input);
+    optionDiv.appendChild(label);
+    optionsDiv.appendChild(optionDiv);
+  });
+
+  questionDiv.appendChild(optionsDiv);
+  container.appendChild(questionDiv);
+}
 
 // Render all questions
 function renderQuestions() {
@@ -81,6 +127,9 @@ function renderQuestions() {
     questionDiv.appendChild(likertDiv);
     container.appendChild(questionDiv);
   });
+
+  // Render identity question last
+  renderIdentityQuestion();
 }
 
 // Update progress bar
@@ -129,7 +178,7 @@ function calculatePersonality() {
 document.getElementById('quizForm').addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // Check if all questions are answered
+  // Check if all personality questions are answered FIRST
   if (answeredCount < questions.length) {
     // Find first unanswered question
     const allQuestions = document.querySelectorAll('.question-item');
@@ -149,6 +198,14 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
       firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
+    return;
+  }
+
+  // Then check if identity question is answered
+  if (!identityAnswer) {
+    const identityQuestion = document.querySelector('.identity-question');
+    identityQuestion.classList.add('question-unanswered');
+    identityQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
 
@@ -183,6 +240,7 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
     // Create submission object with results, answers, and metrics
     const submission = {
       ...result,
+      identity: identityAnswer,
       answers: individualAnswers,
       timestamp: new Date().toISOString(),
       metrics: {
@@ -197,7 +255,7 @@ document.getElementById('quizForm').addEventListener('submit', (e) => {
       }
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbyyNhS2ey_FppR1n6iWX_eIeGHuzq4jLs9buCyDb6TrHoV2Jg-enaxsjULQ5HQm5WpCsw/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbwAMmmqwUPPCjTaAvez4Td0XaPxJSsvz5Sb2U_qQSRJHaN5GB1k7sCsx1yGIIzvHnLG1g/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
@@ -229,6 +287,13 @@ function toggleRandomMode() {
 
   if (isRandomMode) {
     // Turn OFF: Clear all answers
+    // Clear identity question
+    const identityRadios = document.querySelectorAll(`input[name="identity"]`);
+    identityRadios.forEach(radio => {
+      radio.checked = false;
+    });
+    identityAnswer = null;
+
     questions.forEach((question, index) => {
       const radioButtons = document.querySelectorAll(`input[name="q${index}"]`);
       radioButtons.forEach(radio => {
@@ -249,6 +314,15 @@ function toggleRandomMode() {
 
   } else {
     // Turn ON: Fill quiz randomly
+    // Fill identity question randomly
+    const identityOptions = ['Man', 'Woman', 'Non-binary', 'Prefer not to say'];
+    const randomIdentity = identityOptions[Math.floor(Math.random() * identityOptions.length)];
+    const identityRadio = document.getElementById(`identity_${randomIdentity.replace(/\s+/g, '_')}`);
+    if (identityRadio) {
+      identityRadio.checked = true;
+      identityAnswer = randomIdentity;
+    }
+
     questions.forEach((question, index) => {
       // Randomly select a value from the available options (no neutral)
       const options = [-2, -1, 1, 2];
