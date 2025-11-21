@@ -6,7 +6,7 @@
 
 const questions = [
   // I/R Dimension focused questions
-  { text: "My friends think that I’m picky when dating.", weights: [1, 0, 0, 0] },
+  { text: "My friends think that I’m picky.", weights: [1, 0, 0, 0] },
   { text: "I enjoy spontaneous and grand romantic gestures.", weights: [1, 0, 0, 0] },
   { text: "I get easily disappointed when things don't go as planned.", weights: [1, 0, 0, 0] },
   { text: "I want to set clear expectations early in a relationship.", weights: [-1.25, -0.5, 0, 0] },
@@ -112,7 +112,7 @@ const typeDescriptions = {
   },
   RPSC: {
     name: "The Commander",
-    archetype: "Decisive, Social, Direct, Commanding",
+    archetype: "Decisive, Social, Direct, Influential",
     description: "A strategic realist with a polished social presence, this type likes to set the tone and keep relationships moving forward. They appreciate clear expectations, visible commitment, and partners who value accountability as much as affection. Their vibe is confident, organized, and fiercely loyal.\n\nThey plan impressive experiences, initiate tough talks early, and show up reliably when life gets complicated. Acts of service and public affirmation signal that they’re all-in and ready to lead together.\n\nDirectness can tilt into critique when others need gentler messaging. They may forget that not everyone processes feelings as quickly as they solve problems.",
     struggles: "Wrapping strong opinions in softness so they land as care."
   },
@@ -136,7 +136,7 @@ const typeDescriptions = {
   },
   RESC: {
     name: "The Analyst",
-    archetype: "Insightful, Vocal, Precise, Analytical",
+    archetype: "Insightful, Vocal, Precise, Rational",
     description: "Realistic instincts meet social sharpness, creating someone who reads relationships like patterns waiting to be refined. They enjoy lively debate, value direct communication, and stay optimistic about solutions as long as everyone participates. Their vibe is articulate, curious, and committed to improvement.\n\nThey initiate debriefs after dates, offer thoughtful feedback, and connect partners into their social web with ease. Words of affirmation come with actionable ideas, so loved ones know exactly where they stand.\n\nFeedback can sound like critique when delivery outruns empathy. They sometimes overanalyze feelings instead of letting them be messy in the moment.",
     struggles: "Pairing sharp insight with reassurance so it lands as support."
   },
@@ -148,7 +148,7 @@ const typeDescriptions = {
   },
   REVC: {
     name: "The Strategist",
-    archetype: "Measured, Intentional, Private, Strategic",
+    archetype: "Measured, Intentional, Private, Achieving",
     description: "Analytical realism, private processing, and high standards combine into a partner who loves thoughtfully and plans ahead. They assess compatibility carefully, prefer intimate settings, and express affection through decisive action. Calm competence gives their relationships a sense of order and security.\n\nThey outline goals, manage logistics, and make decisions that reduce friction for the couple. Affection appears as steady presence, subtle touch, and intentional quality time away from crowds.\n\nEmotions can get edited out when they focus on efficiency, so warmth risks feeling muted. Critiques might surface before reassurance, which can leave partners guessing about their emotional investment.",
     struggles: "Letting emotion peek through the strategy in real time."
   }

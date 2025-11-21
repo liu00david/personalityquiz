@@ -276,10 +276,10 @@ function displayResults(results) {
     const secondPercent = percentages[dim.second];
     const userLetter = letters[index];
 
-    // Determine fill direction and width
-    const fillFromLeft = firstPercent >= secondPercent;
+    // Determine fill direction and width based on user's actual letter
+    const fillFromLeft = userLetter === dim.first;
     const barWidth = fillFromLeft ? firstPercent : secondPercent;
-    const dominantTrait = fillFromLeft ? dim.first : dim.second;
+    const dominantTrait = userLetter;
     const barColor = traitColors[dominantTrait] || dimensionColors[dim.title];
 
     const dimElement = document.createElement('div');
