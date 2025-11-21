@@ -352,6 +352,9 @@ function toggleRandomMode() {
     // Remove any unanswered highlights
     const allQuestions = document.querySelectorAll('.question-item');
     allQuestions.forEach(q => q.classList.remove('question-unanswered'));
+
+    // Scroll to bottom to show all filled answers including identity question
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 }
 

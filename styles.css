@@ -542,7 +542,7 @@ h1 {
   background: var(--color-sage-blue);
   color: var(--text-light);
   border: 2px solid var(--color-sage-blue);
-  animation: shake 5s ease-in-out infinite;
+  animation: shake 4s ease-in-out infinite;
 }
 
 .share-btn:hover {
