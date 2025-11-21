@@ -45,7 +45,7 @@ const questions = [
   { text: "If my date is late to dinner, I want them to explain why.", weights: [0, 0, 0, -1] },
   { text: "During arguments, there's usually a clear right and wrong.", weights: [0, 0, 0, -1] },
   { text: "I look for the deeper meaning behind someone's actions.", weights: [0, -0.5, 0, -0.75] },
-  { text: "I am usually the first one to apologize.", weights: [0, 0, 0, 1] },
+  { text: "I'm usually the first one to apologize.", weights: [0, 0, 0, 1] },
   { text: "When I'm frustrated, my voice or tone changes easily.", weights: [0, 0, 0, -1] },
   { text: "I don't hold grudges.", weights: [0, 0, 0, 1] },
   { text: "If my partner drops something, I point out that they should be more careful.", weights: [0, 0, 0, -1] },
